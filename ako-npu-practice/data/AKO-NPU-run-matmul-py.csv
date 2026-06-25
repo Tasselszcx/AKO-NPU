@@ -1,0 +1,84 @@
+iter,runtime_us,speedup,status,label
+1,212.97,1.067,improved,128x128 tiles + uint32 tiling copy
+2,214.39,1.06,regression,
+3,290.41,0.783,regression,
+4,,,failed,
+5,,,failed,
+6,201.03,1.136,improved,Tiling sweep (baseM/baseN/cores/traverse
+7,199.57,1.144,improved,"Buffer+config sweep (UB/L1/step/soc, 10 "
+8,201.21,1.13,no-change,
+9,109.94,2.068,improved,"__mix__(1,1) breakthrough"
+10,100.68,2.268,improved,"mix(1,1) param sweep (UB/tiling/cores/bi"
+11,101.0,2.224,no-change,
+12,101.18,2.257,no-change,
+13,99.78,2.289,improved,CFG_MDL pipeline
+14,96.0,2.377,improved,CFG_MDL + enUnitFlag
+15,95.58,2.389,no-change,
+16,100.12,2.281,regression,
+17,,,failed,
+18,97.0,2.354,no-change,
+19,97.12,2.351,no-change,
+20,98.48,2.319,no-change,
+21,96.94,2.356,no-change,
+22,96.0,2.38,no-change,
+23,96.26,2.372,no-change,
+24,95.28,2.397,no-change,
+25,71.08,3.213,improved,Async architecture (Iterate<false>+GetTe
+26,68.88,3.315,improved,splitRowNums=2
+27,,,failed,
+28,74.08,3.083,regression,
+29,69.48,3.287,no-change,
+30,,,failed,
+31,67.96,3.36,improved,"SetShape(-1,-1,K) async"
+32,68.9,3.314,no-change,
+33,78.4,2.913,regression,
+34,,,failed,
+35,,,failed,
+36,68.38,3.34,no-change,
+37,91.2,2.504,regression,
+38,76.08,3.002,regression,
+39,69.3,3.295,no-change,
+40,70.0,3.262,no-change,
+41,120.04,1.902,regression,
+42,69.98,3.263,no-change,
+43,69.0,3.31,no-change,
+44,,,failed,
+45,67.72,3.372,improved,preload=2 (GetMDLConfig)
+46,68.98,3.311,no-change,
+47,66.3,3.444,no-change,
+48,69.52,3.285,no-change,
+49,65.9,3.465,improved,enShuffle=true
+50,68.32,3.343,no-change,
+51,69.14,3.303,no-change,
+52,67.02,3.407,no-change,
+53,67.66,3.375,no-change,
+54,67.54,3.381,no-change,
+55,65.42,3.491,no-change,
+56,67.66,3.375,no-change,
+57,66.16,3.452,no-change,
+58,66.88,3.414,no-change,
+59,66.88,3.414,no-change,
+60,66.28,3.445,no-change,
+61,66.52,3.434,no-change,
+62,66.16,3.452,no-change,
+63,65.22,3.501,no-change,
+64,65.22,3.501,improved,baseK=64 + preload=4
+65,67.0,3.4,no-change,
+68,78.74,2.9,regression,
+69,68.5,3.334,no-change,
+70,67.58,3.379,no-change,
+71,67.44,3.386,no-change,
+72,66.56,3.431,no-change,
+73,68.18,3.349,no-change,
+74,66.94,3.411,no-change,
+75,54.96,4.155,improved,Two-phase: IterateAll→GM + in-place Leak
+76,55.12,4.143,no-change,
+77,54.76,4.17,no-change,
+78,35.16,6.495,improved,SetDim(4) with IterateAll
+79,25.84,8.837,improved,Core count sweep → SetDim(8) best
+80,25.3,9.026,no-change,
+81,25.96,8.797,no-change,
+64,65.22,3.501,improved,baseK=64 + preload=4
+65,67.12,3.402,no-change,
+66,66.52,3.433,no-change,
+67,67.84,3.366,no-change,

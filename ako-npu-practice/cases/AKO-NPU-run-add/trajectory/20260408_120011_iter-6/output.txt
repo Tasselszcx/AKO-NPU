@@ -1,0 +1,63 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+[ 50%] Building ASC object CMakeFiles/add_custom.dir/add.asc.o
+[100%] Linking ASC executable add_custom
+[100%] Built target add_custom
+Build OK
+=== Generating data ===
+Generated test data: 32768 elements, dtype=<class 'numpy.float32'>
+  input/input_x.bin: (32768,), float32
+  input/input_y.bin: (32768,), float32
+  output/golden.bin: (32768,), float32
+=== Running benchmark with msprof ===
+2026-04-08 12:00:17 [INFO]  Op profiling analysis start.
+2026-04-08 12:00:17 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: add_custom
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-08 12:00:22 [INFO]  Profiling running finished. All task success.
+2026-04-08 12:00:22 [INFO]  Start analyze kernel on device: device0, kernel: add_custom, name is: 0
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-08 12:00:22 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-08 12:00:23 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+	3) aivector compute usage lower than 20%.
+
+2026-04-08 12:00:23 [INFO]  Operator Basic Information:
+
+	Op Name: add_custom
+	Op Type: vector
+	Task Duration(us): 5.960238
+	Block Dim: 1
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 1747035
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-08 12:00:23 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/msprof_output/OPPROF_20260408120017_DAPZPPWVTFDYTVHJ
+2026-04-08 12:00:23 [INFO]  Profiling data parse finished.
+2026-04-08 12:00:23 [INFO]  Op profiling finish. Welcome to next use.
+=== Verifying correctness ===
+Verification PASSED! Shape: (32768,)
+Max diff: 0.0
+=== Performance Results ===
+OPPROF dir: ./msprof_output/OPPROF_20260408120017_DAPZPPWVTFDYTVHJ
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+add_custom,vector,5.960238,1,NA,0,1747035,1800,1800,
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,5.370555,9667,0.285556,0.053171,1.145555,0.213303,3.952778,0.736009,61.764317,3.188333,0.593669,38.286560,0.062950,NA,NA,
+--- Memory ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_l1_read_bw(GB/s),aic_l1_write_bw(GB/s),aic_main_mem_read_bw(GB/s),aic_main_mem_write_bw(GB/s),aic_mte1_instructions,aic_mte1_ratio,aic_mte2_instructions,aic_mte2_ratio,aic_mte3_instructions,aic_mte3_ratio,aiv_time(us),aiv_total_cycles,aiv_ub_to_gm_bw(GB/s),aiv_gm_to_ub_bw(GB/s),aiv_main_mem_read_bw(GB/s),aiv_main_mem_write_bw(GB/s),aiv_mte2_instructions,aiv_mte2_ratio,aiv_mte3_instructions,aiv_mte3_ratio,read_main_memory_datas(KB),write_main_memory_datas(KB),GM_to_L1_datas(KB),GM_to_L1_bw_usage_rate(%),L1_to_GM_datas(KB)(estimate),L1_to_GM_bw_usage_rate(%)(estimate),L0C_to_L1_datas(KB),L0C_to_L1_bw_usage_rate(%),L0C_to_GM_datas(KB),L0C_to_GM_bw_usage_rate(%),GM_to_UB_datas(KB),GM_to_UB_bw_usage_rate(%),UB_to_GM_datas(KB),UB_to_GM_bw_usage_rate(%),
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,5.370555,9667,22.729551,45.459103,46.080612,22.773945,9,0.736009,5,0.593669,259.500000,128.250000,NA,NA,NA,NA,NA,NA,NA,NA,256.000000,23.312359,128.000000,12.914517,
+=== Benchmark complete ===

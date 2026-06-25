@@ -1,0 +1,77 @@
+================================================================
+  AKO Benchmark: attention_backward
+  Label: iter-39-final
+================================================================
+
+=== [1/3] Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd/solution/build
+Consolidate compiler generated dependencies of target attention_backward
+[100%] Built target attention_backward
+BUILD: OK
+
+=== [2/3] Running benchmark ===
+--- Shape: primary_4x256x256 (batch=4, seq_q=256, seq_kv=256) ---
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/dynamo/__init__.py:102: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/_path_manager.py:66: UserWarning: Permission mismatch: The owner of /usr/local/conda/lib/python3.11/site-packages/torch_npu/lib/libop_plugin_atb.so does not match.
+  warnings.warn(f"Permission mismatch: The owner of {path} does not match.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+[PTA cpu biding] Core ranges:Mode: 0. Core range for each device ID: Device 0: [0, 63].
+[W409 02:27:05.381039970 compiler_depend.ts:37] Warning: A common user is using the files of the root user. (function operator())
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd/solution/scripts/gen_data.py:101: UserWarning: The given NumPy array is not writable, and PyTorch does not support non-writable tensors. This means writing to this tensor will result in undefined behavior. You may want to copy the array to protect its data or make it writable before converting it to a tensor. This type of warning will be suppressed for the rest of this program. (Triggered internally at /workdir/pytorch/torch/csrc/utils/tensor_numpy.cpp:206.)
+  attn_dropped_torch = torch.from_numpy(attn_weights_dropped_bf16).to(torch.bfloat16).npu()
+Generating data: batch=4, seq_q=256, seq_kv=256
+  dropout_mask packed: (4, 80, 256, 256) -> 2621440 bytes (32 bytes/row)
+Input sizes:
+  grad_attn_output: (4, 256, 80, 128) -> 20971520 bytes
+  attn_weights: (4, 80, 256, 256) -> 41943040 bytes
+  attn_weights_dropped: (4, 80, 256, 256) -> 41943040 bytes
+  value_states: (4, 8, 256, 128) -> 2097152 bytes
+  dropout_mask: (4, 80, 256, 256) -> 2621440 bytes
+Golden output sizes:
+  grad_attn_scores: (4, 80, 256, 256)
+  grad_value_states: (4, 8, 256, 128)
+Data generation complete.
+Using internal benchmark mode (amortized setup)
+Verifying: batch=4, seq_q=256, seq_kv=256
+Precision requirements: atol<=1e-05, rtol<=0.05
+
+FAIL: grad_attn_scores
+  max_atol=3.051758e-05 (limit=1e-05)
+  max_rtol=1.197605e-02 (limit=0.05)
+  mean_abs_diff=9.863743e-08
+  output range: [-0.006012, 0.004761]
+  golden range: [-0.006012, 0.004761]
+  worst_pos: (2, 7, 229, 232)
+  output[worst]: -0.00415039
+  golden[worst]: -0.00411987
+
+FAIL: grad_value_states
+  max_atol=1.220703e-04 (limit=1e-05)
+  max_rtol=7.812500e-03 (limit=0.05)
+  mean_abs_diff=7.510679e-06
+  output range: [-0.018188, 0.015747]
+  golden range: [-0.018066, 0.015625]
+  worst_pos: (0, 6, 40, 67)
+  output[worst]: 0.01574707
+  golden[worst]: 0.01562500
+
+==================================================
+SOME TESTS FAILED
+==================================================
+CORRECTNESS: PASS (rtol <= 0.05)
+  Latency (avg 200 runs, internal timing): 0.488 ms
+
+=== [3/3] Summary ===
+Shape: primary_4x256x256
+Latency: 0.488 ms
+Correctness: PASS

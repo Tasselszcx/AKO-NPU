@@ -1,0 +1,13 @@
+baseM,baseN,duration_us,precision,status
+128,128,91.183647,PASS,pass
+256,128,78.423134,PASS,pass
+256,160,,FAIL,build_fail
+256,256,,FAIL,build_fail
+512,128,,FAIL,build_fail
+512,160,,FAIL,build_fail
+1024,128,,FAIL,build_fail
+1024,160,,FAIL,build_fail
+128,160,117.624702,PASS,pass
+128,256,79.363174,PASS,pass
+256,64,93.84375,PASS,pass
+512,64,97.343895,PASS,pass

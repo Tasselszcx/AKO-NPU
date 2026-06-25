@@ -1,0 +1,14 @@
+# 编译产物
+**/build/
+**/*.o
+**/*.bin
+**/*.so
+**/*.a
+
+# msprof 输出
+**/OPPROF_*/
+**/PROF_*/
+**/msprof_*/
+
+# 但保留 output.txt (bench 结果)
+!**/output.txt

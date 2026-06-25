@@ -1,0 +1,3 @@
+cores,baseN,singleCoreN,compile,correct,runtime_us
+4,256,1024,YES,YES,N/A
+8,256,512,YES,YES,N/A

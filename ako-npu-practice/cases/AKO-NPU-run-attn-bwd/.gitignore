@@ -1,0 +1,26 @@
+__pycache__/
+*.py[cod]
+*$py.class
+_bench_output.txt
+
+# 编译产物（大文件）
+**/build/
+**/*.o
+**/*.bin
+**/*.so
+**/*.a
+
+# msprof 原始输出（大文件）
+**/OPPROF_*/
+**/PROF_*/
+**/msprof_*/
+
+# skills 仓库（不复制）
+skills/
+
+# .claude/ 生成的链接
+.claude/skills/
+.claude/agents/
+.claude/CLAUDE.md
+.claude/workflows
+.claude/cannbot-manifest.json

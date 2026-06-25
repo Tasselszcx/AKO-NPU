@@ -1,0 +1,6 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: iter-1
+=== [1/5] Build ===
+make[2]: *** [CMakeFiles/dsa_indexer.dir/build.make:76：CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/dsa_indexer.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

@@ -1,0 +1,17 @@
+=== [1/5] Compile ===
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+2026-04-11 00:32:23 [ERROR] The current file /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/ should not be allowed to have write permissions to any other users
+2026-04-11 00:32:23 [ERROR] output parent dir permission wrong
+2026-04-11 00:32:23 [INFO]  Use msprof op --help or msprof op simulator --help for more details
+=== [4/5] Verify accuracy ===
+[Errno 2] No such file or directory: './output/output.bin'

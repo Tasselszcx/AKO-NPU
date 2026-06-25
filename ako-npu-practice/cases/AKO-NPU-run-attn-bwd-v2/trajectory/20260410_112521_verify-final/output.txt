@@ -1,0 +1,309 @@
+
+[1/5] Building...
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/build
+Consolidate compiler generated dependencies of target attention_backward_custom
+[ 50%] Building ASC object CMakeFiles/attention_backward_custom.dir/attention_backward.asc.o
+[100%] Linking ASC executable attention_backward_custom
+[100%] Built target attention_backward_custom
+
+[2/5] Generating test data...
+  grad_attn_scores: [4, 80, 256, 256]
+  grad_value_states: [4, 8, 256, 128]
+Data generation complete.
+
+[3/5] Running with msprof (warm-up=5, launch-count=3)...
+2026-04-10 11:25:43 [INFO]  Op profiling analysis start.
+2026-04-10 11:25:43 [INFO]  Running device task: DeviceProf
+MatmulTiling: M=256 N=256 K=128 transA=0 transB=1 -> singleCoreM=256 singleCoreN=256 baseM=128 baseN=256
+MatmulTiling: M=256 N=128 K=256 transA=1 transB=0 -> singleCoreM=256 singleCoreN=128 baseM=128 baseN=128
+Tiling: B=4 sq=256 skv=256 cores=24 tasksPerCore=2 ws=13.5MB
+User workspace: 13.5MB, System workspace: 16.0MB
+Launching kernel with bn=24...
+[INFO] <ProfData> Start profiling on device 7, kernel: attention_backward_custom_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:5
+opType=attention_backward_custom, DumpHead: AIV-0, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-1, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-2, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-3, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-4, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-5, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-6, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-7, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-8, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-9, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-10, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-11, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-12, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-13, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-14, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-15, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-16, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-17, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-18, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-19, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-20, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-21, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-22, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIV-23, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-0, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-1, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-2, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-3, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-4, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-5, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-6, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-7, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-8, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-9, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-10, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-11, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-12, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-13, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-14, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-15, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-16, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-17, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-18, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-19, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-20, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-21, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-22, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+opType=attention_backward_custom, DumpHead: AIC-23, CoreType=MIX, block dim=24, total_block_num=48, block_remain_len=1048448, block_initial_space=1048576, rsv=0, magic=5aa5bccd
+CANN Version: 8.3.RC1, TimeStamp: 20251027211954946
+Kernel completed.
+2026-04-10 11:25:49 [INFO]  Profiling running finished. All task success.
+2026-04-10 11:25:49 [INFO]  Start analyze kernel on device: device7, kernel: attention_backward_custom_mix_aic, name is: 0
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-10 11:25:50 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-10 11:25:50 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+	5) aivector MTE2 bandwidth utilization lower than 80% when active.
+	6) aivector MTE3 bandwidth utilization lower than 80% when active.
+	7) aivector compute usage lower than 20%.
+
+2026-04-10 11:25:50 [INFO]  Operator Basic Information:
+
+	Op Name: attention_backward_custom_mix_aic
+	Op Type: mix
+	Task Duration(us): 1117.424683
+	Block Dim: 24
+	Mix Block Dim: 48
+	Device Id: 7
+	Pid: 1695685
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-10 11:25:50 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/msprof_output/OPPROF_20260410112543_BHWZROJKCLTQJWMY
+2026-04-10 11:25:51 [INFO]  Profiling data parse finished.
+2026-04-10 11:25:51 [INFO]  Op profiling finish. Welcome to next use.
+
+[4/5] Verifying precision...
+Verifying: batch=4, seq_q=256, seq_kv=256
+Thresholds: max_atol=1e-05, max_rtol=0.05
+
+  grad_attn_scores: PASS
+    max_atol     = 1.953125e-03 (threshold=1e-05)
+    max_rtol(nz) = 8.163265e-03 (threshold=0.05, |ref|>1e-6)
+    allclose     = 100.0000% (atol+rtol*|b| criterion)
+    cosine_sim   = 1.0000000000
+    rel_L2_err   = 2.228916e-05
+    elements     = 20971520
+  grad_value_states: PASS
+    max_atol     = 3.906250e-03 (threshold=1e-05)
+    max_rtol(nz) = 2.238806e-02 (threshold=0.05, |ref|>1e-6)
+    allclose     = 100.0000% (atol+rtol*|b| criterion)
+    cosine_sim   = 1.0000000000
+    rel_L2_err   = 2.864683e-05
+    elements     = 1048576
+
+OVERALL: PASS
+
+[5/5] Archiving performance data...
+Archived 8 CSV files to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_009
+Summary written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_009/summary.txt
+
+=== 上板性能统计摘要 ===
+Op: attention_backward_custom_mix_aic | Type: mix | Duration: 1117.424683us | BlockDim: 24 | Freq: 1800/1800
+
+--- PipeUtilization (48 cores, prefix=aic) ---
+                                  min        avg        max
+  aic_time(us)                 0.00     371.35    1114.81
+  scalar_ratio%                0.00      32.59      97.75
+  mte2_ratio%                  0.00       2.98      10.00
+  mte3_ratio%                  0.00       0.01       0.05
+  icache_miss%                 0.00       0.73       4.67
+  cube_ratio%                  0.00       1.58       4.84
+  fixpipe_ratio%               0.00       4.00      13.10
+  mte1_ratio%                  0.00       1.11       3.39
+  mte3_active_bw                0.0      157.7      484.4    (GB/s)
+  fixpipe_active_bw             0.0       18.2       57.1    (GB/s)
+
+--- 头开销 ---
+  Task Duration: 1117.424683us | 最长核: 1114.81us | 头开销: 2.61us (0.2%)
+
+--- Memory ---
+  GM→UB: 241664.0KB total (5034.7KB/core), BW usage: 2.20%
+  UB→GM: 100512.0KB total (2094.0KB/core), BW usage: 1.02%
+  GM→L1: 102784.0KB total (2141.3KB/core), BW usage: 0.82%
+  主存读取: 364004.6KB total
+  主存写入: 224333.9KB total
+  Avg MTE2 transfer: 8.50KB (28432 instructions total)
+  GM→UB avg BW: 4.30 GB/s
+  UB→GM avg BW: 1.79 GB/s
+
+--- MemoryUB ---
+  UB read BW (vector): avg=23.2 GB/s
+  UB write BW (vector): avg=17.2 GB/s
+  UB read BW (scalar): avg=0.0 GB/s
+  UB write BW (scalar): avg=0.0 GB/s
+
+--- MemoryL0 ---
+  L0A read BW: 2.9 GB/s
+  L0A write BW: 1.1 GB/s
+  L0B read BW: 11.7 GB/s
+  L0B write BW: 1.5 GB/s
+  L0C read BW (cube): 2.2 GB/s
+  L0C write BW (cube): 4.4 GB/s
+
+--- L2Cache ---
+  total_hit: avg=41.6% (min=0.0%, max=85.3%)
+  read_hit: avg=43.7% (min=0.0%, max=97.8%)
+  write_hit: avg=42.0% (min=0.0%, max=94.8%)
+  write cache: hit=236012 miss=13067
+
+--- ResourceConflict ---
+  vec_total_cflt: 0.00% | bankgroup_cflt: 0.00% | bank_cflt: 0.00% | resc_cflt: 0.00% | mte_cflt: 0.00%
+  cube_wait: 4.42% | vec_wait: 0.00% | mte2_wait: 2.65% | mte3_wait: 0.00%
+
+--- ArithmeticUtilization ---
+  vec_fp32: 8.9% | vec_fp16: 0.5% | vec_misc: 5.6%
+  vec_fops: 5783957/core
+  cube_fp16: 1.6% | cube_fops: 436907/core
+
+--- 原始数据位置 ---
+  CSV 文件: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_009/
+  如需逐核详情，请 Read 对应 CSV 文件。
+
+=== Performance Summary ===
+=== 上板性能统计摘要 ===
+Op: attention_backward_custom_mix_aic | Type: mix | Duration: 1117.424683us | BlockDim: 24 | Freq: 1800/1800
+
+--- PipeUtilization (48 cores, prefix=aic) ---
+                                  min        avg        max
+  aic_time(us)                 0.00     371.35    1114.81
+  scalar_ratio%                0.00      32.59      97.75
+  mte2_ratio%                  0.00       2.98      10.00
+  mte3_ratio%                  0.00       0.01       0.05
+  icache_miss%                 0.00       0.73       4.67
+  cube_ratio%                  0.00       1.58       4.84
+  fixpipe_ratio%               0.00       4.00      13.10
+  mte1_ratio%                  0.00       1.11       3.39
+  mte3_active_bw                0.0      157.7      484.4    (GB/s)
+  fixpipe_active_bw             0.0       18.2       57.1    (GB/s)
+
+--- 头开销 ---
+  Task Duration: 1117.424683us | 最长核: 1114.81us | 头开销: 2.61us (0.2%)
+
+--- Memory ---
+  GM→UB: 241664.0KB total (5034.7KB/core), BW usage: 2.20%
+  UB→GM: 100512.0KB total (2094.0KB/core), BW usage: 1.02%
+  GM→L1: 102784.0KB total (2141.3KB/core), BW usage: 0.82%
+  主存读取: 364004.6KB total
+  主存写入: 224333.9KB total
+  Avg MTE2 transfer: 8.50KB (28432 instructions total)
+  GM→UB avg BW: 4.30 GB/s
+  UB→GM avg BW: 1.79 GB/s
+
+--- MemoryUB ---
+  UB read BW (vector): avg=23.2 GB/s
+  UB write BW (vector): avg=17.2 GB/s
+  UB read BW (scalar): avg=0.0 GB/s
+  UB write BW (scalar): avg=0.0 GB/s
+
+--- MemoryL0 ---
+  L0A read BW: 2.9 GB/s
+  L0A write BW: 1.1 GB/s
+  L0B read BW: 11.7 GB/s
+  L0B write BW: 1.5 GB/s
+  L0C read BW (cube): 2.2 GB/s
+  L0C write BW (cube): 4.4 GB/s
+
+--- L2Cache ---
+  total_hit: avg=41.6% (min=0.0%, max=85.3%)
+  read_hit: avg=43.7% (min=0.0%, max=97.8%)
+  write_hit: avg=42.0% (min=0.0%, max=94.8%)
+  write cache: hit=236012 miss=13067
+
+--- ResourceConflict ---
+  vec_total_cflt: 0.00% | bankgroup_cflt: 0.00% | bank_cflt: 0.00% | resc_cflt: 0.00% | mte_cflt: 0.00%
+  cube_wait: 4.42% | vec_wait: 0.00% | mte2_wait: 2.65% | mte3_wait: 0.00%
+
+--- ArithmeticUtilization ---
+  vec_fp32: 8.9% | vec_fp16: 0.5% | vec_misc: 5.6%
+  vec_fops: 5783957/core
+  cube_fp16: 1.6% | cube_fops: 436907/core
+
+--- 原始数据位置 ---
+  CSV 文件: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_009/
+  如需逐核详情，请 Read 对应 CSV 文件。
+=============================================
+ Benchmark Complete
+=============================================

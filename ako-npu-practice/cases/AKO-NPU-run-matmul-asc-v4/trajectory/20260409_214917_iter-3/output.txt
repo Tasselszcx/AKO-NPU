@@ -1,0 +1,63 @@
+=== [0/5] Setting up CANN environment ===
+=== [1/5] Compiling ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/solution/build
+Consolidate compiler generated dependencies of target demo
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== [2/5] Generating test data ===
+=== [3/5] Running with msprof (warm-up=10, launch-count=5) ===
+2026-04-09 21:49:30 [INFO]  Op profiling analysis start.
+2026-04-09 21:49:30 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+[WARN] <KernelReplay> Kernel run on device 0 No. 1 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 2 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 3 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 4 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 5 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 6 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 7 time failed.
+2026-04-09 21:49:36 [INFO]  Profiling running finished. All task success.
+2026-04-09 21:49:36 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 21:49:36 [WARN]  Access [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/op_basic_info.txt] failed. Maybe do not contain this file or it is not readable. Please check.
+2026-04-09 21:49:36 [WARN]  Failed to analyze op basic info
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf1.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,l2cache,memory,memoryub,occupancy,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf2.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [l2cache,memory,occupancy,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf3.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [memory,memoryub,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf4.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf5.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,pipeutilization,resourceconflictratio] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf6.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [memory,memoryl0,pipeutilization,resourceconflictratio,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB/device0/_Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic/0/dump/DeviceProf7.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,pipeutilization,resourceconflictratio,roofline] failed to be collected.
+2026-04-09 21:49:36 [WARN]  Failed to analyze metric data.
+2026-04-09 21:49:36 [WARN]  Get op basic info [Task Duration] failed.
+2026-04-09 21:49:37 [INFO]  Operator Basic Information:
+
+	Op Name: 
+	Op Type: vector
+	Task Duration(us): 0.000000
+	Block Dim: 
+	Mix Block Dim: 
+	Device Id: 
+	Pid: 
+	Current Freq: 
+	Rated Freq: 
+
+2026-04-09 21:49:37 [ERROR] Analyzing kernel data failed, device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 21:49:37 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB
+2026-04-09 21:49:37 [WARN]  Profiling kernels result is: 0 success, 1 failed. Please check
+2026-04-09 21:49:37 [ERROR] Profiling data parse failed. Please check
+2026-04-09 21:49:37 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verifying precision ===
+golden_data :  [6840. 6903. 6605. ... 6437. 6574. 6853.]
+output :  [6840. 6903. 6605. ... 6437. 6574. 6853.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== [5/5] Profiling summary ===
+OPPROF dir: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409214930_SKLUXYILZXOXPQYB
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+NA,vector,NA,NA,NA,NA,NA,NA,NA,
+=== BENCH COMPLETE ===

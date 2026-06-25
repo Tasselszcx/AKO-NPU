@@ -1,0 +1,34 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: baseline
+=== [1/5] Build ===
+[ 50%] Building ASC object CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o
+[100%] Linking ASC executable dsa_indexer
+[100%] Built target dsa_indexer
+=== [2/5] Generate test data ===
+Generating data: B=1, S_q=1, S_kv=4096
+  input_q.bin: (1, 1, 64, 128) uint16 (16384 bytes)
+  input_k.bin: (1, 4096, 128) uint16 (1048576 bytes)
+  input_weights.bin: (1, 1, 64, 1) uint16 (128 bytes)
+  golden_topk_indices.bin: (1, 1, 2048) int64 (16384 bytes)
+  golden_index_score.bin: (1, 1, 4096) uint16 (8192 bytes)
+
+  index_score range: [-0.9228, 1.2309]
+  top-5 indices: [2878  419  844 3598  207]
+  top-5 values: [1.2309233 1.1188761 1.0599387 1.0478342 1.0153892]
+=== [3/5] Run with msprof ===
+2026-04-11 02:15:14 [ERROR] The current file /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/solution/build/ should not be allowed to have write permissions to any other users
+2026-04-11 02:15:14 [ERROR] output parent dir permission wrong
+2026-04-11 02:15:14 [INFO]  Use msprof op --help or msprof op simulator --help for more details
+=== [4/5] Verify correctness ===
+Verifying DSA Indexer: B=1, S_q=1, S_kv=4096
+Traceback (most recent call last):
+  File "/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/solution/build/../../scripts/verify_result.py", line 127, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/solution/build/../../scripts/verify_result.py", line 116, in main
+    passed = verify(B, S_q, S_kv)
+             ^^^^^^^^^^^^^^^^^^^^
+  File "/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/solution/build/../../scripts/verify_result.py", line 21, in verify
+    output_topk = np.fromfile("output/output_topk_indices.bin", dtype=np.int64).reshape(B, S_q, topk_k)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'output/output_topk_indices.bin'

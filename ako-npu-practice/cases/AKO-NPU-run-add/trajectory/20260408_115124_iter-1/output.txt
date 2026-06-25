@@ -1,0 +1,9 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/add.asc:114:17: error: non-constant-expression cannot be narrowed from type 'uint32_t' (aka 'unsigned int') to 'uint16_t' (aka 'unsigned short') in initializer list [-Wc++11-narrowing]
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+make[2]: *** [CMakeFiles/add_custom.dir/build.make:76：CMakeFiles/add_custom.dir/add.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/add_custom.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

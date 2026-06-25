@@ -1,0 +1,154 @@
+=== [0/5] Setting up CANN environment ===
+=== [1/5] Compiling ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/solution/build
+Consolidate compiler generated dependencies of target demo
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== [2/5] Generating test data ===
+=== [3/5] Running with msprof (warm-up=10, launch-count=5) ===
+2026-04-09 22:34:06 [INFO]  Op profiling analysis start.
+2026-04-09 22:34:06 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-09 22:34:12 [INFO]  Profiling running finished. All task success.
+2026-04-09 22:34:12 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 22:34:12 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 22:34:13 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-09 22:34:13 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 52.002079
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 0
+	Pid: 562649
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 22:34:13 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v4/msprof_output/OPPROF_20260409223406_ZCIWJDZFINMKQNEQ
+2026-04-09 22:34:13 [INFO]  Profiling data parse finished.
+2026-04-09 22:34:13 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verifying precision ===
+data index: 327680, expected: 6399.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327681, expected: 6518.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327682, expected: 6769.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327683, expected: 6449.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327684, expected: 6872.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327685, expected: 7011.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327686, expected: 6524.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327687, expected: 6653.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327688, expected: 6975.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327689, expected: 6261.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327690, expected: 6816.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327691, expected: 6517.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327692, expected: 6568.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327693, expected: 6698.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327694, expected: 6622.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327695, expected: 6624.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327696, expected: 6554.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327697, expected: 6768.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327698, expected: 6495.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327699, expected: 7089.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327700, expected: 6152.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327701, expected: 7037.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327702, expected: 6720.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327703, expected: 6721.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327704, expected: 6623.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327705, expected: 6965.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327706, expected: 6534.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327707, expected: 6292.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327708, expected: 6325.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327709, expected: 6491.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327710, expected: 6656.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327711, expected: 6932.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327712, expected: 6413.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327713, expected: 5898.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327714, expected: 6828.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327715, expected: 6718.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327716, expected: 6606.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327717, expected: 6363.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327718, expected: 6360.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327719, expected: 6152.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327720, expected: 6671.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327721, expected: 6383.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327722, expected: 5986.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327723, expected: 6760.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327724, expected: 6653.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327725, expected: 6645.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327726, expected: 6597.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327727, expected: 6701.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327728, expected: 6733.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327729, expected: 6386.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327730, expected: 6840.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327731, expected: 6195.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327732, expected: 6278.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327733, expected: 6764.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327734, expected: 6277.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327735, expected: 6242.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327736, expected: 6300.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327737, expected: 6699.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327738, expected: 6910.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327739, expected: 6604.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327740, expected: 6634.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327741, expected: 6753.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327742, expected: 6512.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327743, expected: 6816.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327744, expected: 6585.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327745, expected: 6545.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327746, expected: 6516.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327747, expected: 6117.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327748, expected: 6142.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327749, expected: 6571.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327750, expected: 6901.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327751, expected: 6429.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327752, expected: 6907.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327753, expected: 6344.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327754, expected: 6578.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327755, expected: 6851.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327756, expected: 6285.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327757, expected: 6724.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327758, expected: 6526.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327759, expected: 6204.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327760, expected: 6834.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327761, expected: 6670.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327762, expected: 6455.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327763, expected: 6514.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327764, expected: 6692.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327765, expected: 7118.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327766, expected: 7018.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327767, expected: 6726.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327768, expected: 6634.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327769, expected: 6355.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327770, expected: 6935.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327771, expected: 6649.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327772, expected: 6515.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327773, expected: 6867.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327774, expected: 6406.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327775, expected: 6505.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327776, expected: 6750.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327777, expected: 6165.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327778, expected: 6749.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327779, expected: 6043.000000000, actual: 0.000000000, rdiff: 1.000000
+data index: 327780, expected: 6577.000000000, actual: 0.000000000, rdiff: 1.000000
+golden_data :  [6179. 6342. 6812. ... 6167. 6552. 6365.]
+output :  [6179. 6342. 6812. ...    0.    0.    0.]
+error ratio: 0.5000, tolerance: 0.0001
+[ERROR] result error

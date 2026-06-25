@@ -1,0 +1,36 @@
+================================================================
+  AKO Benchmark: attention_backward
+  Label: iter-11
+================================================================
+
+=== [1/3] Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd/solution/build
+Consolidate compiler generated dependencies of target attention_backward
+[ 50%] Building ASC object CMakeFiles/attention_backward.dir/attention_backward.asc.o
+[100%] Linking ASC executable attention_backward
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclErrorLogManager::~AclErrorLogManager()
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclErrorLogManager::ReportInputError(std::string const&, std::vector<std::string, std::allocator<std::string>> const&, std::vector<std::string, std::allocator<std::string>> const&)
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclErrorLogManager::GetStagesHeader()
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclLog::GetTid()
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclErrorLogManager::FormatStr(char const*, ...)
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+
+ld.lld: error: undefined reference due to --no-allow-shlib-undefined: acl::AclErrorLogManager::AclErrorLogManager(char const*, char const*)
+>>> referenced by /usr/local/Ascend/ascend-toolkit/8.3.RC1/lib64/libacl_cblas.so
+cceld: Linker ReturnCode: 1
+cceld: ExecutionFailed: 0
+cceld: ErrMsg: 
+bisheng: error: linker command failed with exit code 1 (use -v to see invocation)
+make[2]: *** [CMakeFiles/attention_backward.dir/build.make:89：attention_backward] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/attention_backward.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

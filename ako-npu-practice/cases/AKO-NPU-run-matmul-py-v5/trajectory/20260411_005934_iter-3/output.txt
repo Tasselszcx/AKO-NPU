@@ -1,0 +1,64 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 00:59:58 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 00:59:58 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 00:59:58 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: cube
+	Task Duration(us): 12.420497
+	Block Dim: 22
+	Mix Block Dim: 
+	Device Id: 3
+	Pid: 2711697
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 00:59:58 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411005946_HIJNJIIHGVGQVREO
+2026-04-11 00:59:58 [WARN]  Profiling kernels result is: 1 success, 1 failed. Please check
+2026-04-11 00:59:58 [INFO]  Profiling data parse finished.
+2026-04-11 00:59:58 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+data index: 000002, expected: -0.012084910, actual: -12.084911346, rdiff: 999.000122
+data index: 000003, expected: -0.010286154, actual: -10.286143303, rdiff: 998.998901
+data index: 000005, expected: -0.047978003, actual: -47.977996826, rdiff: 998.999878
+data index: 000006, expected: -0.021709153, actual: -21.709152222, rdiff: 998.999939
+data index: 000007, expected: -0.014249987, actual: -14.249987602, rdiff: 999.000061
+data index: 000008, expected: -0.017389094, actual: -17.389087677, rdiff: 998.999573
+data index: 000012, expected: -0.005005482, actual: -5.005479336, rdiff: 998.999451
+data index: 000013, expected: -0.002353058, actual: -2.353055716, rdiff: 998.999084
+data index: 000021, expected: -0.022306142, actual: -22.306140900, rdiff: 998.999939
+data index: 000023, expected: -0.012928162, actual: -12.928164482, rdiff: 999.000244
+data index: 000024, expected: -0.008291925, actual: -8.291927338, rdiff: 999.000183
+data index: 000025, expected: -0.017382838, actual: -17.382848740, rdiff: 999.000610
+data index: 000029, expected: -0.005720647, actual: -5.720643044, rdiff: 998.999329
+data index: 000035, expected: -0.035532635, actual: -35.532646179, rdiff: 999.000305
+data index: 000036, expected: -0.018206196, actual: -18.206193924, rdiff: 998.999939
+data index: 000037, expected: -0.008599570, actual: -8.599568367, rdiff: 998.999817
+data index: 000038, expected: -0.003412794, actual: -3.412793875, rdiff: 999.000000
+data index: 000042, expected: -0.001083455, actual: -1.083453417, rdiff: 998.998596
+data index: 000043, expected: -0.036021709, actual: -36.021709442, rdiff: 999.000000
+data index: 000050, expected: -0.013125065, actual: -13.125064850, rdiff: 999.000000
+error ratio: 0.501759, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+[ERROR] result error

@@ -1,0 +1,79 @@
+=== Building ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:16 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/build
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[ERROR] ASCPLUGIN [pid:3888277, tid:3888277] [asc_utils.cpp:301] Invalid core ratio: cubeNum 2, vecNum 1
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 2, aivCoreNum: 1
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 2, aivCoreNum: 1
+bisheng: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+bisheng: error: clang frontend command failed with exit code 70 (use -v to see invocation)
+2025-10-24T18:53:37+08:00 clang version 15.0.5 (clang-5c68a1cb1231 flang-5c68a1cb1231)
+Target: x86_64-unknown-linux-gnu
+Thread model: posix
+InstalledDir: /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/ccec_compiler/bin
+make[2]: *** [CMakeFiles/demo.dir/build.make:76：CMakeFiles/demo.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/demo.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2
+directories: No such file or directory
+2026-04-09 16:20:05 [INFO]  Profiling running finished. All task success.
+2026-04-09 16:20:05 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 16:20:05 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 16:20:06 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-09 16:20:06 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 76.823074
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 0
+	Pid: 3888062
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 16:20:06 [INFO]  Profiling results saved in /tmp/msprof_matmul_3887483/OPPROF_20260409161959_XNNXWLYHIQSNDEFR
+2026-04-09 16:20:06 [INFO]  Profiling data parse finished.
+2026-04-09 16:20:06 [INFO]  Op profiling finish. Welcome to next use.
+=== msprof results ===
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+matmul_leakyrelu_custom,mix,76.823074,1,2,0,3888062,1800,1800,
+
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,cube0,72.699997,130860,23.069445,0.303545,36.918888,0.485775,19.119444,0.251572,46.779446,0.615519,0.450000,0.005921,80.532509,59.071667,0.777259,41.329563,0.010987,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,74.222778,133601,3.066667,0.040351,5.861111,0.077120,6.825555,0.089810,178.843048,7.146667,0.094035,170.840714,0.021972,NA,NA,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,49.925556,89866,3.107778,0.040892,5.570556,0.073297,6.985000,0.091908,174.760635,7.277778,0.095760,167.762970,0.023168,NA,NA,

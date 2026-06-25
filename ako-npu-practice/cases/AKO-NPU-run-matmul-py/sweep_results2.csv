@@ -1,0 +1,11 @@
+iter,config,numBlocks,singleCoreM,singleCoreN,correct,runtime_us,speedup
+49,UB=64KB_baseM256_baseN128,2,512,640,true,204.908203,1.114
+50,UB=96KB_baseM256_baseN128,2,512,640,true,199.567978,1.144
+51,UB=128KB_baseM256_baseN128,2,512,640,true,206.208252,1.107
+52,UB=160KB_baseM256_baseN128,2,512,640,true,206.448257,1.106
+53,L1=256KB_baseM256_baseN128,2,512,640,true,200.167999,1.141
+54,L1=512KB_baseM256_baseN128,2,512,640,true,206.368256,1.107
+55,L1=1024KB_baseM256_baseN128,2,512,640,true,203.748154,1.121
+56,no_step_override_256x128,2,512,640,true,203.728149,1.121
+57,stepM2_stepN1_256x128,2,512,640,true,204.928192,1.114
+58,stepM1_stepN2_256x128,2,512,640,false,,,

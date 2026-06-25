@@ -1,0 +1,156 @@
+{
+    "binFileName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance",
+    "binFileSuffix": ".o",
+    "blockDim": -1,
+    "compileInfo": {
+        "global_variable_link": true,
+        "vars": {
+            "cache_line": 512,
+            "core_num": 48,
+            "dtype": "float32",
+            "mte_pad": 1,
+            "ub_size": 6144,
+            "vg_cond": 1
+        }
+    },
+    "coreType": "VectorCore",
+    "deterministic": "ignore",
+    "intercoreSync": 0,
+    "kernelList": [
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_0"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_1"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_2"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_3"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_4"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_5"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_6"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_7"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_8"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_9"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_10"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_11"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_12"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_13"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_14"
+        },
+        {
+            "deterministic": "ignore",
+            "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance_15"
+        }
+    ],
+    "kernelName": "Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance",
+    "magic": "RT_DEV_BINARY_MAGIC_ELF_AIVEC",
+    "memoryStamping": [
+        -1
+    ],
+    "opParaSize": 16392,
+    "parameters": [
+        null,
+        null,
+        null,
+        null,
+        null
+    ],
+    "sha256": "73b1b41d27e7f4a0256d37d698884b1455a4fe3de08e558ba2b4bc18c9da8bc1",
+    "workspace": {
+        "num": 1,
+        "size": [
+            4096
+        ],
+        "type": [
+            0
+        ]
+    },
+    "supportInfo": {
+        "int64Mode": false,
+        "simplifiedKeyMode": 0,
+        "simplifiedKey": [
+            "Transpose/d=0,p=0/3,2/9,2/3,2",
+            "Transpose/d=1,p=0/3,2/9,2/3,2"
+        ],
+        "staticKey": "69433f1d5a00a61bd46fc4cf86fa3e823544f6b4bf66bd78a7ebd1f1b7c5fda3",
+        "inputs": [
+            {
+                "name": "x",
+                "index": 0,
+                "dtype": "float32",
+                "format": "ND",
+                "paramType": "required",
+                "shape": [
+                    -2
+                ],
+                "dtype_match_mode": "DtypeByte"
+            },
+            {
+                "name": "perm",
+                "index": 1,
+                "dtype": "int64",
+                "format": "ND",
+                "paramType": "required",
+                "shape": [
+                    -2
+                ]
+            }
+        ],
+        "outputs": [
+            {
+                "name": "y",
+                "index": 0,
+                "dtype": "float32",
+                "format": "ND",
+                "paramType": "required",
+                "shape": [
+                    -2
+                ],
+                "dtype_match_mode": "DtypeByte"
+            }
+        ],
+        "opMode": "dynamic",
+        "deterministic": "ignore"
+    },
+    "filePath": "ascend910b/transpose/Transpose_9a632dc5b6be9e1b4215e3cf2b1aff0d_high_performance.json"
+}

@@ -1,0 +1,72 @@
+=== Building ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:16 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/build
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== Generating test data ===
+=== Running demo (correctness check) ===
+Tiling: usedCoreNum=2 baseM=256 baseN=128 baseK=64 singleCoreM=512 singleCoreN=640
+=== Verifying correctness ===
+golden_data :  [6135. 6422. 6735. ... 6369. 6200. 6247.]
+output :  [6135. 6422. 6735. ... 6369. 6200. 6247.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== Running with msprof (warm-up=10, launch-count=5) ===
+Tiling: usedCoreNum=2 baseM=256 baseN=128 baseK=64 singleCoreM=512 singleCoreN=640
+2026-04-11 00:19:47 [INFO]  Op profiling analysis start.
+2026-04-11 00:19:47 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 2, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-11 00:19:53 [INFO]  Profiling running finished. All task success.
+2026-04-11 00:19:53 [INFO]  Start analyze kernel on device: device2, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 00:19:53 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 00:19:54 [INFO]  Performance Summary Report:
+
+	1) aicore MTE2 bandwidth utilization lower than 80% when active.
+	2) aicore MTE3 bandwidth utilization lower than 80% when active.
+	3) aicore compute usage lower than 20%.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-11 00:19:54 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 223.508942
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 2
+	Pid: 2639111
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 00:19:54 [INFO]  Profiling results saved in /tmp/msprof_soL4M5/OPPROF_20260411001947_MPYBOGPWPSYOXGXF
+2026-04-11 00:19:54 [INFO]  Profiling data parse finished.
+2026-04-11 00:19:54 [INFO]  Op profiling finish. Welcome to next use.

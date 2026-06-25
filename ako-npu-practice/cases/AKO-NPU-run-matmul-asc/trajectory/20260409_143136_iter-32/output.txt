@@ -1,0 +1,85 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/build
+Consolidate compiler generated dependencies of target demo
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== Generating test data ===
+=== Running kernel ===
+=== Verifying correctness ===
+golden_data :  [6624. 6684. 6984. ... 6202. 6698. 6388.]
+output :  [6624. 6684. 6984. ... 6202. 6698. 6388.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== Performance measurement (msprof) ===
+2026-04-09 14:31:53 [INFO]  Op profiling analysis start.
+2026-04-09 14:31:53 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z16leakyrelu_kernelPhj_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-09 14:31:58 [INFO]  Profiling running finished. All task success.
+2026-04-09 14:31:58 [INFO]  Start analyze kernel on device: device0, kernel: _Z16leakyrelu_kernelPhj_mix_aic, name is: 0
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 14:31:58 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 14:31:59 [INFO]  Performance Summary Report:
+
+	1) aicore MTE3 bandwidth utilization lower than 80% when active.
+	2) aicore compute usage lower than 20%.
+	3) aivector MTE2 bandwidth utilization lower than 80% when active.
+	4) aivector MTE3 bandwidth utilization lower than 80% when active.
+	5) aivector compute usage lower than 20%.
+
+2026-04-09 14:31:59 [INFO]  Operator Basic Information:
+
+	Op Name: leakyrelu_kernel
+	Op Type: mix
+	Task Duration(us): 27.021080
+	Block Dim: 2
+	Mix Block Dim: 4
+	Device Id: 0
+	Pid: 3682611
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 14:31:59 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 14:31:59 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 14:32:00 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-09 14:32:00 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 106.684265
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 0
+	Pid: 3682611
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 14:32:00 [INFO]  Profiling results saved in /tmp/msprof_matmul_3681663/OPPROF_20260409143153_ZXQAJOQCQUVXHRMY
+2026-04-09 14:32:00 [INFO]  Profiling data parse finished.
+2026-04-09 14:32:00 [INFO]  Op profiling finish. Welcome to next use.
+=== msprof results ===
+WARNING: msprof output not found

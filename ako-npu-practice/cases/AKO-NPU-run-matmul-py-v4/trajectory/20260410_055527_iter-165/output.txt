@@ -1,0 +1,550 @@
+==========================================
+AKO Benchmark: matmul_leakyrelu
+==========================================
+--- [0/5] Environment Setup ---
+--- [1/5] Compile ---
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:83:11: error: no member named 'enablePreload' in 'MatmulConfig'
+    mmCFG.enablePreload = true;  // iter-165: enable preloading
+    ~~~~~ ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: error: constexpr variable 'CONSTANT_CFG' must be initialized by a constant expression
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^              ~~~~~~~~~~~~~~~~~~~~~~
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/constant_tiling.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../tiling/matmul_constant_tiling_impl.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/tiling/matmul_constant_tiling_utils.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../../../param/../tiling/matmul_constant_tiling_struct.h:20:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../../../utils/matmul_utils.h:22:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../../../param/../utils/mx_matmul_utils.h:262:16: error: constexpr variable 'IsMxDisableUnitFlag<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, CONSTANT_CFG>' must be initialized by a constant expression
+constexpr bool IsMxDisableUnitFlag = (EnUnitFlag(MM_CFG) && HasScalePosition<AType>::value && (AType::isTrans ||
+               ^                     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_out_buffer/cube_out_buffer_unit_flag.h:34:35: note: in instantiation of variable template specialization 'AscendC::IsMxDisableUnitFlag<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    !PhyPosIsL0C(C_TYPE::pos) && !IsMxDisableUnitFlag<A_TYPE, B_TYPE, MM_CFG>>>
+                                  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:30:3: note: during template argument deduction for class template partial specialization 'CubeOutBuffer<IMPL, A_TYPE, B_TYPE, L0cT, C_TYPE, MM_CFG, enable_if_t<MatmulFeatureTrait<MM_CFG>::IsUnitFlagEnabled() && !ToMatmulConfig(MM_CFG).isCO1Shared && !PhyPosIsL0C(C_TYPE::pos) && !IsMxDisableUnitFlag<A_TYPE, B_TYPE, MM_CFG>>>' [with IMPL = AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, A_TYPE = AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, B_TYPE = AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, L0cT = float, C_TYPE = AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, MM_CFG = CONSTANT_CFG]
+, MATMUL_IMPORT_MODULE(CubeOutBuffer)
+  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:30:3: note: in instantiation of template class 'AscendC::Impl::Detail::CubeOutBuffer<AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, float, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl.h:26:14: note: in instantiation of template class 'AscendC::MatmulImplBase<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    : public MatmulImplBase<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, MM_CFG, MM_CB, MATMUL_POLICY>
+             ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:104:70: note: in instantiation of template class 'AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    AscendC::Matmul<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, CONSTANT_CFG> matmulObj;
+                                                                     ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:175:23: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return EnUnitFlag(mmCFG.cfg);
+                      ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:175:23: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../../../param/../utils/mx_matmul_utils.h:262:39: note: in call to 'EnUnitFlag(CONSTANT_CFG)'
+constexpr bool IsMxDisableUnitFlag = (EnUnitFlag(MM_CFG) && HasScalePosition<AType>::value && (AType::isTrans ||
+                                      ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:60:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_from_l1.h:33:1: note: in instantiation of function template specialization 'AscendC::Impl::Detail::GetCopyCubeInType<AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+GetCopyCubeInType<INPUT_TYPE, MM_CFG>() == CopyCubeInType::FROM_L1>>
+^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:32:3: note: during template argument deduction for class template partial specialization 'CopyCubeIn<IMPL, INPUT_TYPE, MM_CFG, enable_if_t<GetCopyCubeInType<INPUT_TYPE, MM_CFG>() == CopyCubeInType::FROM_L1>>' [with IMPL = AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, INPUT_TYPE = AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, MM_CFG = CONSTANT_CFG]
+, MATMUL_IMPORT_MODULE(CopyCubeInA)
+  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:32:3: note: in instantiation of template class 'AscendC::Impl::Detail::CopyCubeIn<AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl.h:26:14: note: in instantiation of template class 'AscendC::MatmulImplBase<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    : public MatmulImplBase<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, MM_CFG, MM_CB, MATMUL_POLICY>
+             ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:104:70: note: in instantiation of template class 'AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    AscendC::Matmul<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, CONSTANT_CFG> matmulObj;
+                                                                     ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulIBShareNorm(mmCFG.cfg);
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:60:26: note: in call to 'DoMatmulIBShareNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:62:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulNorm(mmCFG.cfg);
+                        ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:62:26: note: in call to 'DoMatmulNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:71:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulMDL(mmCFG.cfg);
+                       ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:71:26: note: in call to 'DoMatmulMDL(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:79:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulBasicBlock(mmCFG.cfg);
+                              ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:79:26: note: in call to 'DoMatmulBasicBlock(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:60:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_from_l1.h:33:1: note: in instantiation of function template specialization 'AscendC::Impl::Detail::GetCopyCubeInType<AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+GetCopyCubeInType<INPUT_TYPE, MM_CFG>() == CopyCubeInType::FROM_L1>>
+^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:33:3: note: during template argument deduction for class template partial specialization 'CopyCubeIn<IMPL, INPUT_TYPE, MM_CFG, enable_if_t<GetCopyCubeInType<INPUT_TYPE, MM_CFG>() == CopyCubeInType::FROM_L1>>' [with IMPL = AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, INPUT_TYPE = AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, MM_CFG = CONSTANT_CFG]
+, MATMUL_IMPORT_MODULE(CopyCubeInB)
+  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:33:3: note: in instantiation of template class 'AscendC::Impl::Detail::CopyCubeIn<AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl.h:26:14: note: in instantiation of template class 'AscendC::MatmulImplBase<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    : public MatmulImplBase<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, MM_CFG, MM_CB, MATMUL_POLICY>
+             ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:104:70: note: in instantiation of template class 'AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    AscendC::Matmul<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, CONSTANT_CFG> matmulObj;
+                                                                     ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulIBShareNorm(mmCFG.cfg);
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:60:26: note: in call to 'DoMatmulIBShareNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:62:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulNorm(mmCFG.cfg);
+                        ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:62:26: note: in call to 'DoMatmulNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:71:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulMDL(mmCFG.cfg);
+                       ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:71:26: note: in call to 'DoMatmulMDL(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:23:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_cube_in.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/copy_cube_in_atop.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/copy_tile_to_cube/copy_tile_to_cube.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_using_ub.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/copy_tile_to_cube_intf.h:20:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:79:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulBasicBlock(mmCFG.cfg);
+                              ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_in/base/../copy_tile_to_cube/../base/copy_cube_in_utils.h:79:26: note: in call to 'DoMatmulBasicBlock(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:115:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:30:2: note: in instantiation of function template specialization 'AscendC::Impl::Detail::GetCubeInBufferType<AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+(GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL || 
+ ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:34:3: note: during template argument deduction for class template partial specialization 'CubeInBuffer<IMPL, INPUT_TYPE, MM_CFG, POLICY_TYPE, enable_if_t<(GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL || GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL_MX)>>' [with IMPL = AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, INPUT_TYPE = AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, MM_CFG = CONSTANT_CFG, POLICY_TYPE = AscendC::PolicyType::MATMUL_DEFAULT]
+, MATMUL_IMPORT_MODULE(CubeInBufferA)
+  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:34:3: note: in instantiation of template class 'AscendC::Impl::Detail::CubeInBuffer<AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, AscendC::MatmulInputAType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG, AscendC::PolicyType::MATMUL_DEFAULT>' requested here
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl.h:26:14: note: in instantiation of template class 'AscendC::MatmulImplBase<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    : public MatmulImplBase<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, MM_CFG, MM_CB, MATMUL_POLICY>
+             ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:104:70: note: in instantiation of template class 'AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    AscendC::Matmul<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, CONSTANT_CFG> matmulObj;
+                                                                     ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulIBShareNorm(mmCFG.cfg);
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:115:26: note: in call to 'DoMatmulIBShareNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:116:23: error: constexpr if condition is not a constant expression
+        if constexpr (IsSetDoubleGlobalQue<INPUT_TYPE, MM_CFG>()) {
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:205:12: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return cfg.cfg;
+           ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:205:12: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:91:35: note: in call to 'ToMatmulConfig(CONSTANT_CFG)'
+    return INPUT_TYPE::ibShare && ToMatmulConfig(MM_CFG).enableDoubleCache;
+                                  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:116:23: note: in call to 'IsSetDoubleGlobalQue()'
+        if constexpr (IsSetDoubleGlobalQue<INPUT_TYPE, MM_CFG>()) {
+                      ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:123:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulNorm(mmCFG.cfg);
+                        ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:123:26: note: in call to 'DoMatmulNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:133:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulMDL(mmCFG.cfg);
+                       ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:145:24: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:133:26: note: in call to 'DoMatmulMDL(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulMDL(MM_CFG) || DoMatmulSpecialMDL(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:141:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulBasicBlock(mmCFG.cfg);
+                              ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:125:31: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:141:26: note: in call to 'DoMatmulBasicBlock(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulBasicBlock(MM_CFG) || DoMatmulSpecialBasicBlock(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:115:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:30:2: note: in instantiation of function template specialization 'AscendC::Impl::Detail::GetCubeInBufferType<AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG>' requested here
+(GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL || 
+ ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:35:3: note: during template argument deduction for class template partial specialization 'CubeInBuffer<IMPL, INPUT_TYPE, MM_CFG, POLICY_TYPE, enable_if_t<(GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL || GetCubeInBufferType<INPUT_TYPE, MM_CFG>() == CubeInBufferType::NORMAL_MX)>>' [with IMPL = AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, INPUT_TYPE = AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, MM_CFG = CONSTANT_CFG, POLICY_TYPE = AscendC::PolicyType::MATMUL_DEFAULT]
+, MATMUL_IMPORT_MODULE(CubeInBufferB)
+  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl_base.h:35:3: note: in instantiation of template class 'AscendC::Impl::Detail::CubeInBuffer<AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>, AscendC::MatmulInputBType<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, half>, CONSTANT_CFG, AscendC::PolicyType::MATMUL_DEFAULT>' requested here
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:143:45: note: expanded from macro 'MATMUL_IMPORT_MODULE'
+#define MATMUL_IMPORT_MODULE(...) protected MATMUL_MODULE_IN_POLICY(__VA_ARGS__)
+                                            ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:140:48: note: expanded from macro 'MATMUL_MODULE_IN_POLICY'
+#define MATMUL_MODULE_IN_POLICY(...)           \
+                                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../stage/copy_cube_out/quant/../../../utils/matmul_module.h:128:32: note: expanded from macro '\
+MATMUL_POLICY_TEMPLATE'
+#define MATMUL_POLICY_TEMPLATE MATMUL_POLICY
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/matmul_impl.h:26:14: note: in instantiation of template class 'AscendC::MatmulImplBase<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    : public MatmulImplBase<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, MM_CFG, MM_CB, MATMUL_POLICY>
+             ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:104:70: note: in instantiation of template class 'AscendC::MatmulImpl<AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, true, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, half, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, AscendC::MatmulType<AscendC::TPosition::GM, CubeFormat::ND, float, false, LayoutMode::NONE, false, AscendC::TPosition::GM>, CONSTANT_CFG>' requested here
+    AscendC::Matmul<A_TYPE, B_TYPE, C_TYPE, BIAS_TYPE, CONSTANT_CFG> matmulObj;
+                                                                     ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulIBShareNorm(mmCFG.cfg);
+                               ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:155:32: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:115:26: note: in call to 'DoMatmulIBShareNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulIBShareNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:116:23: error: constexpr if condition is not a constant expression
+        if constexpr (IsSetDoubleGlobalQue<INPUT_TYPE, MM_CFG>()) {
+                      ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:205:12: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return cfg.cfg;
+           ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:205:12: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:91:35: note: in call to 'ToMatmulConfig(CONSTANT_CFG)'
+    return INPUT_TYPE::ibShare && ToMatmulConfig(MM_CFG).enableDoubleCache;
+                                  ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:116:23: note: in call to 'IsSetDoubleGlobalQue()'
+        if constexpr (IsSetDoubleGlobalQue<INPUT_TYPE, MM_CFG>()) {
+                      ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+In file included from /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul_intf.h:22:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul.h:21:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/matmul_policy.h:19:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer.h:17:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_normal.h:18:
+In file included from /usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_intf.h:21:
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:123:26: error: constexpr if condition is not a constant expression
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^~~~~~~~~~~~~~~~~~~~
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: initializer of 'CONSTANT_CFG' is not a constant expression
+    return DoMatmulNorm(mmCFG.cfg);
+                        ^
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/utils/../feature_trait/../utils/matmul_config_utils.h:115:25: note: in call to 'MatmulConfig(CONSTANT_CFG.cfg)'
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/lib/matmul/../../impl/matmul/policy/../resource/cube_in_buffer/cube_in_buffer_utils.h:123:26: note: in call to 'DoMatmulNorm(CONSTANT_CFG)'
+    } else if constexpr (DoMatmulNorm(MM_CFG)) {
+                         ^
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:95:16: note: declared here
+constexpr auto CONSTANT_CFG = GetCustomConstantCFG();
+               ^
+fatal error: too many errors emitted, stopping now [-ferror-limit=]
+20 errors generated.
+make[2]: *** [CMakeFiles/matmul_leakyrelu_custom.dir/build.make:76：CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu_custom.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2
+FAIL: make failed

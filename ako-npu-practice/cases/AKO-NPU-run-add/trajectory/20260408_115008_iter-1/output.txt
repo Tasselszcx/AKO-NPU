@@ -1,0 +1,52 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+[ 50%] Building ASC object CMakeFiles/add_custom.dir/add.asc.o
+[100%] Linking ASC executable add_custom
+[100%] Built target add_custom
+Build OK
+=== Generating data ===
+Generated test data: 1048576 elements, dtype=<class 'numpy.float32'>
+  input/input_x.bin: (1048576,), float32
+  input/input_y.bin: (1048576,), float32
+  output/golden.bin: (1048576,), float32
+=== Running benchmark with msprof ===
+2026-04-08 11:50:13 [INFO]  Op profiling analysis start.
+2026-04-08 11:50:13 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: add_custom
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-08 11:50:19 [INFO]  Profiling running finished. All task success.
+2026-04-08 11:50:19 [INFO]  Start analyze kernel on device: device0, kernel: add_custom, name is: 0
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-08 11:50:19 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-08 11:50:20 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+	3) aivector compute usage lower than 20%.
+
+2026-04-08 11:50:20 [INFO]  Operator Basic Information:
+
+	Op Name: add_custom
+	Op Type: vector
+	Task Duration(us): 7.300292
+	Block Dim: 43
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 1695804
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-08 11:50:20 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/msprof_output/OPPROF_20260408115013_UZIZWPUYHJCVYVVA
+2026-04-08 11:50:20 [INFO]  Profiling data parse finished.
+2026-04-08 11:50:20 [INFO]  Op profiling finish. Welcome to next use.
+=== Verifying correctness ===
+Verification FAILED!
+Max diff: 7.072028160095215, Mean diff: 0.9390471577644348
+Mismatch count: 872448 / 1048576

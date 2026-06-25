@@ -1,0 +1,37 @@
+=== [1/4] 设置 CANN 环境 ===
+=== [2/4] 编译 ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-softmax/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:5 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-softmax/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-softmax/solution/build
+[ 50%] Building ASC object CMakeFiles/softmax_custom.dir/softmax.asc.o
+[100%] Linking ASC executable softmax_custom
+[100%] Built target softmax_custom
+=== [3/4] 生成测试数据 ===
+Generated test data: [1024, 4096], dtype=<class 'numpy.float32'>
+  input/input_x.bin: (1024, 4096)
+  output/golden.bin: (1024, 4096)
+=== [4/4] 运行 Kernel ===
+blockNum=48, rowsBase=21, remainder=16, cores=48
+=== TIMING: avg 53.41 us over 100 runs ===
+=== 精度验证 ===
+Verification PASSED! Shape: (4194304,)
+Max diff: 3.725290e-09
+=== 完成 ===

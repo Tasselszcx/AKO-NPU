@@ -1,0 +1,19 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: iter-1
+=== [1/5] Build ===
+[ 50%] Building ASC object CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o
+[100%] Linking ASC executable dsa_indexer
+[100%] Built target dsa_indexer
+=== [2/5] Generate test data ===
+Generating data: B=1, S_q=1, S_kv=4096
+  input_q.bin: (1, 1, 64, 128) uint16 (16384 bytes)
+  input_k.bin: (1, 4096, 128) uint16 (1048576 bytes)
+  input_weights.bin: (1, 1, 64, 1) uint16 (128 bytes)
+  golden_topk_indices.bin: (1, 1, 2048) int64 (16384 bytes)
+  golden_index_score.bin: (1, 1, 4096) uint16 (8192 bytes)
+
+  index_score range: [-0.9228, 1.2309]
+  top-5 indices: [2878  419  844 3598  207]
+  top-5 values: [1.2309233 1.1188761 1.0599387 1.0478342 1.0153892]
+=== [3/5] Run kernel ===
+Terminated

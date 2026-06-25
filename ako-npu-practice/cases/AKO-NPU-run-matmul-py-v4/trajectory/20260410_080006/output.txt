@@ -1,0 +1,120 @@
+==========================================
+AKO Benchmark: matmul_leakyrelu
+==========================================
+--- [0/5] Environment Setup ---
+--- [1/5] Compile ---
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu_custom
+[100%] Built target matmul_leakyrelu_custom
+Compile: PASS
+--- [2/5] Generate Test Data ---
+Generated test data:
+  input/x1_gm.bin:  A  [(1024, 256)] float16
+  input/x2_gm.bin:  B  [(256, 640)] float16
+  input/bias.bin:    bias [(640,)] float32
+  output/golden.bin: golden [(1024, 640)] float32
+  Golden stats: min=-0.0778, max=93.7817, mean=6.4141
+--- [3/5] Correctness Check ---
+Tiling info:
+  M=1024 N=640 Ka=256
+  baseM=96 baseN=256
+  singleCoreM=94 singleCoreN=320
+  usedCoreNum=22 (matmul)
+  reluCoreNum=20 (leakyrelu)
+  workspaceSize=16777216
+Pass 1: Matmul with 22 blocks...
+Pass 2: LeakyReLU with 20 blocks...
+Kernel execution completed.
+Verification Results:
+  Shape: (655360,)
+  Max absolute error: 3.077698e-02
+  Mean absolute error: 1.132118e-03
+  Mean relative error: 1.773735e-04
+  Cosine similarity: 0.99999858
+  Mismatch count: 0 / 655360 (0.00%)
+  allclose PASSED (rtol=0.001, atol=0.001)
+Verification PASSED!
+Correctness: PASS
+--- [4/5] Performance Profiling (msprof) ---
+2026-04-10 08:00:21 [INFO]  Op profiling analysis start.
+2026-04-10 08:00:21 [INFO]  Running device task: DeviceProf
+Tiling info:
+  M=1024 N=640 Ka=256
+  baseM=96 baseN=256
+  singleCoreM=94 singleCoreN=320
+  usedCoreNum=22 (matmul)
+  reluCoreNum=20 (leakyrelu)
+  workspaceSize=16777216
+Pass 1: Matmul with 22 blocks...
+[INFO] <ProfData> Start profiling on device 1, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_
+[INFO] <WarmUp> Warm Up enabled. times:10
+Pass 2: LeakyReLU with 20 blocks...
+[INFO] <ProfData> Start profiling on device 1, kernel: _Z16leakyrelu_customPhS_S_
+[INFO] <WarmUp> Warm Up enabled. times:10
+Kernel execution completed.
+2026-04-10 08:00:26 [INFO]  Profiling running finished. All task success.
+2026-04-10 08:00:26 [INFO]  Start analyze kernel on device: device1, kernel: _Z16leakyrelu_customPhS_S_, name is: 0
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-10 08:00:26 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-10 08:00:27 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+
+2026-04-10 08:00:27 [INFO]  Operator Basic Information:
+
+	Op Name: leakyrelu_custom
+	Op Type: vector
+	Task Duration(us): 4.700188
+	Block Dim: 20
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 1552167
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-10 08:00:27 [INFO]  Start analyze kernel on device: device1, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_, name is: 0
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-10 08:00:28 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-10 08:00:28 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-10 08:00:28 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: cube
+	Task Duration(us): 11.560462
+	Block Dim: 22
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 1552167
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-10 08:00:28 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/build/msprof_output/OPPROF_20260410080021_XIFZKYLHNJPUOHHM
+2026-04-10 08:00:28 [INFO]  Profiling data parse finished.
+2026-04-10 08:00:28 [INFO]  Op profiling finish. Welcome to next use.
+--- [5/5] Performance Summary ---
+WARN: No profiling data found
+
+==========================================
+Benchmark Complete
+==========================================

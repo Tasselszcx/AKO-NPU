@@ -1,0 +1,195 @@
+#!/usr/bin/env python3
+"""Generate test data for attention_backward kernel.
+
+Iteration 3: Uses NPU (torch_npu) for matmul computation to match on-device
+precision. Falls back to numpy f32 if NPU is unavailable.
+"""
+
+import os
+import sys
+import struct
+import numpy as np
+
+# Parse command-line args
+batch = int(sys.argv[1]) if len(sys.argv) > 1 else 4
+seq_q = int(sys.argv[2]) if len(sys.argv) > 2 else 256
+seq_kv = int(sys.argv[3]) if len(sys.argv) > 3 else 256
+
+print(f"Generating data: batch={batch}, seq_q={seq_q}, seq_kv={seq_kv}")
+
+NUM_HEADS = 80
+NUM_KV_HEADS = 8
+NUM_GROUPS = 10
+HEAD_DIM = 128
+DROPOUT_PROB = 0.1
+
+np.random.seed(42)
+
+# Check for NPU support
+USE_NPU = False
+try:
+    import torch
+    import torch_npu
+    if torch.npu.is_available():
+        USE_NPU = True
+        npu_device = torch.device("npu:0")
+        print("  Using NPU for matmul computation (matches on-device precision)")
+except ImportError:
+    pass
+if not USE_NPU:
+    print("  Using CPU numpy for matmul computation")
+
+def to_bf16(arr):
+    """Convert float32 numpy array to bfloat16 bytes."""
+    f32 = arr.astype(np.float32).flatten()
+    f32_bytes = f32.tobytes()
+    bf16_bytes = bytearray()
+    for i in range(0, len(f32_bytes), 4):
+        bf16_bytes.extend(f32_bytes[i+2:i+4])
+    return bytes(bf16_bytes)
+
+def from_bf16(data, shape):
+    """Convert bfloat16 bytes to float32 numpy array."""
+    n_elements = 1
+    for s in shape:
+        n_elements *= s
+    f32_bytes = bytearray()
+    for i in range(0, len(data), 2):
+        f32_bytes.extend(b'\x00\x00')
+        f32_bytes.extend(data[i:i+2])
+    return np.frombuffer(bytes(f32_bytes), dtype=np.float32).reshape(shape)
+
+# grad_attn_output: [B, seq_q, 80, 128] bf16
+grad_attn_output = np.random.randn(batch, seq_q, NUM_HEADS, HEAD_DIM).astype(np.float32) * 0.01
+
+# attn_weights: [B, 80, seq_q, seq_kv] bf16
+attn_scores_raw = np.random.randn(batch, NUM_HEADS, seq_q, seq_kv).astype(np.float32)
+attn_scores_max = attn_scores_raw.max(axis=-1, keepdims=True)
+attn_scores_exp = np.exp(attn_scores_raw - attn_scores_max)
+attn_weights = attn_scores_exp / attn_scores_exp.sum(axis=-1, keepdims=True)
+
+# dropout_mask: [B, 80, seq_q, seq_kv] bool (uint8)
+dropout_mask = (np.random.rand(batch, NUM_HEADS, seq_q, seq_kv) > DROPOUT_PROB).astype(np.uint8)
+
+# attn_weights_dropped: [B, 80, seq_q, seq_kv] bf16
+attn_weights_dropped_f32 = attn_weights * dropout_mask / (1.0 - DROPOUT_PROB)
+
+# value_states: [B, 8, seq_kv, 128] bf16
+value_states = np.random.randn(batch, NUM_KV_HEADS, seq_kv, HEAD_DIM).astype(np.float32) * 0.1
+
+# Convert to bf16 and back to get exact bf16 values
+grad_attn_output_bf16 = from_bf16(to_bf16(grad_attn_output), grad_attn_output.shape)
+attn_weights_bf16 = from_bf16(to_bf16(attn_weights), attn_weights.shape)
+attn_weights_dropped_bf16 = from_bf16(to_bf16(attn_weights_dropped_f32), attn_weights_dropped_f32.shape)
+value_states_bf16 = from_bf16(to_bf16(value_states), value_states.shape)
+
+# ============ Compute matmul results ============
+# Transpose: [B, seq_q, 80, 128] -> [B, 80, seq_q, 128]
+grad_out_t = grad_attn_output_bf16.transpose(0, 2, 1, 3).astype(np.float32)
+
+# GQA expand value_states: [B, 8, skv, 128] -> [B, 80, skv, 128]
+value_expanded = np.repeat(value_states_bf16, NUM_GROUPS, axis=1).astype(np.float32)
+
+if USE_NPU:
+    # Use NPU bf16 matmul for precision matching
+    grad_out_t_npu = torch.from_numpy(grad_out_t).to(dtype=torch.bfloat16, device=npu_device)
+    value_expanded_npu = torch.from_numpy(value_expanded).to(dtype=torch.bfloat16, device=npu_device)
+    attn_dropped_npu = torch.from_numpy(attn_weights_dropped_bf16).to(dtype=torch.bfloat16, device=npu_device)
+
+    # mm_result1 = grad_out_t @ V_expanded^T  [B, 80, sq, skv] float32
+    # Use bf16 inputs -> f32 output to match aclnnBatchMatMul behavior
+    mm_result1_npu = torch.bmm(
+        grad_out_t_npu.reshape(-1, seq_q, HEAD_DIM),
+        value_expanded_npu.reshape(-1, seq_kv, HEAD_DIM).transpose(-1, -2)
+    ).reshape(batch, NUM_HEADS, seq_q, seq_kv)
+    grad_attn_weights_dropped = mm_result1_npu.float().cpu().numpy().astype(np.float32)
+
+    # mm_result2 = attn_dropped^T @ grad_out_t  [B, 80, skv, 128] float32
+    mm_result2_npu = torch.bmm(
+        attn_dropped_npu.reshape(-1, seq_q, seq_kv).transpose(-1, -2),
+        grad_out_t_npu.reshape(-1, seq_q, HEAD_DIM)
+    ).reshape(batch, NUM_HEADS, seq_kv, HEAD_DIM)
+    grad_value_expanded = mm_result2_npu.float().cpu().numpy().astype(np.float32)
+else:
+    # Fallback: numpy f32 matmul
+    grad_attn_weights_dropped = np.matmul(
+        grad_out_t.astype(np.float32),
+        value_expanded.astype(np.float32).transpose(0, 1, 3, 2)
+    ).astype(np.float32)
+
+    grad_value_expanded = np.matmul(
+        attn_weights_dropped_bf16.astype(np.float32).transpose(0, 1, 3, 2),
+        grad_out_t.astype(np.float32)
+    ).astype(np.float32)
+
+# ============ Compute golden outputs ============
+# 4. Dropout backward (float32)
+grad_attn_weights = (grad_attn_weights_dropped * dropout_mask.astype(np.float32) / np.float32(1.0 - DROPOUT_PROB)).astype(np.float32)
+
+# 5. Softmax backward (float32)
+attn_w_f32 = attn_weights_bf16.astype(np.float32)
+product = (grad_attn_weights * attn_w_f32).astype(np.float32)
+sum_term = product.sum(axis=-1, keepdims=True).astype(np.float32)
+grad_attn_scores = (attn_w_f32 * (grad_attn_weights - sum_term)).astype(np.float32)
+grad_attn_scores_bf16 = from_bf16(to_bf16(grad_attn_scores), grad_attn_scores.shape)
+
+# 7. GQA aggregate: [B, 80, skv, 128] -> [B, 8, skv, 128]
+grad_value_states = grad_value_expanded.reshape(
+    batch, NUM_KV_HEADS, NUM_GROUPS, seq_kv, HEAD_DIM
+).sum(axis=2)
+grad_value_states_bf16 = from_bf16(to_bf16(grad_value_states), grad_value_states.shape)
+
+# ============ Save matmul results for kernel input ============
+mm_result1 = grad_attn_weights_dropped
+mm_result2 = grad_value_expanded
+
+# ============ Save files ============
+os.makedirs("input", exist_ok=True)
+os.makedirs("output", exist_ok=True)
+
+with open("input/grad_attn_output.bin", "wb") as f:
+    f.write(to_bf16(grad_attn_output))
+with open("input/attn_weights.bin", "wb") as f:
+    f.write(to_bf16(attn_weights))
+with open("input/attn_weights_dropped.bin", "wb") as f:
+    f.write(to_bf16(attn_weights_dropped_f32))
+with open("input/value_states.bin", "wb") as f:
+    f.write(to_bf16(value_states))
+mask_bytes_per_row = (seq_kv + 7) // 8
+total_rows = batch * NUM_HEADS * seq_q
+packed_mask = np.zeros(total_rows * mask_bytes_per_row, dtype=np.uint8)
+mask_flat = dropout_mask.reshape(total_rows, seq_kv).astype(np.uint8)
+for row in range(total_rows):
+    for col in range(seq_kv):
+        if mask_flat[row, col]:
+            byte_idx = row * mask_bytes_per_row + col // 8
+            packed_mask[byte_idx] |= (1 << (col % 8))
+with open("input/dropout_mask.bin", "wb") as f:
+    f.write(packed_mask.tobytes())
+print(f"  dropout_mask packed: {dropout_mask.shape} -> {packed_mask.shape[0]} bytes ({mask_bytes_per_row} bytes/row)")
+with open("input/mm_result1.bin", "wb") as f:
+    f.write(mm_result1.astype(np.float32).tobytes())
+with open("input/mm_result2.bin", "wb") as f:
+    f.write(mm_result2.astype(np.float32).tobytes())
+
+# Save golden outputs (bf16 binary)
+with open("output/golden_grad_attn_scores.bin", "wb") as f:
+    f.write(to_bf16(grad_attn_scores))
+with open("output/golden_grad_value_states.bin", "wb") as f:
+    f.write(to_bf16(grad_value_states))
+
+with open("output/golden_grad_attn_scores_f32.bin", "wb") as f:
+    f.write(grad_attn_scores.astype(np.float32).tobytes())
+with open("output/golden_grad_value_states_f32.bin", "wb") as f:
+    f.write(grad_value_states.astype(np.float32).tobytes())
+
+print(f"Input sizes:")
+print(f"  grad_attn_output: {grad_attn_output_bf16.shape} -> {os.path.getsize('input/grad_attn_output.bin')} bytes")
+print(f"  attn_weights: {attn_weights_bf16.shape} -> {os.path.getsize('input/attn_weights.bin')} bytes")
+print(f"  attn_weights_dropped: {attn_weights_dropped_bf16.shape} -> {os.path.getsize('input/attn_weights_dropped.bin')} bytes")
+print(f"  value_states: {value_states_bf16.shape} -> {os.path.getsize('input/value_states.bin')} bytes")
+print(f"  dropout_mask: {dropout_mask.shape} -> {os.path.getsize('input/dropout_mask.bin')} bytes")
+print(f"Golden output sizes:")
+print(f"  grad_attn_scores: {grad_attn_scores.shape}")
+print(f"  grad_value_states: {grad_value_states.shape}")
+print("Data generation complete.")

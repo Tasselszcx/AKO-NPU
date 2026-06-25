@@ -1,0 +1,61 @@
+=== 上板性能统计摘要 ===
+Op: attention_backward_custom_mix_aic | Type: mix | Duration: 1722.908936us | BlockDim: 24 | Freq: 1800/1800
+
+--- PipeUtilization (48 cores, prefix=aic) ---
+                                  min        avg        max
+  aic_time(us)                 0.00     568.79    1720.28
+  scalar_ratio%                0.00      32.38      98.01
+  mte2_ratio%                  0.00       1.93       6.70
+  mte3_ratio%                  0.00       0.01       0.04
+  icache_miss%                 0.00       0.76       5.57
+  cube_ratio%                  0.00       1.03       3.16
+  fixpipe_ratio%               0.00       2.59       8.69
+  mte1_ratio%                  0.00       0.72       2.19
+  mte3_active_bw                0.0      168.8      484.4    (GB/s)
+  fixpipe_active_bw             0.0       18.3       56.8    (GB/s)
+
+--- 头开销 ---
+  Task Duration: 1722.908936us | 最长核: 1720.28us | 头开销: 2.63us (0.2%)
+
+--- Memory ---
+  GM→UB: 241664.0KB total (5034.7KB/core), BW usage: 1.43%
+  UB→GM: 100512.0KB total (2094.0KB/core), BW usage: 0.66%
+  GM→L1: 102784.0KB total (2141.3KB/core), BW usage: 0.53%
+  主存读取: 375380.2KB total
+  主存写入: 224333.9KB total
+  Avg MTE2 transfer: 7.20KB (33552 instructions total)
+  GM→UB avg BW: 2.79 GB/s
+  UB→GM avg BW: 1.16 GB/s
+
+--- MemoryUB ---
+  UB read BW (vector): avg=13.7 GB/s
+  UB write BW (vector): avg=9.4 GB/s
+  UB read BW (scalar): avg=0.0 GB/s
+  UB write BW (scalar): avg=0.0 GB/s
+
+--- MemoryL0 ---
+  L0A read BW: 1.9 GB/s
+  L0A write BW: 0.7 GB/s
+  L0B read BW: 7.6 GB/s
+  L0B write BW: 0.9 GB/s
+  L0C read BW (cube): 1.4 GB/s
+  L0C write BW (cube): 2.8 GB/s
+
+--- L2Cache ---
+  total_hit: avg=42.1% (min=0.0%, max=86.5%)
+  read_hit: avg=44.2% (min=0.0%, max=97.9%)
+  write_hit: avg=42.0% (min=0.0%, max=94.8%)
+  write cache: hit=236007 miss=13072
+
+--- ResourceConflict ---
+  vec_total_cflt: 0.00% | bankgroup_cflt: 0.00% | bank_cflt: 0.00% | resc_cflt: 0.00% | mte_cflt: 0.00%
+  cube_wait: 2.83% | vec_wait: 0.00% | mte2_wait: 1.72% | mte3_wait: 0.00%
+
+--- ArithmeticUtilization ---
+  vec_fp32: 9.2% | vec_fp16: 0.5% | vec_misc: 6.6%
+  vec_fops: 5794197/core
+  cube_fp16: 1.0% | cube_fops: 436907/core
+
+--- 原始数据位置 ---
+  CSV 文件: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_006/
+  如需逐核详情，请 Read 对应 CSV 文件。

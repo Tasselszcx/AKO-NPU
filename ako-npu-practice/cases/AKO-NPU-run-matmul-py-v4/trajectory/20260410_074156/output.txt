@@ -1,0 +1,42 @@
+==========================================
+AKO Benchmark: matmul_leakyrelu
+==========================================
+--- [0/5] Environment Setup ---
+--- [1/5] Compile ---
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu_custom
+[100%] Built target matmul_leakyrelu_custom
+Compile: PASS
+--- [2/5] Generate Test Data ---
+Generated test data:
+  input/x1_gm.bin:  A  [(1024, 256)] float16
+  input/x2_gm.bin:  B  [(256, 640)] float16
+  input/bias.bin:    bias [(640,)] float32
+  output/golden.bin: golden [(1024, 640)] float32
+  Golden stats: min=-0.0778, max=93.7817, mean=6.4141
+--- [3/5] Correctness Check ---
+Tiling info:
+  M=1024 N=640 Ka=256
+  baseM=96 baseN=256
+  singleCoreM=94 singleCoreN=320
+  usedCoreNum=22 (matmul)
+  reluCoreNum=20 (leakyrelu)
+  workspaceSize=16777216
+Pass 1: Matmul with 22 blocks...
+Pass 2: LeakyReLU with 20 blocks...
+Kernel execution completed.
+Verification Results:
+  Shape: (655360,)
+  Max absolute error: 9.378172e+01
+  Mean absolute error: 6.426804e+00
+  Mean relative error: 1.000000e+00
+  Cosine similarity: 0.00000000
+  Mismatch count: 639183 / 655360 (97.53%)
+  WARN: Too many mismatches
+  WARN: Cosine similarity below threshold
+  allclose FAILED (rtol=0.001, atol=0.001)
+Verification FAILED!

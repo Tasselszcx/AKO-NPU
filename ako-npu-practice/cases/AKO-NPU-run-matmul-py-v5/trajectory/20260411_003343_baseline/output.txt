@@ -1,0 +1,43 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-11 00:34:03 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom_mix_aic
+	Op Type: mix
+	Task Duration(us): 98.623947
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 3
+	Pid: 2662994
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 00:34:03 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411003356_LMUSFOWUXQJTCOCP
+2026-04-11 00:34:03 [INFO]  Profiling data parse finished.
+2026-04-11 00:34:03 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+error ratio: 0.000000, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+test pass!
+=== [5/5] Extract performance ===
+--- OpBasicInfo.csv ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+matmul_leakyrelu_custom_mix_aic,mix,98.623947,1,2,3,2662994,1800,1800,
+
+=== PERFORMANCE SUMMARY ===
+Runs: 1
+Task Duration (us): mean=98.62, min=98.62, max=98.62
+=== BENCH COMPLETE ===

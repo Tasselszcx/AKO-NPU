@@ -1,0 +1,21 @@
+name,duration_us,precision,status,config
+baseline_FIRSTN,73.642944,PASS,pass,{}
+FIRSTN_stepM2,76.943077,PASS,pass,{'stepM': 2}
+FIRSTN_stepN2,75.002998,PASS,pass,{'stepN': 2}
+FIRSTN_stepMN2,74.122963,PASS,pass,"{'stepM': 2, 'stepN': 2}"
+FIRSTN_tile4096,77.383095,PASS,pass,{'tileSize': 4096}
+FIRSTN_tile6144,77.163086,PASS,pass,{'tileSize': 6144}
+FIRSTN_tile10240,75.263008,PASS,pass,{'tileSize': 10240}
+FIRSTN_tile12288,76.54306,PASS,pass,{'tileSize': 12288}
+FIRSTN_transB,77.243088,PASS,pass,{'isTransB': True}
+FIRSTN_bM128_bN128,95.343811,PASS,pass,"{'baseM': 128, 'baseN': 128}"
+FIRSTN_bM128_bN256,82.543304,PASS,pass,"{'baseM': 128, 'baseN': 256}"
+FIRSTN_core3,62.662506,FAIL,prec_fail,{'usedCoreNum': 3}
+FIRSTN_core4,70.182808,FAIL,prec_fail,{'usedCoreNum': 4}
+FIRSTN_core5,,FAIL,build_fail,{'usedCoreNum': 5}
+FIRSTN_core8,44.121765,FAIL,prec_fail,{'usedCoreNum': 8}
+FIRSTN_core10,,FAIL,build_fail,{'usedCoreNum': 10}
+FIRSTN_core16,,FAIL,build_fail,{'usedCoreNum': 16}
+FIRSTN_core20,,FAIL,build_fail,{'usedCoreNum': 20}
+FIRSTN_buf512K,74.82299,PASS,pass,"{'bufferSpace': '524288, -1, -1'}"
+FIRSTN_buf256K,75.203011,PASS,pass,"{'bufferSpace': '262144, -1, -1'}"

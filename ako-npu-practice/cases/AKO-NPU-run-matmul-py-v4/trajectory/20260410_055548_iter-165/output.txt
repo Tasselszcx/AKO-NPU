@@ -1,0 +1,22 @@
+==========================================
+AKO Benchmark: matmul_leakyrelu
+==========================================
+--- [0/5] Environment Setup ---
+--- [1/5] Compile ---
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v4/solution/matmul_leakyrelu.asc:83:11: error: no member named 'enableDoubleBuffer' in 'MatmulConfig'; did you mean 'enableDoubleCache'?
+    mmCFG.enableDoubleBuffer = true;  // iter-165: enable double buffering in matmul
+          ^~~~~~~~~~~~~~~~~~
+          enableDoubleCache
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul_config.h:161:10: note: 'enableDoubleCache' declared here
+    bool enableDoubleCache;   // When IBShare is enabled, whether to cache two data blocks in L1 Buffer simultaneously
+         ^
+1 error generated.
+make[2]: *** [CMakeFiles/matmul_leakyrelu_custom.dir/build.make:76：CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu_custom.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2
+FAIL: make failed

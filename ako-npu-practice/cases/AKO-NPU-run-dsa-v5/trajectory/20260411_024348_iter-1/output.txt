@@ -1,0 +1,44 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: iter-1
+=== [1/5] Build ===
+[ 50%] Building ASC object CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o
+[100%] Linking ASC executable dsa_indexer
+[100%] Built target dsa_indexer
+=== [2/5] Generate test data ===
+Generating data: B=1, S_q=1, S_kv=4096
+  input_q.bin: (1, 1, 64, 128) uint16 (16384 bytes)
+  input_k.bin: (1, 4096, 128) uint16 (1048576 bytes)
+  input_weights.bin: (1, 1, 64, 1) uint16 (128 bytes)
+  golden_topk_indices.bin: (1, 1, 2048) int64 (16384 bytes)
+  golden_index_score.bin: (1, 1, 4096) uint16 (8192 bytes)
+
+  index_score range: [-0.9228, 1.2309]
+  top-5 indices: [2878  419  844 3598  207]
+  top-5 values: [1.2309233 1.1188761 1.0599387 1.0478342 1.0153892]
+=== [3/5] Run kernel ===
+DSA Indexer: B=1, S_q=1, S_kv=4096
+  coreNum=1, topkK=2048, topkInner=4096, topkTmpSize=81920
+  wsSysSize=16777216, wsTotalSize=17842176
+=== [4/5] Verify correctness ===
+Verifying DSA Indexer: B=1, S_q=1, S_kv=4096
+index_score verification:
+  Max absolute diff: 1.226562
+  MERE (max rel err): 1.000000 (threshold: 0.007812)
+  MARE (mean rel err): 1.000000 (threshold: 0.078125)
+  WARNING: MERE exceeds threshold!
+  Violations: 4096/4096 (100.00%)
+  topk mismatch at b=0, s=0:
+    output-only (1): [0]
+    golden-only (2048): [2, 3, 4, 6, 7, 8, 12, 13, 17, 20]
+    score at output-only idx 0: -0.606672
+    score at golden-only idx 2: 0.267059
+    score at golden-only idx 3: 0.144541
+    score at golden-only idx 4: 0.354712
+    score at golden-only idx 6: 0.131155
+    score at golden-only idx 7: 0.251347
+
+topk_indices verification:
+  Match rate: 0/2048 (0.00%)
+  topk_indices FAILED (<95% match)
+
+=== Verification FAILED ===

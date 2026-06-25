@@ -1,0 +1,17 @@
+__pycache__/
+*.py[cod]
+*$py.class
+trajectory/
+scripts/
+solution/
+_bench_output.txt
+
+# skills 仓库（用户 git clone 进来的）
+skills/
+
+# .claude/ 下除 settings.local.json 外都是 CANNBot init.sh 生成的
+.claude/skills/
+.claude/agents/
+.claude/CLAUDE.md
+.claude/workflows
+.claude/cannbot-manifest.json

@@ -1,0 +1,51 @@
+iter,name,duration_us,precision,status,config
+144,finetile_8704,77.243088,PASS,pass,{'tileSize': 8704}
+145,finetile_8960,76.463058,PASS,pass,{'tileSize': 8960}
+146,finetile_9216,75.543022,PASS,pass,{'tileSize': 9216}
+147,finetile_9472,77.803116,PASS,pass,{'tileSize': 9472}
+148,finetile_9728,74.322975,PASS,pass,{'tileSize': 9728}
+149,finetile_9984,75.763031,PASS,pass,{'tileSize': 9984}
+150,finetile_10496,77.843117,PASS,pass,{'tileSize': 10496}
+151,finetile_10752,76.323051,PASS,pass,{'tileSize': 10752}
+152,tile9216_step1_1,78.763153,PASS,pass,"{'tileSize': 9216, 'stepM': 1, 'stepN': 1}"
+153,tile9216_step1_2,78.243126,PASS,pass,"{'tileSize': 9216, 'stepM': 1, 'stepN': 2}"
+154,tile9216_step1_3,77.483101,PASS,pass,"{'tileSize': 9216, 'stepM': 1, 'stepN': 3}"
+155,tile9216_step1_4,75.623024,PASS,pass,"{'tileSize': 9216, 'stepM': 1, 'stepN': 4}"
+156,tile9216_step2_1,77.263092,PASS,pass,"{'tileSize': 9216, 'stepM': 2, 'stepN': 1}"
+157,tile9216_step2_2,77.603104,PASS,pass,"{'tileSize': 9216, 'stepM': 2, 'stepN': 2}"
+158,tile9216_step2_3,75.243011,PASS,pass,"{'tileSize': 9216, 'stepM': 2, 'stepN': 3}"
+159,tile9216_step2_4,76.223045,PASS,pass,"{'tileSize': 9216, 'stepM': 2, 'stepN': 4}"
+160,transB_tile8192,73.762947,PASS,pass,"{'isTransB': True, 'tileSize': 8192}"
+161,transB_tile9216,77.003082,PASS,pass,"{'isTransB': True, 'tileSize': 9216}"
+162,transB_tile10240,76.783073,PASS,pass,"{'isTransB': True, 'tileSize': 10240}"
+163,transB_tile11264,75.403015,PASS,pass,"{'isTransB': True, 'tileSize': 11264}"
+164,transB_tile12288,73.302933,PASS,pass,"{'isTransB': True, 'tileSize': 12288}"
+165,transB_tile7168,78.103127,PASS,pass,"{'isTransB': True, 'tileSize': 7168}"
+166,tribuf_tile7168,76.263054,PASS,pass,"{'bufNum': 3, 'tileSize': 7168}"
+167,tribuf_tile8192,76.283051,PASS,pass,"{'bufNum': 3, 'tileSize': 8192}"
+168,tribuf_tile9216,0.0,FAIL,msprof_fail,"{'bufNum': 3, 'tileSize': 9216}"
+169,tribuf_tile10240,0.0,FAIL,msprof_fail,"{'bufNum': 3, 'tileSize': 10240}"
+170,tile9216_buf768K,73.822952,PASS,pass,"{'tileSize': 9216, 'bufferSpace': '786432, -1, -1'}"
+171,tile9216_buf1024K,74.882996,PASS,pass,"{'tileSize': 9216, 'bufferSpace': '1048576, -1, -1'}"
+172,tile9216_buf1536K,77.763107,PASS,pass,"{'tileSize': 9216, 'bufferSpace': '1572864, -1, -1'}"
+173,tile9216_buf2048K,75.98304,PASS,pass,"{'tileSize': 9216, 'bufferSpace': '2097152, -1, -1'}"
+174,transB_step2_1_tile9216,74.642982,PASS,pass,"{'isTransB': True, 'stepM': 2, 'tileSize': 9216}"
+175,transB_step1_3_tile9216,75.663025,PASS,pass,"{'isTransB': True, 'stepN': 3, 'tileSize': 9216}"
+176,transB_step2_3_tile9216,77.403099,PASS,pass,"{'isTransB': True, 'stepM': 2, 'stepN': 3, 'tileSize': 9216}"
+177,transB_step1_2_tile10240,77.303093,PASS,pass,"{'isTransB': True, 'stepN': 2, 'tileSize': 10240}"
+178,transB_step2_2_tile10240,78.863152,PASS,pass,"{'isTransB': True, 'stepM': 2, 'stepN': 2, 'tileSize': 10240}"
+179,transB_step2_3_tile10240,76.043045,PASS,pass,"{'isTransB': True, 'stepM': 2, 'stepN': 3, 'tileSize': 10240}"
+180,repeat1_tile9216,73.922958,PASS,pass,{'tileSize': 9216}
+181,repeat2_tile9216,78.723152,PASS,pass,{'tileSize': 9216}
+182,repeat3_tile9216,73.44294,PASS,pass,{'tileSize': 9216}
+183,repeat1_baseline,75.423019,PASS,pass,{}
+184,repeat2_baseline,73.862953,PASS,pass,{}
+185,repeat3_baseline,76.583061,PASS,pass,{}
+186,tribuf_tile9216_stepM2,0.0,FAIL,msprof_fail,"{'bufNum': 3, 'tileSize': 9216, 'stepM': 2}"
+187,tribuf_tile10240_stepM2,0.0,FAIL,msprof_fail,"{'bufNum': 3, 'tileSize': 10240, 'stepM': 2}"
+188,tile9216_transB_buf1M,76.903076,PASS,pass,"{'tileSize': 9216, 'isTransB': True, 'bufferSpace': '1048576, -1, -1'}"
+189,tile10240_transB_buf1M,77.343094,PASS,pass,"{'tileSize': 10240, 'isTransB': True, 'bufferSpace': '1048576, -1, -1'}"
+190,tile9216_buf2M_stepM2,75.98304,PASS,pass,"{'tileSize': 9216, 'bufferSpace': '2097152, -1, -1', 'stepM': 2}"
+191,tile10240_buf2M_stepM2,77.083084,PASS,pass,"{'tileSize': 10240, 'bufferSpace': '2097152, -1, -1', 'stepM': 2}"
+192,tile9216_transB_stepM2_buf2M,74.242973,PASS,pass,"{'tileSize': 9216, 'isTransB': True, 'stepM': 2, 'bufferSpace': '2097152, -1, -1'}"
+193,tile10240_transB_stepM2_buf2M,74.922997,PASS,pass,"{'tileSize': 10240, 'isTransB': True, 'stepM': 2, 'bufferSpace': '2097152, -1, -1'}"

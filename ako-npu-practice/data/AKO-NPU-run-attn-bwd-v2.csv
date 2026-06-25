@@ -1,0 +1,6 @@
+iter,runtime_us,speedup,status,label
+1,146.0,1.11,improved,Batch Cast + merge DMA + reduce barriers
+2,146.0,1.11,no-change,
+3,1.0,94.51,major improvement,
+4,1.0,117.17,improved,Batch vector ops in softmax bwd + reduce
+5,1.0,145.36,improved,Pattern ReduceSum AR for batch row sums

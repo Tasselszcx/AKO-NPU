@@ -1,0 +1,1524 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AKO-NPU 全景分析</title>
+<style>
+  /* ── Reset & Base ── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg: #0f1117;
+    --bg1: #161b27;
+    --bg2: #1e2537;
+    --bg3: #252d42;
+    --border: #2d3855;
+    --accent: #5b8dee;
+    --accent2: #7c3aed;
+    --green: #22c55e;
+    --yellow: #eab308;
+    --red: #ef4444;
+    --orange: #f97316;
+    --cyan: #06b6d4;
+    --pink: #ec4899;
+    --text: #e2e8f0;
+    --text2: #94a3b8;
+    --text3: #64748b;
+    --radius: 10px;
+    --radius-lg: 16px;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.6;
+    font-size: 14px;
+  }
+
+  /* ── Nav ── */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(15,17,23,.9);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    padding: 0 32px;
+    display: flex; align-items: center; gap: 0;
+    height: 52px;
+  }
+  .nav-logo { font-weight: 700; font-size: 15px; color: var(--accent); margin-right: 32px; white-space: nowrap; }
+  nav a {
+    color: var(--text2); text-decoration: none; font-size: 13px;
+    padding: 0 14px; height: 52px; display: flex; align-items: center;
+    border-bottom: 2px solid transparent; transition: all .15s;
+    white-space: nowrap;
+  }
+  nav a:hover { color: var(--text); border-bottom-color: var(--accent); }
+
+  /* ── Layout ── */
+  .page { max-width: 1200px; margin: 0 auto; padding: 0 24px 80px; }
+
+  /* ── Hero ── */
+  .hero {
+    padding: 64px 0 48px;
+    border-bottom: 1px solid var(--border);
+    margin-bottom: 48px;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(91,141,238,.12); border: 1px solid rgba(91,141,238,.3);
+    color: var(--accent); border-radius: 100px; padding: 4px 12px;
+    font-size: 12px; font-weight: 600; margin-bottom: 20px;
+  }
+  .hero h1 { font-size: 42px; font-weight: 800; letter-spacing: -.5px; line-height: 1.15; margin-bottom: 16px; }
+  .hero h1 span { background: linear-gradient(135deg, var(--accent), var(--cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero-sub { font-size: 16px; color: var(--text2); max-width: 680px; line-height: 1.7; }
+  .hero-meta { display: flex; gap: 24px; margin-top: 28px; flex-wrap: wrap; }
+  .hero-meta-item { display: flex; align-items: center; gap: 8px; color: var(--text2); font-size: 13px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+  .dot.yellow { background: var(--yellow); }
+  .dot.blue { background: var(--accent); }
+
+  /* ── Section ── */
+  section { margin-bottom: 64px; }
+  .section-header { margin-bottom: 28px; }
+  .section-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 8px;
+  }
+  h2 { font-size: 26px; font-weight: 700; }
+  h3 { font-size: 17px; font-weight: 600; margin-bottom: 12px; }
+  h4 { font-size: 14px; font-weight: 600; margin-bottom: 8px; color: var(--text); }
+
+  /* ── Cards ── */
+  .card {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 24px;
+  }
+  .card-sm { background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; }
+
+  /* ── Grid ── */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+  .grid-4 { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; }
+  @media (max-width: 900px) {
+    .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+    .hero h1 { font-size: 28px; }
+  }
+
+  /* ── Stat Cards ── */
+  .stat-card {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px 24px;
+    position: relative; overflow: hidden;
+  }
+  .stat-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .stat-card.green::before { background: var(--green); }
+  .stat-card.blue::before { background: var(--accent); }
+  .stat-card.purple::before { background: var(--accent2); }
+  .stat-card.cyan::before { background: var(--cyan); }
+  .stat-card.orange::before { background: var(--orange); }
+  .stat-val { font-size: 36px; font-weight: 800; line-height: 1; margin: 4px 0 6px; }
+  .stat-val.green { color: var(--green); }
+  .stat-val.blue { color: var(--accent); }
+  .stat-val.purple { color: var(--accent2); }
+  .stat-val.cyan { color: var(--cyan); }
+  .stat-val.orange { color: var(--orange); }
+  .stat-label { font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); }
+  .stat-desc { font-size: 12px; color: var(--text2); margin-top: 4px; }
+
+  /* ── Tags ── */
+  .tag {
+    display: inline-flex; align-items: center; border-radius: 6px;
+    padding: 2px 8px; font-size: 11px; font-weight: 600;
+  }
+  .tag-green { background: rgba(34,197,94,.15); color: var(--green); border: 1px solid rgba(34,197,94,.3); }
+  .tag-blue { background: rgba(91,141,238,.15); color: var(--accent); border: 1px solid rgba(91,141,238,.3); }
+  .tag-red { background: rgba(239,68,68,.15); color: var(--red); border: 1px solid rgba(239,68,68,.3); }
+  .tag-yellow { background: rgba(234,179,8,.15); color: var(--yellow); border: 1px solid rgba(234,179,8,.3); }
+  .tag-purple { background: rgba(124,58,237,.15); color: #a78bfa; border: 1px solid rgba(124,58,237,.3); }
+  .tag-orange { background: rgba(249,115,22,.15); color: var(--orange); border: 1px solid rgba(249,115,22,.3); }
+  .tag-cyan { background: rgba(6,182,212,.15); color: var(--cyan); border: 1px solid rgba(6,182,212,.3); }
+
+  /* ── Code ── */
+  code {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 4px; padding: 1px 5px; color: var(--cyan);
+  }
+  pre {
+    font-family: 'SF Mono', 'Fira Code', 'Consolas', monospace;
+    font-size: 12px; background: var(--bg3); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px; overflow-x: auto;
+    line-height: 1.6; color: var(--text2);
+  }
+  pre .c { color: var(--text3); }
+  pre .k { color: var(--accent); }
+  pre .s { color: var(--green); }
+  pre .n { color: var(--cyan); }
+  pre .h { color: var(--yellow); }
+
+  /* ── Flow ── */
+  .flow { display: flex; flex-direction: column; gap: 0; }
+  .flow-item {
+    display: flex; align-items: flex-start; gap: 16px;
+    padding: 16px 0; border-bottom: 1px solid var(--border);
+    position: relative;
+  }
+  .flow-item:last-child { border-bottom: none; }
+  .flow-num {
+    width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent);
+    color: var(--accent); font-weight: 700; font-size: 13px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+    background: rgba(91,141,238,.08);
+  }
+  .flow-content { flex: 1; }
+  .flow-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+  .flow-desc { font-size: 13px; color: var(--text2); }
+
+  /* ── Progress Bar ── */
+  .perf-bar-wrap { margin-bottom: 14px; }
+  .perf-bar-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 6px; }
+  .perf-bar-label { font-size: 13px; font-weight: 600; }
+  .perf-bar-vals { font-size: 12px; color: var(--text2); display: flex; gap: 8px; align-items: baseline; }
+  .perf-speedup { font-weight: 700; font-size: 16px; }
+  .bar-track { height: 8px; background: var(--bg3); border-radius: 99px; overflow: hidden; }
+  .bar-fill { height: 100%; border-radius: 99px; transition: width 0.6s ease; }
+
+  /* ── Timeline ── */
+  .timeline { position: relative; padding-left: 24px; }
+  .timeline::before {
+    content: ''; position: absolute; left: 7px; top: 8px; bottom: 8px;
+    width: 2px; background: var(--border);
+  }
+  .tl-item { position: relative; margin-bottom: 20px; }
+  .tl-dot {
+    position: absolute; left: -21px; top: 5px;
+    width: 12px; height: 12px; border-radius: 50%;
+    border: 2px solid var(--bg); background: var(--accent);
+    z-index: 1;
+  }
+  .tl-dot.green { background: var(--green); }
+  .tl-dot.yellow { background: var(--yellow); }
+  .tl-dot.red { background: var(--red); }
+  .tl-dot.big {
+    width: 16px; height: 16px; left: -23px; top: 3px;
+    background: var(--orange); box-shadow: 0 0 12px rgba(249,115,22,.5);
+  }
+  .tl-title { font-weight: 600; font-size: 13px; }
+  .tl-body { font-size: 12px; color: var(--text2); margin-top: 3px; }
+  .tl-speedup { font-weight: 700; color: var(--green); }
+
+  /* ── Table ── */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  th {
+    text-align: left; padding: 10px 12px; background: var(--bg2);
+    color: var(--text2); font-size: 11px; font-weight: 600;
+    text-transform: uppercase; letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+  }
+  td { padding: 10px 12px; border-bottom: 1px solid rgba(45,56,85,.5); vertical-align: middle; }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(91,141,238,.04); }
+
+  /* ── Architecture Box ── */
+  .arch-box {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 32px; overflow-x: auto;
+  }
+  .arch-row { display: flex; align-items: stretch; gap: 0; }
+  .arch-layer {
+    flex: 1; background: var(--bg2); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 16px 14px;
+    text-align: center; position: relative;
+  }
+  .arch-layer-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text3); margin-bottom: 10px; }
+  .arch-layer-name { font-size: 14px; font-weight: 700; color: var(--text); margin-bottom: 6px; }
+  .arch-layer-desc { font-size: 11px; color: var(--text2); }
+  .arch-arrow {
+    display: flex; align-items: center; padding: 0 8px; color: var(--text3); font-size: 18px;
+  }
+  .arch-connector {
+    display: flex; justify-content: center; margin: 12px 0;
+    color: var(--text3); font-size: 14px;
+  }
+  .arch-files {
+    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; margin-top: 8px;
+  }
+  .arch-file {
+    background: var(--bg3); border: 1px solid var(--border);
+    border-radius: 6px; padding: 3px 8px; font-size: 11px; font-family: monospace;
+    color: var(--cyan);
+  }
+  .arch-file.blue { color: var(--accent); }
+  .arch-file.green { color: var(--green); }
+
+  /* ── Alert ── */
+  .alert {
+    border-radius: var(--radius); padding: 14px 16px; margin: 16px 0;
+    display: flex; gap: 10px; align-items: flex-start; font-size: 13px;
+  }
+  .alert-icon { font-size: 16px; flex-shrink: 0; }
+  .alert.info { background: rgba(91,141,238,.1); border: 1px solid rgba(91,141,238,.25); }
+  .alert.warn { background: rgba(234,179,8,.1); border: 1px solid rgba(234,179,8,.25); }
+  .alert.danger { background: rgba(239,68,68,.1); border: 1px solid rgba(239,68,68,.25); }
+  .alert.success { background: rgba(34,197,94,.1); border: 1px solid rgba(34,197,94,.25); }
+  .alert-content strong { display: block; margin-bottom: 2px; }
+
+  /* ── Divider ── */
+  .divider { border: none; border-top: 1px solid var(--border); margin: 32px 0; }
+
+  /* ── Priority table ── */
+  .priority-dot {
+    display: inline-block; width: 8px; height: 8px; border-radius: 50; margin-right: 3px; border-radius: 50%;
+  }
+
+  /* ── Insight box ── */
+  .insight {
+    background: linear-gradient(135deg, rgba(91,141,238,.08), rgba(124,58,237,.08));
+    border: 1px solid rgba(91,141,238,.2); border-radius: var(--radius-lg);
+    padding: 24px; margin: 16px 0;
+  }
+  .insight-title { font-weight: 700; font-size: 14px; margin-bottom: 10px; color: var(--accent); }
+  .insight-list { list-style: none; }
+  .insight-list li { padding: 5px 0; padding-left: 16px; position: relative; font-size: 13px; color: var(--text2); }
+  .insight-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); }
+
+  /* ── Phase bar ── */
+  .phase-row { display: flex; gap: 4px; margin-bottom: 8px; align-items: stretch; }
+  .phase-seg {
+    border-radius: 6px; padding: 8px 10px; font-size: 11px; font-weight: 600;
+    display: flex; flex-direction: column; justify-content: center;
+    min-width: 60px;
+  }
+  .phase-seg-num { font-size: 16px; font-weight: 800; line-height: 1; }
+  .phase-seg-label { opacity: .75; margin-top: 1px; }
+
+  /* ── Env checklist ── */
+  .check-list { list-style: none; }
+  .check-list li {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 9px 0; border-bottom: 1px solid rgba(45,56,85,.4); font-size: 13px;
+  }
+  .check-list li:last-child { border-bottom: none; }
+  .check-icon { flex-shrink: 0; width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; margin-top: 1px; }
+  .check-icon.must { background: rgba(239,68,68,.2); color: var(--red); }
+  .check-icon.opt { background: rgba(234,179,8,.2); color: var(--yellow); }
+  .check-icon.info-i { background: rgba(91,141,238,.2); color: var(--accent); }
+  .check-content strong { display: block; margin-bottom: 1px; }
+  .check-content span { color: var(--text2); }
+
+  /* ── Opt cards ── */
+  .opt-card {
+    background: var(--bg1); border: 1px solid var(--border);
+    border-radius: var(--radius-lg); padding: 20px; margin-bottom: 12px;
+  }
+  .opt-card-header { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+  .opt-card-icon { font-size: 20px; }
+  .opt-card-title { font-weight: 700; font-size: 15px; }
+  .opt-card-tier { margin-left: auto; font-size: 11px; font-weight: 600; padding: 3px 8px; border-radius: 6px; }
+  .tier-1 { background: rgba(34,197,94,.15); color: var(--green); }
+  .tier-2 { background: rgba(234,179,8,.15); color: var(--yellow); }
+  .tier-3 { background: rgba(91,141,238,.15); color: var(--accent); }
+  .opt-card-body { font-size: 13px; color: var(--text2); line-height: 1.7; }
+  .opt-card-body ul { margin: 8px 0 0 0; padding-left: 18px; }
+  .opt-card-body li { margin-bottom: 4px; }
+  .opt-card-footer { display: flex; gap: 8px; margin-top: 14px; flex-wrap: wrap; }
+
+  /* footer */
+  footer { border-top: 1px solid var(--border); padding: 32px 0; text-align: center; color: var(--text3); font-size: 12px; }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">AKO-NPU</div>
+  <a href="#overview">概览</a>
+  <a href="#architecture">框架结构</a>
+  <a href="#results">实验结果</a>
+  <a href="#patterns">核心规律</a>
+  <a href="#env">复现环境</a>
+  <a href="#optimization">优化方向</a>
+</nav>
+
+<div class="page">
+
+<!-- HERO -->
+<div class="hero" id="overview">
+  <div class="hero-badge">🚀 Agentic Kernel Optimization for NPU</div>
+  <h1>AKO-NPU<br><span>华为昇腾 NPU 算子自动迭代优化框架</span></h1>
+  <p class="hero-sub">
+    给定一个算子（PyTorch 代码或 Ascend C 代码），LLM agent 自动执行「修改代码 → benchmark → 分析 → 迭代」循环，
+    逐步将算子优化至接近硬件峰值。框架本身是一套纯 Markdown 规则文件，NPU 知识来自外部 CANN Skills 实时查阅。
+  </p>
+  <div class="hero-meta">
+    <div class="hero-meta-item"><div class="dot"></div>DSA Indexer 9.33x 加速（125 迭代）</div>
+    <div class="hero-meta-item"><div class="dot"></div>MatMul+LeakyReLU 6.15x 加速（200 迭代）</div>
+    <div class="hero-meta-item"><div class="dot blue"></div>改编自 GPU 上的 AKO4ALL（autoresearch 方法论）</div>
+    <div class="hero-meta-item"><div class="dot yellow"></div>运行于华为昇腾 Atlas 910B / CANN 8.3</div>
+  </div>
+</div>
+
+<!-- STAT ROW -->
+<div class="grid-4" style="margin-bottom:48px">
+  <div class="stat-card green">
+    <div class="stat-label">最高加速比</div>
+    <div class="stat-val green">9.33×</div>
+    <div class="stat-desc">DSA Indexer，38.64→4.14 µs</div>
+  </div>
+  <div class="stat-card blue">
+    <div class="stat-label">最多迭代</div>
+    <div class="stat-val blue">205</div>
+    <div class="stat-desc">dsa-v5 / matmul-asc-v5 各 200 轮</div>
+  </div>
+  <div class="stat-card purple">
+    <div class="stat-label">实验 Case 数</div>
+    <div class="stat-val purple">16</div>
+    <div class="stat-desc">含 MatMul、Attention、Softmax 等</div>
+  </div>
+  <div class="stat-card cyan">
+    <div class="stat-label">框架文件数</div>
+    <div class="stat-val cyan">5</div>
+    <div class="stat-desc">纯 Markdown 规则，零算子代码</div>
+  </div>
+</div>
+
+<!-- SECTION 1: ARCHITECTURE -->
+<section id="architecture">
+  <div class="section-header">
+    <div class="section-num">Section 01</div>
+    <h2>框架结构与执行原理</h2>
+  </div>
+
+  <!-- 三层架构图 -->
+  <div class="arch-box" style="margin-bottom:24px">
+    <div style="text-align:center;margin-bottom:24px">
+      <h3 style="margin:0;font-size:15px;color:var(--text2)">三层架构：规则 → 知识 → 执行</h3>
+    </div>
+    <div class="arch-row">
+      <div class="arch-layer" style="border-color:rgba(91,141,238,.4)">
+        <div class="arch-layer-title">Layer 1 · 规则层</div>
+        <div class="arch-layer-name" style="color:var(--accent)">AKO-NPU 框架</div>
+        <div class="arch-layer-desc">纯 Markdown，不含代码</div>
+        <div class="arch-files">
+          <span class="arch-file">CLAUDE.md</span>
+          <span class="arch-file">OPTIMIZE.md</span>
+          <span class="arch-file">HINTS.md</span>
+          <span class="arch-file">ITERATIONS.md</span>
+          <span class="arch-file green">bench-wrapper.sh</span>
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-layer" style="border-color:rgba(6,182,212,.4)">
+        <div class="arch-layer-title">Layer 2 · 知识层</div>
+        <div class="arch-layer-name" style="color:var(--cyan)">CANN Skills（外部）</div>
+        <div class="arch-layer-desc">Agent 运行时动态查阅</div>
+        <div class="arch-files">
+          <span class="arch-file" style="color:var(--cyan)">环境检查 skill</span>
+          <span class="arch-file" style="color:var(--cyan)">性能采集 skill</span>
+          <span class="arch-file" style="color:var(--cyan)">Tiling 设计 skill</span>
+          <span class="arch-file" style="color:var(--cyan)">API 最佳实践</span>
+          <span class="arch-file" style="color:var(--cyan)">NPU 架构 skill</span>
+        </div>
+      </div>
+      <div class="arch-arrow">→</div>
+      <div class="arch-layer" style="border-color:rgba(34,197,94,.4)">
+        <div class="arch-layer-title">Layer 3 · 执行层</div>
+        <div class="arch-layer-name" style="color:var(--green)">NPU 服务器</div>
+        <div class="arch-layer-desc">CANN 8.3 + Atlas 910B</div>
+        <div class="arch-files">
+          <span class="arch-file" style="color:var(--green)">bisheng 编译器</span>
+          <span class="arch-file" style="color:var(--green)">msprof 性能工具</span>
+          <span class="arch-file" style="color:var(--green)">Ascend C 算子</span>
+        </div>
+      </div>
+    </div>
+    <div class="arch-connector" style="margin-top:20px">
+      <div style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:10px 20px;font-size:13px;color:var(--text2)">
+        <strong style="color:var(--text)">对比 AKO4ALL（GPU 版）</strong>：
+        GPU → 模型内化 CUDA/Triton 知识；NPU → 外部 CANN Skills 实时提供知识（可独立更新）
+      </div>
+    </div>
+  </div>
+
+  <!-- 执行流程 -->
+  <div class="grid-2" style="gap:24px">
+    <div class="card">
+      <h3>完整执行流程</h3>
+      <div class="flow">
+        <div class="flow-item">
+          <div class="flow-num">0</div>
+          <div class="flow-content">
+            <div class="flow-title">环境准备</div>
+            <div class="flow-desc">检测 <code>.claude/skills/</code> 是否存在。未装则自动从 CANN Skills 安装并 symlink 到项目级。确认 NPU 可用（以实际编译为准，不依赖 npu-smi）</div>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">1</div>
+          <div class="flow-content">
+            <div class="flow-title">路由</div>
+            <div class="flow-desc"><code>input/</code> 有 <code>.asc + CMakeLists.txt</code> → Step 3（直接优化）<br>否则 → Step 2（先开发基础版）</div>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">2</div>
+          <div class="flow-content">
+            <div class="flow-title">基础版开发（可选）</div>
+            <div class="flow-desc">按 DEV_TEAM 的 architect → developer → reviewer 工作流，从 PyTorch 代码或文字描述生成可编译 Ascend C 算子</div>
+          </div>
+        </div>
+        <div class="flow-item">
+          <div class="flow-num">3</div>
+          <div class="flow-content">
+            <div class="flow-title">AKO 迭代循环</div>
+            <div class="flow-desc">
+              ① 查阅 skills → ② 形成假设 → ③ 修改 <code>solution/</code> →
+              ④ <code>bash scripts/bench.sh iter-N</code>（build + msprof + verify）→
+              ⑤ 精度失败则 revert → ⑥ 更新 ITERATIONS.md → ⑦ git commit
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <!-- Key Constraints -->
+      <div class="card" style="margin-bottom:16px">
+        <h3>关键约束机制</h3>
+        <div style="display:flex;flex-direction:column;gap:10px;margin-top:8px">
+          <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+            <span style="color:var(--red);font-size:16px;flex-shrink:0">🛡</span>
+            <div><strong style="font-size:13px">精度失败必须立即 revert</strong><br><span style="font-size:12px;color:var(--text2)">防止 agent 带错误结果继续优化（reward hacking）</span></div>
+          </div>
+          <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+            <span style="color:var(--yellow);font-size:16px;flex-shrink:0">📐</span>
+            <div><strong style="font-size:13px">输入 shapes 全程不可变</strong><br><span style="font-size:12px;color:var(--text2)">防止通过改尺寸虚增加速比</span></div>
+          </div>
+          <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+            <span style="color:var(--accent);font-size:16px;flex-shrink:0">🔢</span>
+            <div><strong style="font-size:13px">参数 sweep = 一个迭代</strong><br><span style="font-size:12px;color:var(--text2)">防止 grid search 耗尽迭代 budget</span></div>
+          </div>
+          <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+            <span style="color:var(--green);font-size:16px;flex-shrink:0">⏱</span>
+            <div><strong style="font-size:13px">Baseline = msprof Task Duration</strong><br><span style="font-size:12px;color:var(--text2)">纯 kernel 时间，排除 host I/O 和 launch overhead</span></div>
+          </div>
+          <div class="card-sm" style="display:flex;gap:10px;align-items:flex-start">
+            <span style="color:var(--cyan);font-size:16px;flex-shrink:0">📚</span>
+            <div><strong style="font-size:13px">每轮决策前重读 skill</strong><br><span style="font-size:12px;color:var(--text2)">防止上下文压缩后 NPU 知识丢失</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 停滞策略 -->
+      <div class="card">
+        <h3>停滞处理策略</h3>
+        <div style="display:flex;flex-direction:column;gap:8px;margin-top:8px;font-size:13px">
+          <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg2);border-radius:8px">
+            <span style="color:var(--yellow);font-weight:700;min-width:40px">3 轮</span>
+            <span style="color:var(--text2)">重新 profile，查阅 skill 瓶颈建议，review 历史，制定计划</span>
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;padding:8px;background:var(--bg2);border-radius:8px">
+            <span style="color:var(--red);font-weight:700;min-width:40px">5 轮</span>
+            <span style="color:var(--text2)">重新评估整体策略——Tiling 设计类 skill 重设切分，考虑换架构方向</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bench-wrapper 说明 -->
+  <div style="margin-top:24px" class="card">
+    <h3>bench-wrapper.sh：零成本轨迹追踪</h3>
+    <div class="grid-2" style="gap:16px;margin-top:12px">
+      <div>
+        <p style="font-size:13px;color:var(--text2);margin-bottom:10px">框架不硬编码编译命令——<code>bench-wrapper.sh</code> 是模板，agent 将实际 bench 命令填入 <code>&#123;&#123;BENCH_COMMAND&#125;&#125;</code> 生成 <code>scripts/bench.sh</code>。每次执行自动将 <code>solution/</code> 快照到 <code>trajectory/</code>，附上 <code>output.txt</code>。</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <span class="tag tag-blue">自动 timestamp</span>
+          <span class="tag tag-green">代码快照</span>
+          <span class="tag tag-cyan">输出归档</span>
+          <span class="tag tag-yellow">失败也记录</span>
+        </div>
+      </div>
+      <div>
+        <pre><span class="c"># 每次 bench 自动存档</span>
+TRAJ_DIR="trajectory/<span class="n">${TIMESTAMP}</span>_<span class="n">${LABEL}</span>"
+mkdir -p "$TRAJ_DIR"
+cp -r solution/* "$TRAJ_DIR/"   <span class="c"># 代码快照</span>
+mv _bench_output.txt \
+   "$TRAJ_DIR/output.txt"       <span class="c"># 输出归档</span>
+
+<span class="c"># 使用方式</span>
+bash scripts/bench.sh iter-9    <span class="c"># label 必须填</span></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SECTION 2: RESULTS -->
+<section id="results">
+  <div class="section-header">
+    <div class="section-num">Section 02</div>
+    <h2>实验结果全景</h2>
+  </div>
+
+  <!-- Performance overview bars -->
+  <div class="card" style="margin-bottom:24px">
+    <h3>各案例加速比一览</h3>
+    <div style="margin-top:20px">
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">DSA Indexer（dsa-v5）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--green)">9.33×</span><span>38.64 µs → 4.14 µs · 205 iter</span><span class="tag tag-green">Showcase ★</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:93.3%;background:linear-gradient(90deg,var(--green),#86efac)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">Attention 反向（attn-bwd-v2，小 shape）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--green)">145×</span><span>162 ms → 1.12 ms · 5 iter</span><span class="tag tag-orange">快速突破</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:100%;background:linear-gradient(90deg,var(--orange),#fdba74)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">MatMul（从 PyTorch，matmul-py）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--green)">8.84×</span><span>228 µs → 25.8 µs · 79 iter</span><span class="tag tag-purple">PyTorch 起点</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:88.4%;background:linear-gradient(90deg,var(--accent2),#a78bfa)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">Attention 反向（attn-bwd）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--green)">~10×</span><span>2.778 ms → 0.272 ms · 200 iter</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:72%;background:linear-gradient(90deg,var(--cyan),#67e8f9)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">MatMul+LeakyReLU（matmul-asc-v5）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--green)">6.15×</span><span>226 µs → 36.8 µs · 200 iter</span><span class="tag tag-green">Showcase ★</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:61.5%;background:linear-gradient(90deg,var(--green),#86efac)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">Attention 反向 vs torch_npu（attn-bwd-v5）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--yellow)">2.6–3.6×</span><span>对标厂商算子 · ~25 iter</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:36%;background:linear-gradient(90deg,var(--yellow),#fde047)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">DSA Indexer 反向（dsa-indexer-bwd）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--yellow)">3.3×</span><span>180 ms → 54 ms · 200 iter</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:33%;background:linear-gradient(90deg,var(--accent),#93c5fd)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">MatMul+LeakyReLU（早期版 matmul-asc）</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--yellow)">3.08×</span><span>228 µs → 74 µs · 200 iter</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:30.8%;background:var(--bg3)"></div></div>
+      </div>
+
+      <div class="perf-bar-wrap">
+        <div class="perf-bar-header">
+          <span class="perf-bar-label">Softmax</span>
+          <div class="perf-bar-vals"><span class="perf-speedup" style="color:var(--text3)">1.16×</span><span>53.4 µs → 46 µs · 17 iter（接近理论上限）</span></div>
+        </div>
+        <div class="bar-track"><div class="bar-fill" style="width:11.6%;background:var(--text3)"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Two Main Cases Deep Dive -->
+  <h3 style="margin-bottom:16px">两大 Showcase 优化轨迹详解</h3>
+  <div class="grid-2" style="gap:20px">
+
+    <!-- DSA Indexer -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div>
+          <div style="font-size:18px;font-weight:800;color:var(--green)">9.33×</div>
+          <div style="font-size:13px;font-weight:700">DSA Indexer（dsa-v5）</div>
+          <div style="font-size:11px;color:var(--text2)">Q[64,128] × K^T[128,4096]，bf16 Matmul + 后处理</div>
+        </div>
+      </div>
+
+      <!-- Phase bar -->
+      <div class="phase-row" style="margin-bottom:16px">
+        <div class="phase-seg" style="background:rgba(91,141,238,.15);color:var(--accent);flex:8">
+          <div class="phase-seg-num">Iter 1-8</div>
+          <div class="phase-seg-label">单核调优</div>
+        </div>
+        <div class="phase-seg" style="background:rgba(34,197,94,.25);color:var(--green);flex:14;border:2px solid rgba(34,197,94,.4)">
+          <div class="phase-seg-num">Iter 9</div>
+          <div class="phase-seg-label">多核突破 ★</div>
+        </div>
+        <div class="phase-seg" style="background:rgba(6,182,212,.15);color:var(--cyan);flex:12">
+          <div class="phase-seg-num">Iter 10-22</div>
+          <div class="phase-seg-label">多核调优</div>
+        </div>
+        <div class="phase-seg" style="background:rgba(124,58,237,.15);color:#a78bfa;flex:183">
+          <div class="phase-seg-num">23-205</div>
+          <div class="phase-seg-label">E2E / 验证</div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Baseline <span style="color:var(--text2);font-weight:400">38.64 µs</span></div>
+          <div class="tl-body">单核 Matmul，MTE2 78%，后处理在 host 端</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 2 — CFG_MDL 大包 MTE2 <span class="tl-speedup">→ 1.86× (20.8 µs)</span></div>
+          <div class="tl-body">MDL 模板让 MTE2 从小包变大包传输，单步最大单核提升</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 4 — 常量 Tiling <span class="tl-speedup">→ 1.97× (19.6 µs)</span></div>
+          <div class="tl-body">编译期 Tiling 消除运行期 Scalar overhead（49→28%）</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 5 — enUnitFlag <span class="tl-speedup">→ 2.35× (16.5 µs)</span></div>
+          <div class="tl-body">512B 粒度同步，Cube 和 FixPipe 并行执行</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot big"></div>
+          <div class="tl-title" style="color:var(--orange)">Iter 9 — N-split 多核（8 核）<span class="tl-speedup"> → 7.98× (4.84 µs)</span></div>
+          <div class="tl-body">每核只加载 1/8 B 矩阵，并行带宽 8×。单步跨越 MTE2 硬墙。<br>
+            <em style="color:var(--text3)">注：MultiCoreMatmulTiling 有 bug，需用 MatmulApiTiling 手动算偏移</em></div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 10 — L1 depth 调参 <span class="tl-speedup">→ 8.55× (4.52 µs)</span></div>
+          <div class="tl-body">8 核 shape 下 B full-load（stepKb=2），消除多余 L1 传输</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 17-18 — 16 核 + 编译 flags <span class="tl-speedup">→ 9.33× (4.14 µs)</span></div>
+          <div class="tl-body">16 核 baseN=128 降低 FixPipe 瓶颈；enableStaticPadZeros + enableInit=false 减 Scalar</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-title">Iter 23+ — E2E 优化（host 端）</div>
+          <div class="tl-body">Radix sort 替代 std::nth_element，TopK 120→15 µs；E2E 950→117 µs</div>
+        </div>
+      </div>
+
+      <!-- Bottleneck pie-like -->
+      <div class="card-sm" style="margin-top:16px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">最终 E2E 瓶颈分布（warm）</div>
+        <div style="display:flex;gap:6px">
+          <div style="flex:1.7;background:rgba(91,141,238,.2);border-radius:6px;padding:8px;text-align:center">
+            <div style="font-weight:700;color:var(--accent)">~17 µs</div>
+            <div style="font-size:11px;color:var(--text2)">Kernel</div>
+          </div>
+          <div style="flex:5.3;background:rgba(239,68,68,.2);border-radius:6px;padding:8px;text-align:center">
+            <div style="font-weight:700;color:var(--red)">~53 µs</div>
+            <div style="font-size:11px;color:var(--text2)">D2H (1MB)</div>
+          </div>
+          <div style="flex:4.7;background:rgba(234,179,8,.2);border-radius:6px;padding:8px;text-align:center">
+            <div style="font-weight:700;color:var(--yellow)">~47 µs</div>
+            <div style="font-size:11px;color:var(--text2)">Host 处理</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MatMul+LeakyReLU -->
+    <div class="card">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+        <div>
+          <div style="font-size:18px;font-weight:800;color:var(--green)">6.15×</div>
+          <div style="font-size:13px;font-weight:700">MatMul+LeakyReLU（matmul-asc-v5）</div>
+          <div style="font-size:11px;color:var(--text2)">M=1024, K=256, N=640，从 CANN 样例代码出发</div>
+        </div>
+      </div>
+
+      <div class="phase-row" style="margin-bottom:16px">
+        <div class="phase-seg" style="background:rgba(100,116,139,.15);color:var(--text3);flex:50">
+          <div class="phase-seg-num">Iter 1-50</div>
+          <div class="phase-seg-label">单核调参（低效）</div>
+        </div>
+        <div class="phase-seg" style="background:rgba(249,115,22,.25);color:var(--orange);flex:1;border:2px solid rgba(249,115,22,.4)">
+          <div class="phase-seg-num">51</div>
+          <div class="phase-seg-label">突破</div>
+        </div>
+        <div class="phase-seg" style="background:rgba(34,197,94,.15);color:var(--green);flex:149">
+          <div class="phase-seg-num">Iter 52-200</div>
+          <div class="phase-seg-label">多核调优 + 验证</div>
+        </div>
+      </div>
+
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Baseline <span style="color:var(--text2);font-weight:400">226 µs</span></div>
+          <div class="tl-body">CANN 样例代码，单核 MIX mode</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot yellow"></div>
+          <div class="tl-title">Iter 1-50 — 单核参数调整 <span style="color:var(--text3)">仅 1.18× (192 µs)</span></div>
+          <div class="tl-body">
+            CFG_MDL、baseM/baseN sweep、L1 depth、MatmulConfig flags……<br>
+            50 轮仅提升 18%。单核 MTE2 带宽已到顶。
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot red"></div>
+          <div class="tl-title" style="color:var(--red)">重要发现：MultiCoreMatmulTiling 有 API 陷阱</div>
+          <div class="tl-body">
+            <code>singleCoreM</code> 参数被 Iterate 循环忽略 → 每核处理完整 M → 精度失败<br>
+            正确做法：<code>MatmulApiTiling</code> + <code>Init()</code> 中手动计算 A/C 指针偏移
+          </div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot big"></div>
+          <div class="tl-title" style="color:var(--orange)">Iter 51 — 独立 per-block Tiling（8 核）<span class="tl-speedup"> → 5.36× (42 µs)</span></div>
+          <div class="tl-body">换用正确 API，单步从 1.18x 跳到 5.36x。架构决策 >> 参数调优。</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">Iter 52-113 — 多核参数调优 <span class="tl-speedup">→ 6.13× (37 µs)</span></div>
+          <div class="tl-body">baseN=128 + stepN=5 为 8 核 shape 下的最优配置</div>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot green"></div>
+          <div class="tl-title">Iter 114-200 — 全面 sweep 收敛 <span class="tl-speedup">→ 6.15× (36.8 µs)</span></div>
+          <div class="tl-body">48 配置 sweep 验证，方差测量确认收敛</div>
+        </div>
+      </div>
+
+      <!-- Config card -->
+      <div class="card-sm" style="margin-top:16px">
+        <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">最优配置</div>
+        <pre style="padding:10px;font-size:11px">Cores:    8 blocks (__mix__(1,1))
+Per-block: M=128, N=640, K=256
+Tiling:   baseM=128, baseN=128, stepN=5
+Config:   CFG_MDL + enUnitFlag + isA2B2Shared
+          iterateMode=NORMAL</pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- All cases table -->
+  <div class="card" style="margin-top:24px;overflow-x:auto">
+    <h3>全部实验案例汇总表</h3>
+    <table style="margin-top:16px">
+      <thead>
+        <tr>
+          <th>案例</th>
+          <th>算子类型</th>
+          <th>起点</th>
+          <th>迭代数</th>
+          <th>Baseline</th>
+          <th>最终延迟</th>
+          <th>加速比</th>
+          <th>状态</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>dsa-v5</strong></td>
+          <td>DSA Indexer（Matmul+后处理）</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>205</td>
+          <td>38.64 µs</td>
+          <td style="color:var(--green);font-weight:700">4.14 µs</td>
+          <td style="color:var(--green);font-weight:800">9.33×</td>
+          <td><span class="tag tag-green">★ Showcase</span></td>
+        </tr>
+        <tr>
+          <td><strong>attn-bwd-v2</strong></td>
+          <td>Attention 反向（小 shape）</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>5</td>
+          <td>162 ms</td>
+          <td style="color:var(--green);font-weight:700">1.12 ms</td>
+          <td style="color:var(--green);font-weight:800">145×</td>
+          <td><span class="tag tag-orange">快速突破</span></td>
+        </tr>
+        <tr>
+          <td><strong>matmul-py</strong></td>
+          <td>MatMul（PyTorch 起点）</td>
+          <td><span class="tag tag-purple">PyTorch</span></td>
+          <td>~80</td>
+          <td>228 µs</td>
+          <td style="color:var(--green);font-weight:700">25.8 µs</td>
+          <td style="color:var(--green);font-weight:800">8.84×</td>
+          <td><span class="tag tag-green">良好</span></td>
+        </tr>
+        <tr>
+          <td><strong>matmul-asc-v5</strong></td>
+          <td>MatMul+LeakyReLU</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>200</td>
+          <td>226 µs</td>
+          <td style="color:var(--green);font-weight:700">36.8 µs</td>
+          <td style="color:var(--green);font-weight:800">6.15×</td>
+          <td><span class="tag tag-green">★ Showcase</span></td>
+        </tr>
+        <tr>
+          <td><strong>attn-bwd</strong></td>
+          <td>Attention 反向</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>200</td>
+          <td>2.778 ms</td>
+          <td style="color:var(--green);font-weight:700">0.272 ms</td>
+          <td style="color:var(--green);font-weight:800">~10×</td>
+          <td><span class="tag tag-cyan">含方法论修复</span></td>
+        </tr>
+        <tr>
+          <td><strong>dsa-indexer-bwd</strong></td>
+          <td>DSA Indexer 反向</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>200</td>
+          <td>180 ms</td>
+          <td style="color:var(--yellow);font-weight:700">54 ms</td>
+          <td style="color:var(--yellow);font-weight:800">3.3×</td>
+          <td><span class="tag tag-yellow">收敛</span></td>
+        </tr>
+        <tr>
+          <td><strong>attn-bwd-v5</strong></td>
+          <td>Attention 反向（vs torch_npu）</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>~25</td>
+          <td>11.4 ms</td>
+          <td style="color:var(--yellow);font-weight:700">3.75 ms</td>
+          <td style="color:var(--yellow);font-weight:800">2.6-3.6×</td>
+          <td><span class="tag tag-yellow">对标厂商</span></td>
+        </tr>
+        <tr>
+          <td><strong>matmul-asc</strong></td>
+          <td>MatMul+LeakyReLU（早期）</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>200</td>
+          <td>228 µs</td>
+          <td style="color:var(--text2);font-weight:700">74 µs</td>
+          <td style="color:var(--text2);font-weight:800">3.08×</td>
+          <td><span class="tag tag-blue">v5 重跑更优</span></td>
+        </tr>
+        <tr>
+          <td><strong>softmax</strong></td>
+          <td>Softmax</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>17</td>
+          <td>53.4 µs</td>
+          <td style="color:var(--text2);font-weight:700">46 µs</td>
+          <td style="color:var(--text2);font-weight:800">1.16×</td>
+          <td><span class="tag tag-blue">接近上限</span></td>
+        </tr>
+        <tr>
+          <td><strong>lm-head</strong></td>
+          <td>LM Head（4 shape）</td>
+          <td><span class="tag tag-blue">Ascend C</span></td>
+          <td>—</td>
+          <td>289–1126 µs</td>
+          <td style="color:var(--text2)">—</td>
+          <td style="color:var(--text2)">—</td>
+          <td><span class="tag tag-blue">多 shape</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SECTION 3: PATTERNS -->
+<section id="patterns">
+  <div class="section-header">
+    <div class="section-num">Section 03</div>
+    <h2>跨实验核心规律</h2>
+  </div>
+
+  <div class="alert info">
+    <span class="alert-icon">💡</span>
+    <div class="alert-content">
+      以下规律从 16 个实验案例的 ITERATIONS.md 中人工提炼，代表 agent 在不同算子上多次独立发现的稳定结论。
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:16px;margin-top:20px">
+    <div class="insight">
+      <div class="insight-title">✅ 通用有效优化</div>
+      <ul class="insight-list">
+        <li><strong>CFG_MDL 总优于 CFG_NORM</strong>（dsa Iter13, matmul Iter13）— MDL 大包 MTE2 对矩阵类算子几乎是默认最优，无需反复验证</li>
+        <li><strong>enUnitFlag 几乎总是有益</strong>（dsa Iter5 +15%, matmul-asc-v5）— Cube∥FixPipe 并行，~10-20% 免费提升</li>
+        <li><strong>多核 N-split 是 MTE2 瓶颈突破口</strong>（dsa Iter9, matmul Iter51, matmul-py Iter79）— 并行带宽 > 单核优化上限，是最大单步提升来源</li>
+        <li><strong>Atlas 910B 最优核数 8-16</strong>（多案例一致）— 更多核 Scalar overhead 超越收益，常见于 16 核是甜点</li>
+        <li><strong>enableStaticPadZeros + enableInit=false</strong>（dsa Iter18）— 对固定 shape 额外减少 ~5% Scalar 开销</li>
+      </ul>
+    </div>
+    <div class="insight" style="background:linear-gradient(135deg,rgba(239,68,68,.08),rgba(234,179,8,.08));border-color:rgba(239,68,68,.2)">
+      <div class="insight-title" style="color:var(--red)">❌ 常见陷阱与误判</div>
+      <ul class="insight-list">
+        <li><strong>MultiCoreMatmulTiling 的 singleCoreM bug</strong> — Iterate 忽略该参数，每核重复处理全量 M，导致精度失败，必须改用 MatmulApiTiling 手动偏移</li>
+        <li><strong>MTE2 preload 对小 shape 有害</strong>（dsa Iter7, matmul Iter9）— 预加载开销 > 收益，仅对大 shape 迭代次数多时有效</li>
+        <li><strong>常量 Tiling 在 Atlas A2 不稳定</strong>（matmul-asc-v5 Iter3: 2× 变慢！）— 与 GPU 经验相反，慎用</li>
+        <li><strong>Vector kernel 不能替代 Cube 做 GEMM</strong>（dsa Iter25: 1.4s vs 4µs）— 算力差 ~100×，矩阵操作必须用 Cube API</li>
+        <li><strong>Bench 方法论本身是大坑</strong>（attn-bwd 前 14 轮废了）— 含 host I/O 的计时不代表 kernel 性能，必须先用 msprof 稳定测量</li>
+        <li><strong>MIX mode（aicore + cube）在 CANN 8.3 受限</strong>（dsa Iter25: DDR 地址限制）— __aicore__ 无法访问部分 GM 地址区域</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Bottleneck → Strategy -->
+  <div class="card" style="margin-top:20px">
+    <h3>瓶颈 → 优化策略 对照表</h3>
+    <div style="margin-top:12px;overflow-x:auto">
+      <table>
+        <thead>
+          <tr>
+            <th>msprof 主要瓶颈</th>
+            <th>典型比例</th>
+            <th>优先策略（排序）</th>
+            <th>实验验证</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>MTE2 > 60%</strong><br><span style="font-size:11px;color:var(--text2)">GM→L1 数据加载</span></td>
+            <td><span class="tag tag-red">高</span></td>
+            <td>
+              ① 多核 N-split（最有效）<br>
+              ② CFG_MDL 大包模式<br>
+              ③ 增大 baseN<br>
+              ④ L1 depth 调参
+            </td>
+            <td style="color:var(--text2);font-size:12px">dsa: MTE2→多核 7.98× 单步</td>
+          </tr>
+          <tr>
+            <td><strong>Scalar > 50%</strong><br><span style="font-size:11px;color:var(--text2)">控制流/tiling 计算</span></td>
+            <td><span class="tag tag-yellow">中</span></td>
+            <td>
+              ① enableInit=false<br>
+              ② enableStaticPadZeros<br>
+              ③ 减少核数（减少协调开销）<br>
+              ④ 常量 Tiling（Atlas A2 慎用）
+            </td>
+            <td style="color:var(--text2);font-size:12px">dsa Iter4: 49→28%（+1.06×）</td>
+          </tr>
+          <tr>
+            <td><strong>FixPipe > 50%</strong><br><span style="font-size:11px;color:var(--text2)">L0C→GM 写出</span></td>
+            <td><span class="tag tag-yellow">中</span></td>
+            <td>
+              ① enUnitFlag（最有效，Cube∥FixPipe）<br>
+              ② 减小 baseN（减少单次输出量）<br>
+              ③ 增加核数（分摊写出量）
+            </td>
+            <td style="color:var(--text2);font-size:12px">dsa Iter5: +0.87µs 通过并行</td>
+          </tr>
+          <tr>
+            <td><strong>Cube < 20%</strong><br><span style="font-size:11px;color:var(--text2)">计算单元利用率低</span></td>
+            <td><span class="tag tag-blue">低</span></td>
+            <td>
+              ① 增大 baseM/baseN（更多计算/次）<br>
+              ② 检查是否 MTE2 饿死 Cube<br>
+              ③ 增加核数分摊（小心 Scalar 开销）
+            </td>
+            <td style="color:var(--text2);font-size:12px">多核后 Cube 从 13→35%</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SECTION 4: ENV -->
+<section id="env">
+  <div class="section-header">
+    <div class="section-num">Section 04</div>
+    <h2>复现环境要求</h2>
+  </div>
+
+  <div class="alert danger">
+    <span class="alert-icon">⚠️</span>
+    <div class="alert-content">
+      <strong>无法在 GPU 或 CPU 上仿真复现</strong>
+      msprof、Ascend C 编译器（bisheng）、NPU 内核执行均需真实昇腾硬件。CANN 提供的仿真模式功能受限，无法复现性能数据。
+    </div>
+  </div>
+
+  <div class="grid-2" style="gap:20px;margin-top:20px">
+    <div class="card">
+      <h3>硬件要求</h3>
+      <ul class="check-list" style="margin-top:12px">
+        <li>
+          <div class="check-icon must">必</div>
+          <div class="check-content">
+            <strong>华为昇腾 NPU</strong>
+            <span>实验硬件：Atlas A2 / Ascend 910B。其他型号（950PR、A3）可能需调整部分 API（如 enableRelu 仅 950 支持）</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon must">必</div>
+          <div class="check-content">
+            <strong>x86_64 服务器</strong>
+            <span>实验服务器：Intel Xeon Platinum 8468V（AVX-512，用于 host 端优化）</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon opt">建议</div>
+          <div class="check-content">
+            <strong>独占 NPU 卡</strong>
+            <span>用 <code>ASCEND_RT_VISIBLE_DEVICES=&lt;卡号&gt;</code> 隔离，避免多任务干扰 msprof 时序</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3>软件版本</h3>
+      <ul class="check-list" style="margin-top:12px">
+        <li>
+          <div class="check-icon must">必</div>
+          <div class="check-content">
+            <strong>CANN 8.3.RC1</strong>
+            <span>实验环境版本。部分 API（<code>__kfc_workspace__</code>、MIX mode 行为）版本间有差异</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon must">必</div>
+          <div class="check-content">
+            <strong>bisheng 编译器</strong>
+            <span>LLVM-based，含 Ascend C 前端。注意：OpenMP 运行时为 <code>__kmpc_*</code>（LLVM），与 <code>libgomp</code> ABI 不兼容</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon must">必</div>
+          <div class="check-content">
+            <strong>msprof 性能工具</strong>
+            <span>op level profiling，输出 OpBasicInfo / PipeUtilization / Memory CSV。<code>--warm-up=10 --launch-count=10</code> 为标准参数</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon opt">可选</div>
+          <div class="check-content">
+            <strong>npu-smi</strong>
+            <span>HINTS.md 特别说明：无 npu-smi 不代表 NPU 不可用，以实际编译运行为准</span>
+          </div>
+        </li>
+        <li>
+          <div class="check-icon info-i">i</div>
+          <div class="check-content">
+            <strong>Claude Code CLI</strong>
+            <span>用 <code>claude --dangerously-skip-permissions</code> 运行，<code>.claude/settings.local.json</code> 已预设全权限</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Reproduction steps -->
+  <div class="card" style="margin-top:20px">
+    <h3>复现步骤</h3>
+    <div class="grid-2" style="gap:16px;margin-top:16px">
+      <div>
+        <pre><span class="c"># Step 1: 克隆框架</span>
+git clone &lt;ako-npu-repo&gt; AKO-NPU
+cd AKO-NPU
+
+<span class="c"># Step 2: 克隆并安装 CANN Skills</span>
+git clone https://gitcode.com/cann/skills.git
+<span class="c"># 找 DEV_TEAM（含 init.sh + AGENTS.md 的子目录）</span>
+cd skills/ops/teams/ops-direct-invoke
+bash init.sh project claude
+cd ../../..
+
+<span class="c"># Step 3: 提升 skills 到项目级</span>
+mkdir -p .claude/skills .claude/agents
+DEV_TEAM_CLAUDE="skills/ops/teams/ops-direct-invoke/.claude"
+for s in "$DEV_TEAM_CLAUDE"/skills/*/; do
+  ln -sfn "$(realpath "$s")" \
+    .claude/skills/$(basename "$s")
+done
+for a in "$DEV_TEAM_CLAUDE"/agents/*/; do
+  ln -sfn "$(realpath "$a")" \
+    .claude/agents/$(basename "$a")
+done</pre>
+      </div>
+      <div>
+        <pre><span class="c"># Step 4: 放置输入</span>
+<span class="c"># 方式A: 直接用 Ascend C 代码</span>
+cp your_kernel.asc input/
+cp CMakeLists.txt input/
+
+<span class="c"># 方式B: 复现 showcase 案例</span>
+cp practice/cases/AKO-NPU-run-matmul-asc-v5\
+   /input/* input/
+
+<span class="c"># Step 5: 启动优化</span>
+ASCEND_RT_VISIBLE_DEVICES=0 \
+  claude --dangerously-skip-permissions
+
+<span class="c"># 提示词（在 Claude 中输入）:</span>
+<span class="s">"Follow the instructions in CLAUDE.md.
+Optimize for at least 50 iterations."</span></pre>
+
+        <div class="card-sm" style="margin-top:12px">
+          <div style="font-size:12px;font-weight:600;margin-bottom:8px;color:var(--text2)">时间成本估算</div>
+          <table style="font-size:12px">
+            <tr><td style="padding:4px 8px 4px 0;color:var(--text2)">单次迭代</td><td style="padding:4px">1–3 分钟</td></tr>
+            <tr><td style="padding:4px 8px 4px 0;color:var(--text2)">50 迭代</td><td style="padding:4px">1–3 小时</td></tr>
+            <tr><td style="padding:4px 8px 4px 0;color:var(--text2)">200 迭代</td><td style="padding:4px">8–12 小时</td></tr>
+            <tr><td style="padding:4px 8px 4px 0;color:var(--text2)">Token 消耗</td><td style="padding:4px">数百万/50 iter</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- SECTION 5: OPTIMIZATION -->
+<section id="optimization">
+  <div class="section-header">
+    <div class="section-num">Section 05</div>
+    <h2>后续优化方向</h2>
+  </div>
+
+  <p style="color:var(--text2);font-size:14px;margin-bottom:24px;max-width:700px">
+    以下三个层面的改进方向，基于对 16 个实验案例中 agent 行为的人工观察和问题归因。
+    每项均标注了实现难度和预期收益。
+  </p>
+
+  <!-- Layer 1: Agent Framework -->
+  <h3 style="margin-bottom:12px;display:flex;align-items:center;gap:8px">
+    <span style="width:8px;height:24px;background:var(--accent);border-radius:3px;display:inline-block"></span>
+    4.1 Agent 框架层
+  </h3>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">📊</span>
+      <div class="opt-card-title">停滞检测：从计数到统计显著性</div>
+      <span class="opt-card-tier tier-1">★★★★★ 优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>用「连续 3/5 轮无改善」的死计数规则。但 NPU 延迟有 ~10% 噪声，「真实改善」与「测量噪声」无法区分。实验中大量 no-change 迭代实为统计噪声，agent 却继续在错误方向打转。
+      <ul>
+        <li>将 ITERATIONS.md 模板增加 <code>Runtime(std)</code> 字段，bench 脚本强制跑 5 次取均值</li>
+        <li>停滞判定改为：效应量 &lt; ε（如 3%）且 std_overlap &gt; 50%，才算真正无改善</li>
+        <li>加速比只比较 mean，不允许用 best-of-N 代替 mean 汇报</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-green">实现难度：低（改 Markdown 模板）</span>
+      <span class="tag tag-blue">预期收益：减少无效迭代 ~30%</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">🗂</span>
+      <div class="opt-card-title">FINDINGS.md：结构化历史知识积累</div>
+      <span class="opt-card-tier tier-1">★★★★★ 优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>ITERATIONS.md 是自由文本，上下文压缩后 agent 无法高效检索历史发现。实验中 agent 在 100+ 迭代后频繁重复已尝试的配置（如多次尝试 MTE2 preload 已确认失败的参数组合）。
+      <ul>
+        <li>新增 <code>FINDINGS.md</code>，分「已确认有效」「已确认无效」「待验证」三栏</li>
+        <li>每次迭代后强制更新，agent 制定下一步时<strong>优先读 FINDINGS.md</strong> 而非翻历史迭代</li>
+        <li>无效列表尤其重要：如「enableSetTail=false 精度失败」「32 核会 hang」「Vector kernel 替代 Cube 慢 100×」</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-green">实现难度：低（新增模板文件）</span>
+      <span class="tag tag-blue">预期收益：减少重复尝试，节省 budget</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">🏗</span>
+      <div class="opt-card-title">分层探索：架构决策先于参数调优</div>
+      <span class="opt-card-tier tier-2">★★★★☆ 次优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>agent 把架构级决策（多核 vs 单核、算法路径）和参数调优（baseN=128 vs 256）混在一起。matmul-asc-v5 最典型：50 轮单核参数调优只获 1.18×，Iter 51 换 API 一步跳到 5.36×。
+      <ul>
+        <li>在 OPTIMIZE.md 中强制两阶段：Phase 1（架构探索，每方案仅 1 次快速验证）→ Phase 2（参数 sweep，在确定架构后）</li>
+        <li>架构探索清单：① 单核 vs 多核 ② 是否用 Cube API ③ MIX mode 可行性 ④ 数据类型（bf16/fp32）</li>
+        <li>理论极限计算：在 Phase 1 结束前，根据 msprof 数据计算「当前架构的理论下界」，判断是否值得进入 Phase 2</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-yellow">实现难度：中（改 OPTIMIZE.md 流程）</span>
+      <span class="tag tag-blue">预期收益：避免在错误架构上浪费 50+ 轮</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">⚡</span>
+      <div class="opt-card-title">E2E 视角自动引入时机</div>
+      <span class="opt-card-tier tier-2">★★★★☆ 次优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>dsa-v5 在 kernel 优化到 4.14 µs 后，花了近 100 轮才开始关注 E2E。当时 kernel 只占 E2E 的 3.3%，而 host TopK 占 84%。过度优化 kernel 是低效的。
+      <ul>
+        <li>HINTS.md 增加 E2E 触发条件：kernel 连续 5 轮无改善 AND 尚未测量 E2E 时间 → 强制插入 E2E 测量（<code>clock_gettime</code> 各阶段分项计时）</li>
+        <li>若 kernel time &lt; 20% E2E → 自动转向 E2E 最大瓶颈</li>
+        <li>若「理论带宽利用率 &gt; 70%」→ 可宣告 kernel 收敛，不再在 kernel 上投入</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-green">实现难度：低（改 HINTS.md）</span>
+      <span class="tag tag-blue">预期收益：避免过度优化 kernel，及时发现真正瓶颈</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">🔀</span>
+      <div class="opt-card-title">并行实验流水线（多 agent sweep）</div>
+      <span class="opt-card-tier tier-3">★★☆☆☆ 高收益高难度</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>所有迭代串行执行，一次 msprof 就要 2-3 分钟，36 配置 sweep = 1-2 小时。200 迭代 = 整晚不停跑。
+      <ul>
+        <li>利用 Claude Code 的多 agent 能力：主 agent 规划 K 个候选配置 → 派发 K 个子 agent 并行 bench → 汇总选最优</li>
+        <li>前提条件：多 NPU 卡（<code>ASCEND_RT_VISIBLE_DEVICES=0,1,2,3</code>），或验证同卡多进程 msprof 并发限制</li>
+        <li>bench 脚本需改为无状态（输出到不同目录，不共享 <code>trajectory/</code>）</li>
+        <li>sweep 阶段效果最显著：36 配置从 2 小时压缩到 20-30 分钟</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-red">实现难度：高（需要多卡或并发支持验证）</span>
+      <span class="tag tag-blue">预期收益：sweep 速度 5-10×</span>
+    </div>
+  </div>
+
+  <h3 style="margin:28px 0 12px;display:flex;align-items:center;gap:8px">
+    <span style="width:8px;height:24px;background:var(--cyan);border-radius:3px;display:inline-block"></span>
+    4.2 Auto-Research 方法论层
+  </h3>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">🗺</span>
+      <div class="opt-card-title">瓶颈→策略映射表内置到 OPTIMIZE.md</div>
+      <span class="opt-card-tier tier-1">★★★★☆ 优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>agent 的优化假设主要来自 skill 文档推荐，缺乏系统性。50+ 迭代后 agent 开始随机组合 flag，效率极低（dsa-v5 后期 80% 迭代是无效 flag sweep）。
+      <ul>
+        <li>将「Section 03 瓶颈→策略对照表」直接内置到 OPTIMIZE.md，让 agent 每次 profiling 后强制对照查找</li>
+        <li>增加「理论下界估算」模板：数据量 / 硬件峰值带宽 = 理论最小时间。current / theoretical &lt; 1.3× → 该方向收敛，停止</li>
+        <li>增加「搜索状态追踪」字段到 ITERATIONS.md：已穷举空间、待探索空间、预估剩余改善空间</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-green">实现难度：低（改 Markdown）</span>
+      <span class="tag tag-blue">预期收益：减少后期无效 flag sweep</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">📐</span>
+      <div class="opt-card-title">理论极限计算与自动收敛声明</div>
+      <span class="opt-card-tier tier-2">★★★★☆ 次优先</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>当前框架没有「宣告收敛」的机制，agent 会一直跑到 budget 用尽。dsa-v5 Iter 9 多核突破后，理论极限已经触及，但仍继续跑了 190+ 轮基本无效迭代（从 4.52→4.14 µs 仅 8.4%）。
+      <ul>
+        <li>规则：任意停滞节点，agent 必须计算「数据移动下界」：<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;理论最小时间 = Σ(数据量) / 硬件带宽峰值<br>
+            &nbsp;&nbsp;&nbsp;&nbsp;910B GM 带宽 ≈ 1.8 TB/s，per-core ≈ 1.8T/num_cores
+        </li>
+        <li>如果 current ≤ 1.5 × theoretical_min：提示「已接近硬件极限，当前方向收敛，转向 E2E 或其他维度」</li>
+        <li>HINTS.md 中给出各硬件资源参数（L0C、L1、UB 大小，GM 带宽），agent 可直接引用</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-yellow">实现难度：中（需要 skill 提供硬件参数）</span>
+      <span class="tag tag-blue">预期收益：节省 30-50 轮无效迭代</span>
+    </div>
+  </div>
+
+  <h3 style="margin:28px 0 12px;display:flex;align-items:center;gap:8px">
+    <span style="width:8px;height:24px;background:var(--green);border-radius:3px;display:inline-block"></span>
+    4.3 Skill Evolution 层
+  </h3>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">🔄</span>
+      <div class="opt-card-title">跨实验知识提炼 → CANN Skills 反哺</div>
+      <span class="opt-card-tier tier-2">★★★☆☆ 中期</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>16 个实验积累的知识（如「MultiCoreMatmulTiling 的 singleCoreM bug」「MIX mode 在 CANN 8.3 的 GM 地址限制」）留在 ITERATIONS.md 里，下一个实验的 agent 从零学起。每次都要重新踩同一个坑。
+      <ul>
+        <li>建立「实验后知识提炼」流程：实验结束 → 人工/agent 分析 ITERATIONS.md → 提炼为新的 skill 条目 → PR 到 CANN Skills 仓库</li>
+        <li>重点提炼类型：① 已知 API Bug（含版本号）② 平台限制（Atlas A2 vs 950 的差异）③ 经验最优配置（如「8-16 核是 910B 甜点」）</li>
+        <li>在 bench 脚本中加入 <code>context/skill_feedback.md</code> 记录机制，让 agent 主动标记 skill 文档的错误或缺失</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-yellow">实现难度：中（需要人工审查流程）</span>
+      <span class="tag tag-blue">预期收益：每个新实验受益历史全部经验</span>
+    </div>
+  </div>
+
+  <div class="opt-card">
+    <div class="opt-card-header">
+      <span class="opt-card-icon">📈</span>
+      <div class="opt-card-title">Skill 有效性追踪</div>
+      <span class="opt-card-tier tier-3">★★☆☆☆ 长期</span>
+    </div>
+    <div class="opt-card-body">
+      <strong>当前问题：</strong>ITERATIONS.md 的 References 字段记录了引用的 skill，但没有关联「引用后是否有效」。不知道哪些 skill 推荐的策略真正有效，哪些在 Atlas A2 上不适用。
+      <ul>
+        <li>统计各 skill 的引用频率 × 有效率，识别核心 skill 和低质 skill</li>
+        <li>低有效率的 skill 优先更新：内容过时、推荐策略不够具体、Atlas A2 适配度不足</li>
+        <li>可以在 ITERATIONS.md 模板的 References 字段加一个「有效/无效/部分有效」标注</li>
+      </ul>
+    </div>
+    <div class="opt-card-footer">
+      <span class="tag tag-red">实现难度：高（需要工程化基础设施）</span>
+      <span class="tag tag-blue">预期收益：长期提升 skill 质量和可靠性</span>
+    </div>
+  </div>
+
+  <!-- Priority matrix -->
+  <div class="card" style="margin-top:24px">
+    <h3>优化方向优先级矩阵</h3>
+    <div style="overflow-x:auto;margin-top:16px">
+      <table>
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>优化方向</th>
+            <th>层面</th>
+            <th>实现难度</th>
+            <th>预期收益</th>
+            <th>优先级</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>1</td>
+            <td>统计显著性停滞检测</td>
+            <td><span class="tag tag-blue">Agent 框架</span></td>
+            <td><span class="tag tag-green">低</span></td>
+            <td>减少无效迭代 ~30%</td>
+            <td>
+              <span style="color:var(--green)">●●●●●</span>
+            </td>
+          </tr>
+          <tr>
+            <td>2</td>
+            <td>FINDINGS.md 结构化知识积累</td>
+            <td><span class="tag tag-blue">Agent 框架</span></td>
+            <td><span class="tag tag-green">低</span></td>
+            <td>减少重复尝试</td>
+            <td><span style="color:var(--green)">●●●●●</span></td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>瓶颈→策略映射表内置</td>
+            <td><span class="tag tag-cyan">Auto-Research</span></td>
+            <td><span class="tag tag-green">低</span></td>
+            <td>减少后期盲目 sweep</td>
+            <td><span style="color:var(--green)">●●●●</span><span style="color:var(--bg3)">●</span></td>
+          </tr>
+          <tr>
+            <td>4</td>
+            <td>E2E 视角自动引入时机</td>
+            <td><span class="tag tag-blue">Agent 框架</span></td>
+            <td><span class="tag tag-green">低</span></td>
+            <td>避免过度优化 kernel</td>
+            <td><span style="color:var(--green)">●●●●</span><span style="color:var(--bg3)">●</span></td>
+          </tr>
+          <tr>
+            <td>5</td>
+            <td>理论极限计算 + 自动收敛声明</td>
+            <td><span class="tag tag-cyan">Auto-Research</span></td>
+            <td><span class="tag tag-yellow">中</span></td>
+            <td>节省 30-50 轮无效迭代</td>
+            <td><span style="color:var(--green)">●●●●</span><span style="color:var(--bg3)">●</span></td>
+          </tr>
+          <tr>
+            <td>6</td>
+            <td>分层架构探索 + 参数调优分离</td>
+            <td><span class="tag tag-blue">Agent 框架</span></td>
+            <td><span class="tag tag-yellow">中</span></td>
+            <td>避免早期 budget 浪费</td>
+            <td><span style="color:var(--yellow)">●●●</span><span style="color:var(--bg3)">●●</span></td>
+          </tr>
+          <tr>
+            <td>7</td>
+            <td>跨实验知识提炼 → Skills 反哺</td>
+            <td><span class="tag tag-green">Skill Evolution</span></td>
+            <td><span class="tag tag-yellow">中</span></td>
+            <td>每个新实验受益历史经验</td>
+            <td><span style="color:var(--yellow)">●●●</span><span style="color:var(--bg3)">●●</span></td>
+          </tr>
+          <tr>
+            <td>8</td>
+            <td>并行 sweep（多 agent）</td>
+            <td><span class="tag tag-blue">Agent 框架</span></td>
+            <td><span class="tag tag-red">高</span></td>
+            <td>sweep 速度 5-10×</td>
+            <td><span style="color:var(--accent)">●●</span><span style="color:var(--bg3)">●●●</span></td>
+          </tr>
+          <tr>
+            <td>9</td>
+            <td>Skill 有效性追踪系统</td>
+            <td><span class="tag tag-green">Skill Evolution</span></td>
+            <td><span class="tag tag-red">高</span></td>
+            <td>长期 skill 质量提升</td>
+            <td><span style="color:var(--accent)">●●</span><span style="color:var(--bg3)">●●●</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Recommended starting path -->
+  <div class="insight" style="margin-top:24px">
+    <div class="insight-title">🚀 建议的推进路线</div>
+    <ul class="insight-list">
+      <li><strong>复现先行</strong>：选用 <code>matmul-asc-v5</code> 案例（input 在 practice 仓库），跑通 ~50 迭代（约 2 小时）。观察 agent 实际行为，尤其是停滞检测和 skill 查阅模式。</li>
+      <li><strong>低成本框架优化</strong>：首批改动只改 Markdown 文件（HINTS.md + OPTIMIZE.md + ITERATIONS.md 模板），加入统计停滞检测和 FINDINGS.md 机制。用同一个案例对比改前改后的迭代效率。</li>
+      <li><strong>跨实验知识提炼</strong>：从 16 个已有案例中整理「已知陷阱列表」（API Bug、平台限制），写成新的 skill 条目，在下一个实验中验证 agent 是否能主动规避。</li>
+      <li><strong>大方向实验</strong>：选一个新算子，用改进后的框架跑完整实验，与对应的旧框架结果对比：到达同等加速比需要的迭代数是否减少？</li>
+    </ul>
+  </div>
+</section>
+
+</div><!-- /page -->
+
+<footer>
+  <div style="max-width:1200px;margin:0 auto;padding:0 24px">
+    AKO-NPU · 华为昇腾 NPU 算子自动迭代优化框架 · 改编自 AKO4ALL（autoresearch 方法论）·
+    NPU 知识由 <a href="https://gitcode.com/cann/skills" style="color:var(--accent);text-decoration:none">CANN Skills</a> 提供
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+# Hints
+
+## NPU Skills 使用指引
+
+本项目已通过 `init.sh` 将 NPU 开发 skills 注册到 Claude Code 的自动发现机制中。Skills 会在相关场景自动加载，你也可以主动调用。
+
+**使用原则**：
+- 在做技术决策前，先让相关 skill 加载——它们的 description 已在上下文中，Claude 会在需要时自动使用
+- 不要假设你知道 NPU 的 API 用法或限制——让 skill 提供准确信息
+- 每个 skill 的 SKILL.md 是入口，references/ 目录有详细资料
+- 如果 skills 中没有覆盖的知识，标注出来并基于已有信息做最佳判断
+
+## 停滞策略
+
+- Iter 1 前，使用 `ops-profiling` skill 采集 baseline 性能数据。
+- 连续 3 次迭代无改善：重新用 `ops-profiling` profile，查阅 skill 中的瓶颈优化建议，review ITERATIONS.md 寻找规律。制定计划后再继续。
+- 连续 5 次迭代无改善：重新评估整体策略——使用 `ascendc-tiling-design` skill 重新设计 Tiling 方案，考虑是否需要换架构方向。
+
+<!-- 用户可在下方添加额外指令，例如：
+- 优化约束或重点方向
+- 要尝试或要避免的策略
+- Agent 行为控制
+- 依赖策略（如"不要安装任何包"） -->

@@ -1,0 +1,14 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:327:94: error: too many arguments to function call, expected 8, have 9
+                                                             outputCDevice, workspaceDevice, tilingDevice);
+                                                                                             ^~~~~~~~~~~~
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:178:39: note: 'matmul_leakyrelu_custom' declared here
+extern "C" __global__ __aicore__ void matmul_leakyrelu_custom(GM_ADDR a, GM_ADDR b, GM_ADDR bias, GM_ADDR c,
+                                      ^
+2 errors generated.
+make[2]: *** [CMakeFiles/matmul_leakyrelu.dir/build.make:76：CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

@@ -1,0 +1,13 @@
+config_id,baseM,baseN,baseK,traverse,l1_manual,depthA1,stepKa,description,compile_ok,correct,runtime_us
+1,64,128,-1,default,0,0,0,baseN=128,OK,PASS,24.82
+2,64,256,-1,default,0,0,0,baseN=256_verify,OK,PASS,21.30
+3,64,512,-1,default,0,0,0,baseN=512,OK,PASS,21.22
+4,64,256,64,default,0,0,0,baseN256_baseK64,OK,PASS,21.40
+5,64,512,64,default,0,0,0,baseN512_baseK64,OK,PASS,21.70
+6,64,256,128,default,0,0,0,baseN256_baseK128,OK,PASS,22.08
+7,64,512,128,default,0,0,0,baseN512_baseK128,OK,FAIL,N/A
+8,64,256,-1,FIRSTN,0,0,0,baseN256_FIRSTN,OK,PASS,21.26
+9,64,256,128,FIRSTN,0,0,0,baseN256_K128_FIRSTN,OK,PASS,21.14
+10,64,256,-1,default,1,4,2,L1_dA4_sKa2,OK,PASS,21.94
+11,64,256,-1,default,1,8,2,L1_dA8_sKa2,OK,PASS,21.28
+12,64,256,128,default,1,4,2,K128_L1_dA4_sKa2,OK,PASS,21.50

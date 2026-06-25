@@ -1,0 +1,93 @@
+=== Building ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:16 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/build
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== Generating test data ===
+=== Running kernel ===
+=== Verifying correctness ===
+golden_data :  [6266. 6300. 6245. ... 6783. 6659. 6388.]
+output :  [6266. 6300. 6245. ... 6783. 6659. 6388.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== Performance measurement (msprof) ===
+2026-04-09 15:32:40 [INFO]  Op profiling analysis start.
+2026-04-09 15:32:40 [INFO]  Running device task: DeviceProf
+[ERROR]  failed to get file
+[ERROR]  failed to get file
+[ERROR]  failed to get file
+[WARN] <GetCurrentPath> Get current working dir failed.
+[ERROR] <CheckWriteFilePathValid> Failed to get aicore_binary.3812708.139644380104064 file work dir
+[ERROR] <GetPcStartAddr> get kernel offset from pc start failed
+[WARN] <AddLaunchEvent> get pc start addr by stub func failed. pc start addr will fallback to 0
+[ERROR] <GetPcStartAddr> get kernel offset from pc start failed
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE
+[INFO] <WarmUp> Warm Up enabled. times:10
+[ERROR]  Open file failed. path = ./output/output.bin
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+shell-init: error retrieving current directory: getcwd: cannot access parent directories: No such file or directory
+2026-04-09 15:32:45 [INFO]  Profiling running finished. All task success.
+2026-04-09 15:32:45 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE, name is: 0
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 15:32:45 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 15:32:45 [WARN]  Failed to convert start pc in cache line heat map
+2026-04-09 15:32:45 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-09 15:32:45 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 77.563103
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 0
+	Pid: 3812708
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 15:32:45 [INFO]  Profiling results saved in /tmp/msprof_matmul_3811800/OPPROF_20260409153240_LVEXCPSBSIZROBJC
+2026-04-09 15:32:46 [INFO]  Profiling data parse finished.
+2026-04-09 15:32:46 [INFO]  Op profiling finish. Welcome to next use.
+=== msprof results ===
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+matmul_leakyrelu_custom,mix,77.563103,1,2,0,3812708,1800,1800,
+
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,cube0,73.903336,133026,43.406666,0.563723,54.850555,0.712345,21.680000,0.281558,50.342777,0.653802,0.437778,0.005685,82.780861,58.587223,0.760873,41.671310,0.001593,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,48.895000,88011,5.107778,0.066335,9.388333,0.121926,11.185555,0.145267,109.132095,11.636111,0.151118,104.926941,0.022448,NA,NA,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,75.201668,135363,4.811666,0.062489,8.956111,0.116313,10.427222,0.135418,117.068871,10.923889,0.141869,111.768028,0.022400,NA,NA,

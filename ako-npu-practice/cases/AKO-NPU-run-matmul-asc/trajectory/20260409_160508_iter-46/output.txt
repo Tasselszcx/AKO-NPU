@@ -1,0 +1,63 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/build
+Consolidate compiler generated dependencies of target demo
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== Generating test data ===
+=== Running kernel ===
+=== Verifying correctness ===
+golden_data :  [6169. 6589. 6321. ... 5853. 6143. 6290.]
+output :  [6169. 6589. 6321. ... 5853. 6143. 6290.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== Performance measurement (msprof) ===
+2026-04-09 16:05:23 [INFO]  Op profiling analysis start.
+2026-04-09 16:05:23 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-09 16:05:29 [INFO]  Profiling running finished. All task success.
+2026-04-09 16:05:29 [INFO]  Start analyze kernel on device: device0, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 16:05:29 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 16:05:30 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-09 16:05:30 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 86.163445
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 0
+	Pid: 3863901
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 16:05:30 [INFO]  Profiling results saved in /tmp/msprof_matmul_3863325/OPPROF_20260409160523_SVGUNAJBILONGKXP
+2026-04-09 16:05:30 [INFO]  Profiling data parse finished.
+2026-04-09 16:05:30 [INFO]  Op profiling finish. Welcome to next use.
+=== msprof results ===
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+matmul_leakyrelu_custom,mix,86.163445,1,2,0,3863901,1800,1800,
+
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,cube0,83.477776,150260,27.348333,0.318004,49.298889,0.573243,13.709444,0.159412,52.182220,0.606770,0.462778,0.005381,78.308907,56.903889,0.661673,42.904030,0.009998,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,82.699997,148860,4.480000,0.052093,4.690556,0.054541,10.113889,0.117603,120.695724,11.888333,0.138236,102.700821,0.096866,NA,NA,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,58.160000,104688,2.202778,0.025614,1.742778,0.020265,4.973889,0.057836,245.422272,5.870000,0.068256,207.996857,0.098901,NA,NA,

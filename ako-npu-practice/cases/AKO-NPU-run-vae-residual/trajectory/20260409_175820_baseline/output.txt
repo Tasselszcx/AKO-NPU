@@ -1,0 +1,73 @@
+=== [1/5] Build ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/latest/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-vae-residual/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:5 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-vae-residual/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-vae-residual/solution/build
+[ 50%] Building ASC object CMakeFiles/vae_residual_block.dir/vae_residual_block.asc.o
+[100%] Linking ASC executable vae_residual_block
+[100%] Built target vae_residual_block
+=== [2/5] Generate test data ===
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/dynamo/__init__.py:102: UserWarning: Register eager implementation for the 'npu' backend of dynamo, as torch_npu was not compiled with torchair.
+  warnings.warn(
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/_path_manager.py:66: UserWarning: Permission mismatch: The owner of /usr/local/conda/lib/python3.11/site-packages/torch_npu/lib/libop_plugin_atb.so does not match.
+  warnings.warn(f"Permission mismatch: The owner of {path} does not match.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/latest owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+/usr/local/conda/lib/python3.11/site-packages/torch_npu/utils/collect_env.py:58: UserWarning: Warning: The /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/ascend_toolkit_install.info owner does not match the current owner.
+  warnings.warn(f"Warning: The {path} owner does not match the current owner.")
+Generating test data: B=1, C=256, H=64, W=64
+  input_x: (1, 256, 64, 64) [4194304 bytes]
+  conv1_weight: (256, 256, 3, 3) [2359296 bytes]
+  norm1_weight: (256,)
+  conv2_weight: (256, 256, 3, 3)
+  golden: (1, 256, 64, 64) [4194304 bytes]
+  golden range: [-0.708945, 4.824515]
+Golden data generated with PyTorch
+=== [3/5] Run correctness check ===
+OK: im2col_1
+OK: weight_transpose_1
+OK: matmul_1
+OK: transpose_1
+OK: groupnorm_1
+OK: silu_1
+OK: im2col_2
+OK: weight_transpose_2
+OK: matmul_2
+OK: transpose_2
+OK: groupnorm_2
+OK: silu_2
+OK: residual_add
+Shape: (1048576,)
+Max absolute diff: 0.01144409
+Mean absolute diff: 0.00068724
+Max relative error: 5808.25537109
+Mean relative error: 0.01802375
+Output range: [-0.709121, 4.820183]
+Golden range: [-0.708945, 4.824515]
+Verification PASSED! (rtol=0.01, atol=0.01)
+=== [4/5] msprof performance profiling ===
+2026-04-09 17:58:41 [ERROR] The current file /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-vae-residual/solution/build/ should not be allowed to have write permissions to any other users
+2026-04-09 17:58:41 [ERROR] output parent dir permission wrong
+2026-04-09 17:58:41 [INFO]  Use msprof op --help or msprof op simulator --help for more details
+=== [5/5] Performance summary ===

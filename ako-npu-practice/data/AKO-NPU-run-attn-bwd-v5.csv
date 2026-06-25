@@ -1,0 +1,26 @@
+iter,runtime_us,speedup,status,label
+0,53260.0,1.0,baseline,Baseline torch_npu
+1,52940.0,1.0,no-change,
+2,52560.0,1.03,improved,"Broadcast matmul, avoid GQA expand"
+3,52630.0,1.0,regression,
+4,53090.0,1.08,improved,"In-place ops (mul_, div_, sub_)"
+5,53170.0,1.03,no-change,
+6,39700.0,1.34,failed,
+7,39400.0,1.35,improved,Native softmax bwd + matching ref
+8,39380.0,1.0,no-change,
+9,39740.0,1.36,improved,In-place dropout + native softmax bwd
+10,34640.0,1.64,improved,BF16 matmul + f32 softmax bwd
+11,28450.0,1.9,improved,BF16 dropout backward
+12,27970.0,1.91,improved,Pre-scaled bf16 dropout mask
+13,15640.0,3.41,improved,All-bf16 pipeline (incl. softmax bwd)
+14,15430.0,3.45,improved,Minimize op count + chain expressions
+15,15000.0,3.55,improved,Fully bf16 pipeline (incl. GQA sum)
+16,14780.0,3.6,improved,4D broadcast matmul (vs 5D)
+17,18750.0,,regression,
+18,,,failed,
+19,14740.0,3.61,no-change,
+20,14800.0,3.6,improved,Direct 4D matmul for matmul2
+21,15100.0,,regression,
+22,14860.0,3.58,no-change,
+23,14870.0,3.58,improved,Reorder matmul2 before softmax_bwd
+24,14930.0,3.57,no-change,

@@ -1,0 +1,8 @@
+iter,runtime_us,speedup,status,label
+0,226.09,1.00,baseline,Baseline
+1,215.0,1.05,improved,CFG_MDL tuning
+50,192.0,1.18,improved,baseM=512
+51,42.0,5.36,improved,Multi-core 8 blocks via MatmulApiTiling
+52,40.0,5.65,improved,Multi-core tuning
+113,37.0,6.13,improved,baseN=128 + stepN=5
+200,36.8,6.15,no-change,Converged

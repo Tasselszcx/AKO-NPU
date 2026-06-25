@@ -1,0 +1,14 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+    .iterateMode = AscendC::IterateMode::ITERATE_MODE_ALL,
+                   ^~~~~~~~~~~~~~~~~~~~
+                   IterateMode
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/ascendc/include/highlevel_api/lib/matmul/matmul_config.h:98:6: note: 'IterateMode' declared here
+enum IterateMode : uint8_t {
+     ^
+2 errors generated.
+make[2]: *** [CMakeFiles/matmul_leakyrelu.dir/build.make:76：CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

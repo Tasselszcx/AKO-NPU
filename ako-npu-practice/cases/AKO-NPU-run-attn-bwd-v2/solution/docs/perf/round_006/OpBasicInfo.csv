@@ -1,0 +1,2 @@
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+attention_backward_custom_mix_aic,mix,1722.908936,24,48,5,780324,1800,1800,

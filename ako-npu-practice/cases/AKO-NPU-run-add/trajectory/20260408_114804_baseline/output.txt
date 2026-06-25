@@ -1,0 +1,17 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+Consolidate compiler generated dependencies of target add_custom
+[100%] Built target add_custom
+Build OK
+=== Generating data ===
+Generated test data: 32768 elements, dtype=<class 'numpy.float32'>
+  input/input_x.bin: (32768,), float32
+  input/input_y.bin: (32768,), float32
+  output/golden.bin: (32768,), float32
+=== Running benchmark with msprof ===
+2026-04-08 11:48:05 [ERROR] The current file /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/ should not be allowed to have write permissions to any other users
+2026-04-08 11:48:05 [ERROR] output parent dir permission wrong
+2026-04-08 11:48:05 [INFO]  Use msprof op --help or msprof op simulator --help for more details
+ERROR: output.bin not found

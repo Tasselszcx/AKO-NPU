@@ -1,0 +1,56 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:36:5: warning: ISO C++ requires field designators to be specified in declaration order; field 'iterateMode' will be initialized after field 'enableGetTensorC' [-Wreorder-init-list]
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:35:20: note: previous initialization for field 'iterateMode' is here
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+2026-04-11 01:54:00 [INFO]  Start analyze kernel on device: device3, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_, name is: 0
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 01:54:01 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 01:54:01 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 01:54:01 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: cube
+	Task Duration(us): 12.040482
+	Block Dim: 22
+	Mix Block Dim: 
+	Device Id: 3
+	Pid: 2829755
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 01:54:01 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411015354_EADZXOGWSNSZTPVV
+2026-04-11 01:54:01 [INFO]  Profiling data parse finished.
+2026-04-11 01:54:01 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+error ratio: 0.000000, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+test pass!
+=== [5/5] Extract performance ===
+=== PERFORMANCE SUMMARY ===
+  leakyrelu_kernel: mean=8.16us, min=8.16us, max=8.16us (1 runs)
+  matmul_leakyrelu_custom: mean=12.04us, min=12.04us, max=12.04us (1 runs)
+Total kernel time (sum of means): 20.20 us
+=== BENCH COMPLETE ===

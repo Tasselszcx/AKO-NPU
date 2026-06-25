@@ -1,0 +1,18 @@
+=== [1/5] Setup CANN environment ===
+=== [2/5] Build ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/matmul_leakyrelu.asc:364:42: error: no member named 'baseKa' in 'AscendC::tiling::TCubeTiling'; did you mean 'baseK'?
+              << " baseK=" << tilingData.baseKa
+                                         ^~~~~~
+                                         baseK
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/include/kernel_tiling/kernel_tiling.h:316:13: note: 'baseK' declared here
+    int32_t baseK = 0;
+            ^
+1 error generated.
+make[2]: *** [CMakeFiles/matmul_leakyrelu_custom.dir/build.make:76：CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu_custom.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

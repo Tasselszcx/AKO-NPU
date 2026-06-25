@@ -1,0 +1,76 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:36:5: warning: ISO C++ requires field designators to be specified in declaration order; field 'iterateMode' will be initialized after field 'enableGetTensorC' [-Wreorder-init-list]
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/matmul_leakyrelu.asc:35:20: note: previous initialization for field 'iterateMode' is here
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+2026-04-11 01:32:04 [INFO]  Start analyze kernel on device: device3, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_, name is: 0
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 01:32:04 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 01:32:05 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 01:32:05 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: cube
+	Task Duration(us): 12.060482
+	Block Dim: 22
+	Mix Block Dim: 
+	Device Id: 3
+	Pid: 2779529
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 01:32:05 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411013158_ASSXOCCZQQEPKUVF
+2026-04-11 01:32:05 [INFO]  Profiling data parse finished.
+2026-04-11 01:32:05 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+data index: 087382, expected: -0.004922528, actual: -0.000004923, rdiff: 0.999000
+data index: 087383, expected: -0.008134331, actual: -0.000008134, rdiff: 0.999000
+data index: 087384, expected: -0.038626086, actual: -0.000038626, rdiff: 0.999000
+data index: 087385, expected: -0.011971581, actual: -0.000011972, rdiff: 0.999000
+data index: 131076, expected: -0.016530717, actual: -0.000016531, rdiff: 0.999000
+data index: 174764, expected: -0.001557914, actual: -0.000001558, rdiff: 0.999000
+data index: 174766, expected: -0.005733448, actual: -0.000005733, rdiff: 0.999000
+data index: 174768, expected: -0.018812003, actual: -0.000018812, rdiff: 0.999000
+data index: 218455, expected: -0.036918409, actual: -0.000036918, rdiff: 0.999000
+data index: 218458, expected: -0.011448128, actual: -0.000011448, rdiff: 0.999000
+data index: 218459, expected: -0.014442725, actual: -0.000014443, rdiff: 0.999000
+data index: 262146, expected: -0.003599607, actual: -0.000003600, rdiff: 0.999000
+data index: 262148, expected: -0.031604018, actual: -0.000031604, rdiff: 0.999000
+data index: 305839, expected: -0.014521136, actual: -0.000014521, rdiff: 0.999000
+data index: 349529, expected: -0.004370445, actual: -0.000004370, rdiff: 0.999000
+data index: 393219, expected: -0.012172454, actual: -0.000012172, rdiff: 0.999000
+data index: 393220, expected: -0.035849184, actual: -0.000035849, rdiff: 0.999000
+data index: 393222, expected: -0.023646867, actual: -0.000023647, rdiff: 0.999000
+data index: 393223, expected: -0.007778551, actual: -0.000007779, rdiff: 0.999000
+data index: 436910, expected: -0.008025860, actual: -0.000008026, rdiff: 0.999000
+error ratio: 0.000046, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+test pass!
+=== [5/5] Extract performance ===
+=== PERFORMANCE SUMMARY ===
+  leakyrelu_kernel: mean=9.24us, min=9.24us, max=9.24us (1 runs)
+  matmul_leakyrelu_custom: mean=12.06us, min=12.06us, max=12.06us (1 runs)
+Total kernel time (sum of means): 21.30 us
+=== BENCH COMPLETE ===

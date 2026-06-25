@@ -1,0 +1,305 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: iter-26
+=== [1/5] Build ===
+[ 50%] Building ASC object CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o
+[100%] Linking ASC executable dsa_indexer
+[100%] Built target dsa_indexer
+=== [2/5] Generate test data ===
+Generating data: B=1, S_q=1, S_kv=4096
+  input_q.bin: (1, 1, 64, 128) uint16 (16384 bytes)
+  input_k.bin: (1, 4096, 128) uint16 (1048576 bytes)
+  input_weights.bin: (1, 1, 64, 1) uint16 (128 bytes)
+  golden_topk_indices.bin: (1, 1, 2048) int64 (16384 bytes)
+  golden_index_score.bin: (1, 1, 4096) uint16 (8192 bytes)
+
+  index_score range: [-0.9228, 1.2309]
+  top-5 indices: [2878  419  844 3598  207]
+  top-5 values: [1.2309233 1.1188761 1.0599387 1.0478342 1.0153892]
+=== [3/5] Run kernel ===
+DSA Indexer: B=1, S_q=1, S_kv=4096
+  coreNum=16, topkK=2048, topkInner=4096, topkTmpSize=0
+  wsSysSize=16777216, wsTotalSize=17842176
+
+--- Warmup (3 runs) ---
+  Warmup 1: E2E = 1584.85 us
+  Warmup 2: E2E = 424.79 us
+  Warmup 3: E2E = 341.41 us
+
+--- Timed runs (5 runs) ---
+  [detail] Launch: 8.41 us, Sync: 42.05 us
+
+=== End-to-End Timing Breakdown ===
+  Kernel launch+sync:       50.45 us
+  D2H transfer (1MB):       49.83 us
+  Data reorder:             65.50 us
+  Host post-processing:    152.36 us
+    - ReLU+weighted sum:    24.81 us
+    - TopK:               126.08 us
+    - bf16 cast:            0.51 us
+  H2D writeback:            16.31 us
+  Total end-to-end:        334.63 us
+  Breakdown: kernel 15.1%, D2H 14.9%, reorder 19.6%, host 45.5%, writeback 4.9%
+  Run 1: E2E = 334.63 us
+  Run 2: E2E = 294.95 us
+  Run 3: E2E = 308.40 us
+  Run 4: E2E = 286.59 us
+  Run 5: E2E = 298.39 us
+
+=== E2E Summary: best=286.59 us, mean=304.59 us ===
+=== [4/5] Verify correctness ===
+Verifying DSA Indexer: B=1, S_q=1, S_kv=4096
+index_score verification:
+  Max absolute diff: 0.000000
+  MERE (max rel err): 0.000000 (threshold: 0.007812)
+  MARE (mean rel err): 0.000000 (threshold: 0.078125)
+  index_score PASSED
+
+topk_indices verification:
+  Match rate: 2048/2048 (100.00%)
+  topk_indices PASSED (>99% match)
+
+=== Verification PASSED ===
+=== [5/5] Profile with msprof ===
+2026-04-11 06:19:04 [INFO]  Op profiling analysis start.
+2026-04-11 06:19:04 [INFO]  Running device task: DeviceProf
+DSA Indexer: B=1, S_q=1, S_kv=4096
+  coreNum=16, topkK=2048, topkInner=4096, topkTmpSize=0
+  wsSysSize=16777216, wsTotalSize=17842176
+
+--- Warmup (3 runs) ---
+[INFO] <ProfData> Start profiling on device 1, kernel: dsa_indexer_custom
+[INFO] <WarmUp> Warm Up enabled. times:5
+  Warmup 1: E2E = 288419.42 us
+[INFO] <ProfData> Start profiling on device 1, kernel: dsa_indexer_custom
+[INFO] <WarmUp> Warm Up enabled. times:5
+  Warmup 2: E2E = 223278.84 us
+[INFO] <ProfData> Start profiling on device 1, kernel: dsa_indexer_custom
+[INFO] <WarmUp> Warm Up enabled. times:5
+  Warmup 3: E2E = 224440.29 us
+
+--- Timed runs (5 runs) ---
+  [detail] Launch: 711.00 us, Sync: 9.68 us
+
+=== End-to-End Timing Breakdown ===
+  Kernel launch+sync:      720.68 us
+  D2H transfer (1MB):       76.42 us
+  Data reorder:            198.15 us
+  Host post-processing:    231.52 us
+    - ReLU+weighted sum:    47.83 us
+    - TopK:               180.21 us
+    - bf16 cast:            1.15 us
+  H2D writeback:            25.64 us
+  Total end-to-end:       1252.66 us
+  Breakdown: kernel 57.5%, D2H 6.1%, reorder 15.8%, host 18.5%, writeback 2.0%
+  Run 1: E2E = 1252.66 us
+  Run 2: E2E = 1086.59 us
+  Run 3: E2E = 984.19 us
+  Run 4: E2E = 899.69 us
+  Run 5: E2E = 943.16 us
+
+=== E2E Summary: best=899.69 us, mean=1033.26 us ===
+2026-04-11 06:19:09 [INFO]  Profiling running finished. All task success.
+2026-04-11 06:19:09 [INFO]  Start analyze kernel on device: device1, kernel: dsa_indexer_custom, name is: 0
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 06:19:10 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 06:19:10 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 06:19:10 [INFO]  Operator Basic Information:
+
+	Op Name: dsa_indexer_custom
+	Op Type: cube
+	Task Duration(us): 4.300172
+	Block Dim: 16
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 3511314
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 06:19:10 [INFO]  Start analyze kernel on device: device1, kernel: dsa_indexer_custom, name is: 1
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 06:19:11 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 06:19:11 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 06:19:11 [INFO]  Operator Basic Information:
+
+	Op Name: dsa_indexer_custom
+	Op Type: cube
+	Task Duration(us): 4.480179
+	Block Dim: 16
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 3511314
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 06:19:11 [INFO]  Start analyze kernel on device: device1, kernel: dsa_indexer_custom, name is: 2
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 06:19:12 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 06:19:12 [INFO]  Performance Summary Report:
+
+	1) aicore compute usage lower than 20%.
+
+2026-04-11 06:19:12 [INFO]  Operator Basic Information:
+
+	Op Name: dsa_indexer_custom
+	Op Type: cube
+	Task Duration(us): 4.260170
+	Block Dim: 16
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 3511314
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 06:19:12 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/msprof_output/OPPROF_20260411061904_ZREZYFZNBNTMEAFH
+2026-04-11 06:19:13 [INFO]  Profiling data parse finished.
+2026-04-11 06:19:13 [INFO]  Op profiling finish. Welcome to next use.
+WARNING: msprof output not found
+Running simple timing with multiple invocations...
+  Warmup 1: E2E = 1317.28 us
+  Warmup 2: E2E = 406.71 us
+  Warmup 3: E2E = 340.32 us
+--- Timed runs (5 runs) ---
+  [detail] Launch: 8.18 us, Sync: 38.54 us
+  Kernel launch+sync:       46.72 us
+  D2H transfer (1MB):       49.15 us
+  Data reorder:             65.24 us
+  Host post-processing:    165.76 us
+    - ReLU+weighted sum:    25.95 us
+    - TopK:               138.59 us
+    - bf16 cast:            0.44 us
+  H2D writeback:            15.41 us
+  Total end-to-end:        342.48 us
+  Run 1: E2E = 342.48 us
+  Run 2: E2E = 321.08 us
+  Run 3: E2E = 356.61 us
+  Run 4: E2E = 317.56 us
+  Run 5: E2E = 327.93 us
+=== E2E Summary: best=317.56 us, mean=333.13 us ===
+
+real	0m2.909s
+user	0m1.181s
+sys	0m0.672s
+  Warmup 1: E2E = 1530.63 us
+  Warmup 2: E2E = 401.69 us
+  Warmup 3: E2E = 320.12 us
+--- Timed runs (5 runs) ---
+  [detail] Launch: 7.42 us, Sync: 40.79 us
+  Kernel launch+sync:       48.21 us
+  D2H transfer (1MB):       48.89 us
+  Data reorder:             61.47 us
+  Host post-processing:    149.27 us
+    - ReLU+weighted sum:    23.12 us
+    - TopK:               124.95 us
+    - bf16 cast:            0.48 us
+  H2D writeback:            15.25 us
+  Total end-to-end:        323.23 us
+  Run 1: E2E = 323.23 us
+  Run 2: E2E = 293.32 us
+  Run 3: E2E = 301.43 us
+  Run 4: E2E = 274.68 us
+  Run 5: E2E = 299.43 us
+=== E2E Summary: best=274.68 us, mean=298.42 us ===
+
+real	0m2.903s
+user	0m1.160s
+sys	0m0.504s
+  Warmup 1: E2E = 1275.09 us
+  Warmup 2: E2E = 413.71 us
+  Warmup 3: E2E = 344.64 us
+--- Timed runs (5 runs) ---
+  [detail] Launch: 7.85 us, Sync: 39.83 us
+  Kernel launch+sync:       47.67 us
+  D2H transfer (1MB):       49.18 us
+  Data reorder:             72.58 us
+  Host post-processing:    160.13 us
+    - ReLU+weighted sum:    24.56 us
+    - TopK:               134.25 us
+    - bf16 cast:            0.48 us
+  H2D writeback:            16.22 us
+  Total end-to-end:        345.96 us
+  Run 1: E2E = 345.96 us
+  Run 2: E2E = 300.40 us
+  Run 3: E2E = 311.10 us
+  Run 4: E2E = 284.10 us
+  Run 5: E2E = 296.47 us
+=== E2E Summary: best=284.10 us, mean=307.60 us ===
+
+real	0m2.905s
+user	0m1.160s
+sys	0m0.513s
+  Warmup 1: E2E = 1355.98 us
+  Warmup 2: E2E = 398.11 us
+  Warmup 3: E2E = 363.14 us
+--- Timed runs (5 runs) ---
+  [detail] Launch: 8.11 us, Sync: 16.98 us
+  Kernel launch+sync:       25.09 us
+  D2H transfer (1MB):       49.42 us
+  Data reorder:             62.43 us
+  Host post-processing:    163.94 us
+    - ReLU+weighted sum:    24.39 us
+    - TopK:               138.13 us
+    - bf16 cast:            0.48 us
+  H2D writeback:            17.00 us
+  Total end-to-end:        318.10 us
+  Run 1: E2E = 318.10 us
+  Run 2: E2E = 330.77 us
+  Run 3: E2E = 304.83 us
+  Run 4: E2E = 354.35 us
+  Run 5: E2E = 321.45 us
+=== E2E Summary: best=304.83 us, mean=325.90 us ===
+
+real	0m3.708s
+user	0m1.147s
+sys	0m0.533s
+  Warmup 1: E2E = 1333.61 us
+  Warmup 2: E2E = 369.68 us
+  Warmup 3: E2E = 366.47 us
+--- Timed runs (5 runs) ---
+  [detail] Launch: 7.17 us, Sync: 14.67 us
+  Kernel launch+sync:       21.84 us
+  D2H transfer (1MB):       53.96 us
+  Data reorder:             63.64 us
+  Host post-processing:    165.44 us
+    - ReLU+weighted sum:    23.69 us
+    - TopK:               140.60 us
+    - bf16 cast:            0.34 us
+  H2D writeback:            15.57 us
+  Total end-to-end:        320.60 us
+  Run 1: E2E = 320.60 us
+  Run 2: E2E = 321.95 us
+  Run 3: E2E = 289.02 us
+  Run 4: E2E = 311.68 us
+  Run 5: E2E = 278.12 us
+=== E2E Summary: best=278.12 us, mean=304.27 us ===
+
+real	0m2.702s
+user	0m1.179s
+sys	0m0.503s
+=== Benchmark Complete ===

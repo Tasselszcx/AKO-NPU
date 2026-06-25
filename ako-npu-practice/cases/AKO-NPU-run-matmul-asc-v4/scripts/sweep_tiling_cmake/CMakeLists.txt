@@ -1,0 +1,6 @@
+cmake_minimum_required(VERSION 3.16)
+find_package(ASC REQUIRED)
+project(sweep_tiling LANGUAGES ASC CXX)
+add_executable(sweep_tiling ../sweep_tiling.asc)
+target_link_libraries(sweep_tiling PRIVATE tiling_api register platform m dl)
+target_compile_options(sweep_tiling PRIVATE $<$<COMPILE_LANGUAGE:ASC>:--npu-arch=dav-2201>)

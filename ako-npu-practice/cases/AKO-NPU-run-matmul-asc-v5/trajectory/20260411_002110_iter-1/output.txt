@@ -1,0 +1,93 @@
+=== Building ===
+-- CMAKE_ASC_COMPILER: /usr/local/Ascend/ascend-toolkit/latest/compiler/ccec_compiler/bin/bisheng
+CMake Warning at /usr/local/Ascend/ascend-toolkit/8.3.RC1/x86_64-linux/tikcpp/ascendc_kernel_cmake/ASC_CMake/CMakeDetermineASCCompiler.cmake:56 (message):
+  CMAKE_INSTALL_PREFIX is not set.  Set to default value
+  /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/out.
+Call Stack (most recent call first):
+  CMakeLists.txt:16 (project)
+
+
+-- CMAKE_BUILD_TYPE: Release
+-- CMAKE_INSTALL_PREFIX: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/out
+-- ASCEND_CANN_PACKAGE_PATH: /usr/local/Ascend/ascend-toolkit/latest
+-- CMAKE_ASC_LLD_LINKER: /usr/local/Ascend/ascend-toolkit/latest/tools/ccec_compiler/bin/ld.lld
+-- The CXX compiler identification is GNU 10.3.1
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /usr/bin/c++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc-v5/solution/build
+[ 50%] Building ASC object CMakeFiles/demo.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable demo
+[100%] Built target demo
+=== Generating test data ===
+=== Running demo (correctness check) ===
+Tiling: usedCoreNum=2 baseM=256 baseN=128 baseK=64 singleCoreM=512 singleCoreN=640
+=== Verifying correctness ===
+golden_data :  [6127. 6128. 6234. ... 6488. 5988. 6273.]
+output :  [6127. 6128. 6234. ... 6488. 5988. 6273.]
+error ratio: 0.0000, tolerance: 0.0001
+test pass!
+=== Running with msprof (warm-up=10, launch-count=5) ===
+Tiling: usedCoreNum=2 baseM=256 baseN=128 baseK=64 singleCoreM=512 singleCoreN=640
+2026-04-11 00:21:26 [INFO]  Op profiling analysis start.
+2026-04-11 00:21:26 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 2, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-11 00:21:32 [INFO]  Profiling running finished. All task success.
+2026-04-11 00:21:32 [INFO]  Start analyze kernel on device: device2, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_N7AscendC6tiling11TCubeTilingE_mix_aic, name is: 0
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 00:21:32 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 00:21:33 [INFO]  Performance Summary Report:
+
+	1) aicore MTE2 bandwidth utilization lower than 80% when active.
+	2) aicore MTE3 bandwidth utilization lower than 80% when active.
+	3) aicore compute usage lower than 20%.
+	4) aivector MTE2 bandwidth utilization lower than 80% when active.
+	5) aivector MTE3 bandwidth utilization lower than 80% when active.
+	6) aivector compute usage lower than 20%.
+
+2026-04-11 00:21:33 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: mix
+	Task Duration(us): 227.769104
+	Block Dim: 1
+	Mix Block Dim: 2
+	Device Id: 2
+	Pid: 2641782
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 00:21:33 [INFO]  Profiling results saved in /tmp/msprof_XhdqHA/OPPROF_20260411002126_RJJODIMXUROSLTAL
+2026-04-11 00:21:33 [INFO]  Profiling data parse finished.
+2026-04-11 00:21:33 [INFO]  Op profiling finish. Welcome to next use.
+=== Extracting performance ===
+OPPROF directory: /tmp/msprof_XhdqHA/OPPROF_20260411002126_RJJODIMXUROSLTAL
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+matmul_leakyrelu_custom,mix,227.769104,1,2,2,2641782,1800,1800,
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,cube0,225.091660,405165,24.290556,0.107007,220.786118,0.972626,13.609445,0.059953,81.871109,0.360666,3.037222,0.013380,2435.349609,77.955002,0.343414,31.318148,0.004165,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,121.193886,218149,3.194444,0.014072,8.786667,0.038708,6.816667,0.030029,179.076248,9.923333,0.043715,123.265694,0.031776,NA,NA,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,224.294449,403730,3.172778,0.013977,8.148334,0.035896,6.573889,0.028960,185.689651,10.063334,0.044332,121.550827,0.034204,NA,NA,
+--- Memory ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_l1_read_bw(GB/s),aic_l1_write_bw(GB/s),aic_main_mem_read_bw(GB/s),aic_main_mem_write_bw(GB/s),aic_mte1_instructions,aic_mte1_ratio,aic_mte2_instructions,aic_mte2_ratio,aic_mte3_instructions,aic_mte3_ratio,aiv_time(us),aiv_total_cycles,aiv_ub_to_gm_bw(GB/s),aiv_gm_to_ub_bw(GB/s),aiv_main_mem_read_bw(GB/s),aiv_main_mem_write_bw(GB/s),aiv_mte2_instructions,aiv_mte2_ratio,aiv_mte3_instructions,aiv_mte3_ratio,read_main_memory_datas(KB),write_main_memory_datas(KB),GM_to_L1_datas(KB),GM_to_L1_bw_usage_rate(%),L1_to_GM_datas(KB)(estimate),L1_to_GM_bw_usage_rate(%)(estimate),L0C_to_L1_datas(KB),L0C_to_L1_bw_usage_rate(%),L0C_to_GM_datas(KB),L0C_to_GM_bw_usage_rate(%),GM_to_UB_datas(KB),GM_to_UB_bw_usage_rate(%),UB_to_GM_datas(KB),UB_to_GM_bw_usage_rate(%),
+0,cube0,225.091660,405165,16.535599,16.501055,17.133818,10.898295,366,0.059953,225,0.360666,38,0.013380,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,4092.125000,2602.875000,3941.000000,7.432908,7756.000000,17.182299,0.000000,0.000000,2560.000000,5.641461,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,121.193886,218149,5.370379,5.359388,5.403352,5.371950,11,0.030029,32,0.043715,1290.500000,1283.000000,NA,NA,NA,NA,NA,NA,NA,NA,1280.000000,2.748404,1282.625000,3.051352,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,224.294449,403730,5.370379,5.359388,5.403352,5.371950,11,0.028960,32,0.044332,1290.500000,1283.000000,NA,NA,NA,NA,NA,NA,NA,NA,1280.000000,2.748404,1282.625000,3.051352,
+--- ArithmeticUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_ratio,aic_cube_fp16_ratio,aic_cube_int8_ratio,aic_cube_fops,aic_cube_total_instr_number,aic_cube_fp_instr_number,aic_cube_int_instr_number,aiv_time(us),aiv_total_cycles,aiv_vec_ratio,aiv_vec_fp32_ratio,aiv_vec_fp16_ratio,aiv_vec_int32_ratio,aiv_vec_int16_ratio,aiv_vec_misc_ratio,aiv_vec_fops,
+0,cube0,225.091660,405165,0.107007,0.107007,0.000000,655360,80,80,0,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,121.193886,218149,0.014072,0.013953,0.000000,0.000000,0.000000,0.000117,329088,
+0,vector1,NA,NA,NA,NA,NA,NA,NA,NA,NA,224.294449,403730,0.013977,0.013857,0.000000,0.000000,0.000000,0.000117,329088,
+=== BENCH DONE ===

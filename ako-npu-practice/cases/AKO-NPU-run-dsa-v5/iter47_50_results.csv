@@ -1,0 +1,5 @@
+test,e2e_best,e2e_mean,correct
+baseline_2head,131.25,142.89,YES
+current_2head_verify,123.10,135.61,YES
+5warmup,119.71,126.37,YES
+10timed,114.84,249.84,YES

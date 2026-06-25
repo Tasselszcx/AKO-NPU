@@ -1,0 +1,36 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 00:55:04 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom
+	Op Type: cube
+	Task Duration(us): 12.040482
+	Block Dim: 22
+	Mix Block Dim: 
+	Device Id: 3
+	Pid: 2703676
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 00:55:04 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411005456_NIRBHEYMPJODQPQA
+2026-04-11 00:55:04 [INFO]  Profiling data parse finished.
+2026-04-11 00:55:04 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+error ratio: 0.000000, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+test pass!
+=== [5/5] Extract performance ===
+=== BENCH COMPLETE ===

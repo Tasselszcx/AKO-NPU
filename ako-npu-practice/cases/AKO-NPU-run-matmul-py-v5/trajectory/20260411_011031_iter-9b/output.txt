@@ -1,0 +1,64 @@
+=== [1/5] Compile ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu
+[100%] Built target matmul_leakyrelu
+Compilation OK
+=== [2/5] Generate test data ===
+=== [3/5] Run with msprof ===
+
+2026-04-11 01:10:49 [INFO]  Start analyze kernel on device: device3, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_, name is: 0
+2026-04-11 01:10:49 [WARN]  Access [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/op_basic_info.txt] failed. Maybe do not contain this file or it is not readable. Please check.
+2026-04-11 01:10:49 [WARN]  Failed to analyze op basic info
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf1.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,l2cache,memory,memoryub,occupancy,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf2.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [l2cache,memory,occupancy,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf3.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [memory,memoryub,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf4.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf5.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,pipeutilization,resourceconflictratio] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf6.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [memory,memoryl0,pipeutilization,resourceconflictratio,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Access profiling data file [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/DeviceProf7.bin] failed, maybe do not contain this file or it is not readable. Some indicators of [arithmeticutilization,memory,pipeutilization,resourceconflictratio,roofline] failed to be collected.
+2026-04-11 01:10:49 [WARN]  Failed to analyze metric data.
+2026-04-11 01:10:49 [WARN]  Access [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ/device3/_Z23matmul_leakyrelu_customPhS_S_S_S_S_/0/dump/duration.bin] failed. Maybe do not contain this file or it is not readable. Please check.
+2026-04-11 01:10:50 [INFO]  Operator Basic Information:
+
+	Op Name: 
+	Op Type: vector
+	Task Duration(us): 0.000000
+	Block Dim: 
+	Mix Block Dim: 
+	Device Id: 
+	Pid: 
+	Current Freq: 
+	Rated Freq: 
+
+2026-04-11 01:10:50 [ERROR] Analyzing kernel data failed, device: device3, kernel: _Z23matmul_leakyrelu_customPhS_S_S_S_S_, name is: 0
+2026-04-11 01:10:50 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py-v5/solution/build/msprof_output/OPPROF_20260411011043_DQZWPSYETTXQGBOZ
+2026-04-11 01:10:50 [WARN]  Profiling kernels result is: 1 success, 1 failed. Please check
+2026-04-11 01:10:50 [INFO]  Profiling data parse finished.
+2026-04-11 01:10:50 [INFO]  Op profiling finish. Welcome to next use.
+=== [4/5] Verify accuracy ===
+data index: 000000, expected: -0.040660191, actual: 0.000000000, rdiff: 1.000000
+data index: 000001, expected: 3.901257992, actual: 0.000000000, rdiff: 1.000000
+data index: 000002, expected: 38.251346588, actual: 0.000000000, rdiff: 1.000000
+data index: 000003, expected: -0.004056730, actual: 0.000000000, rdiff: 1.000000
+data index: 000004, expected: -0.014039464, actual: 0.000000000, rdiff: 1.000000
+data index: 000005, expected: 12.759267807, actual: 0.000000000, rdiff: 1.000000
+data index: 000006, expected: -0.030914236, actual: 0.000000000, rdiff: 1.000000
+data index: 000007, expected: 8.895274162, actual: 0.000000000, rdiff: 1.000000
+data index: 000008, expected: -0.018512806, actual: 0.000000000, rdiff: 1.000000
+data index: 000009, expected: -0.018807748, actual: 0.000000000, rdiff: 1.000000
+data index: 000010, expected: -0.011295469, actual: 0.000000000, rdiff: 1.000000
+data index: 000011, expected: 30.995027542, actual: 0.000000000, rdiff: 1.000000
+data index: 000012, expected: 8.362656593, actual: 0.000000000, rdiff: 1.000000
+data index: 000013, expected: 10.455045700, actual: 0.000000000, rdiff: 1.000000
+data index: 000014, expected: 1.617388248, actual: 0.000000000, rdiff: 1.000000
+data index: 000015, expected: -0.010548184, actual: 0.000000000, rdiff: 1.000000
+data index: 000016, expected: 20.896306992, actual: 0.000000000, rdiff: 1.000000
+data index: 000017, expected: -0.009316864, actual: 0.000000000, rdiff: 1.000000
+data index: 000018, expected: -0.005879461, actual: 0.000000000, rdiff: 1.000000
+data index: 000019, expected: -0.009540191, actual: 0.000000000, rdiff: 1.000000
+error ratio: 0.981221, tolerance: 0.0001 (rtol=1.0e-03, atol=1.0e-03)
+[ERROR] result error

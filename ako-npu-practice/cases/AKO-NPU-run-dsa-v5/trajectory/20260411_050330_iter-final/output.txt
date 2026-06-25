@@ -1,0 +1,81 @@
+=== DSA Indexer Benchmark: B=1, S_q=1, S_kv=4096 ===
+Label: iter-final
+=== [1/5] Build ===
+[ 50%] Building ASC object CMakeFiles/dsa_indexer.dir/dsa_indexer.asc.o
+[100%] Linking ASC executable dsa_indexer
+[100%] Built target dsa_indexer
+=== [2/5] Generate test data ===
+Generating data: B=1, S_q=1, S_kv=4096
+  input_q.bin: (1, 1, 64, 128) uint16 (16384 bytes)
+  input_k.bin: (1, 4096, 128) uint16 (1048576 bytes)
+  input_weights.bin: (1, 1, 64, 1) uint16 (128 bytes)
+  golden_topk_indices.bin: (1, 1, 2048) int64 (16384 bytes)
+  golden_index_score.bin: (1, 1, 4096) uint16 (8192 bytes)
+
+  index_score range: [-0.9228, 1.2309]
+  top-5 indices: [2878  419  844 3598  207]
+  top-5 values: [1.2309233 1.1188761 1.0599387 1.0478342 1.0153892]
+=== [3/5] Run kernel ===
+DSA Indexer: B=1, S_q=1, S_kv=4096
+  coreNum=8, topkK=2048, topkInner=4096, topkTmpSize=0
+  wsSysSize=16777216, wsTotalSize=17842176
+=== [4/5] Verify correctness ===
+Verifying DSA Indexer: B=1, S_q=1, S_kv=4096
+index_score verification:
+  Max absolute diff: 0.000000
+  MERE (max rel err): 0.000000 (threshold: 0.007812)
+  MARE (mean rel err): 0.000000 (threshold: 0.078125)
+  index_score PASSED
+
+topk_indices verification:
+  Match rate: 2048/2048 (100.00%)
+  topk_indices PASSED (>99% match)
+
+=== Verification PASSED ===
+=== [5/5] Profile with msprof ===
+2026-04-11 05:03:45 [INFO]  Op profiling analysis start.
+2026-04-11 05:03:45 [INFO]  Running device task: DeviceProf
+DSA Indexer: B=1, S_q=1, S_kv=4096
+  coreNum=8, topkK=2048, topkInner=4096, topkTmpSize=0
+  wsSysSize=16777216, wsTotalSize=17842176
+[INFO] <ProfData> Start profiling on device 1, kernel: dsa_indexer_custom
+[INFO] <WarmUp> Warm Up enabled. times:5
+2026-04-11 05:03:51 [INFO]  Profiling running finished. All task success.
+2026-04-11 05:03:51 [INFO]  Start analyze kernel on device: device1, kernel: dsa_indexer_custom, name is: 0
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-11 05:03:52 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-11 05:03:52 [INFO]  Performance Summary Report:
+
+	1) MTE1 bandwidth utilization lower than 80% when active.
+	2) MTE2 bandwidth utilization lower than 80% when active.
+	3) MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+
+2026-04-11 05:03:52 [INFO]  Operator Basic Information:
+
+	Op Name: dsa_indexer_custom
+	Op Type: cube
+	Task Duration(us): 4.660186
+	Block Dim: 8
+	Mix Block Dim: 
+	Device Id: 1
+	Pid: 3354403
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-11 05:03:52 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-dsa-v5/msprof_output/OPPROF_20260411050345_OFMIIOERSNRJNOYC
+2026-04-11 05:03:52 [INFO]  Profiling data parse finished.
+2026-04-11 05:03:52 [INFO]  Op profiling finish. Welcome to next use.
+--- Performance Results ---
+Task Duration: mean=4.66 us, min=4.66 us, max=4.66 us, n=1
+
+--- PipeUtilization (first 3 lines) ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,cube0,3.590556,6463,0.660556,0.183970,1.449444,0.403683,0.734444,0.204549,1.700000,0.473464,0.000556,0.000155,1716.613770,2.398889,0.668111,50.886189,0.000000,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+1,cube0,3.827222,6889,0.651667,0.170271,1.508333,0.394107,0.755000,0.197271,1.683333,0.439832,0.000556,0.000145,1716.613770,2.457222,0.642038,49.678173,0.000000,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,
+=== Benchmark Complete ===

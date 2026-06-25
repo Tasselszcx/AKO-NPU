@@ -1,0 +1,66 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+[ 50%] Building ASC object CMakeFiles/add_custom.dir/add.asc.o
+[100%] Linking ASC executable add_custom
+[100%] Built target add_custom
+Build OK
+=== Generating data ===
+Generated test data: 4194304 elements, dtype=<class 'numpy.float16'>
+  input/input_x.bin: (4194304,), float16
+  input/input_y.bin: (4194304,), float16
+  output/golden.bin: (4194304,), float16
+=== Running benchmark with msprof ===
+2026-04-08 11:57:05 [INFO]  Op profiling analysis start.
+2026-04-08 11:57:05 [INFO]  Running device task: DeviceProf
+Available vector cores: 48
+blockNum=48, elemPerCore=98304, tailNum=18446744073709125632, totalTiles=256
+[INFO] <ProfData> Start profiling on device 0, kernel: add_custom
+[INFO] <WarmUp> Warm Up enabled. times:10
+[WARN] <KernelReplay> Kernel run on device 0 No. 1 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 2 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 3 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 4 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 5 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 6 time failed.
+[WARN] <KernelReplay> Kernel run on device 0 No. 7 time failed.
+2026-04-08 11:57:32 [INFO]  Profiling running finished. All task success.
+2026-04-08 11:57:32 [INFO]  Start analyze kernel on device: device0, kernel: add_custom, name is: 0
+2026-04-08 11:57:32 [WARN]  Access [/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/msprof_output/OPPROF_20260408115705_AXPPFJUXZJXCHFNJ/device0/add_custom/0/dump/op_basic_info.txt] failed. Maybe do not contain this file or it is not readable. Please check.
+2026-04-08 11:57:32 [WARN]  Failed to analyze op basic info
+2026-04-08 11:57:32 [WARN]  Get op basic info [Task Duration] failed.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-08 11:57:32 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-08 11:57:32 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+	3) aivector compute usage lower than 20%.
+
+2026-04-08 11:57:32 [INFO]  Operator Basic Information:
+
+	Op Name: 
+	Op Type: vector
+	Task Duration(us): 0.000000
+	Block Dim: 
+	Mix Block Dim: 
+	Device Id: 
+	Pid: 
+	Current Freq: 
+	Rated Freq: 
+
+2026-04-08 11:57:32 [ERROR] Analyzing kernel data failed, device: device0, kernel: add_custom, name is: 0
+2026-04-08 11:57:32 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/msprof_output/OPPROF_20260408115705_AXPPFJUXZJXCHFNJ
+2026-04-08 11:57:32 [WARN]  Profiling kernels result is: 0 success, 1 failed. Please check
+2026-04-08 11:57:32 [ERROR] Profiling data parse failed. Please check
+2026-04-08 11:57:32 [INFO]  Op profiling finish. Welcome to next use.
+=== Verifying correctness ===
+Verification FAILED!
+Max diff: inf, Mean diff: inf
+Mismatch count: 4194304 / 4194304

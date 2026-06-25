@@ -1,0 +1,54 @@
+=== [1/5] Setup CANN environment ===
+=== [2/5] Build ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/matmul_leakyrelu.asc:257:5: warning: 'SetSysWorkSpacePtr' is deprecated: NOTICE: SetSysWorkSpacePtr has been deprecated and will be removed in the next version. [-Wdeprecated-declarations]
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/interface/kernel_common.h:194:3: note: 'SetSysWorkSpacePtr' has been explicitly marked deprecated here
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/matmul_leakyrelu.asc:257:5: warning: 'SetSysWorkSpacePtr' is deprecated: NOTICE: SetSysWorkSpacePtr has been deprecated and will be removed in the next version. [-Wdeprecated-declarations]
+/usr/local/Ascend/ascend-toolkit/8.3.RC1/compiler/tikcpp/tikcfw/interface/kernel_common.h:194:3: note: 'SetSysWorkSpacePtr' has been explicitly marked deprecated here
+1 warning generated.
+Warning: please refer to the above warning message. 
+Warning: please refer to the above warning message. 
+[100%] Linking ASC executable matmul_leakyrelu_custom
+[100%] Built target matmul_leakyrelu_custom
+BUILD: PASS
+=== [3/5] Generate test data ===
+Generated matmul_leakyrelu test data:
+  A: input/x1_gm.bin  shape=(1024, 256), dtype=float16
+  B: input/x2_gm.bin  shape=(256, 640), dtype=float16
+  bias: input/bias.bin  shape=(640,), dtype=float32
+  golden: output/golden.bin  shape=(1024, 640), dtype=float32
+  Golden stats: min=-0.0778, max=93.7817, mean=6.4141
+DATA_GEN: PASS
+=== [4/5] Run correctness check ===
+numBlocks=4 baseM=256 baseN=128 singleCoreM=512 singleCoreN=320
+=== Precision Verification ===
+Shape: output=(655360,), golden=(655360,)
+Max abs diff: 9.37833023e+01
+Mean abs diff: 3.63491893e+00
+
+--- Full metrics (all elements) ---
+MERE: 8.35603027e+02 (threshold: 1.220703e-04)
+MARE: 4.97963920e+07 (threshold: 1.220703e-03)
+
+--- Safe metrics (|golden| > 0.1, N=327552) ---
+MERE: 7.76772916e-01 (threshold: 1.220703e-04) FAIL
+MARE: 3.93705902e+02 (threshold: 1.220703e-03) FAIL
+
+allclose(rtol=0.001, atol=0.001): FAIL
+Element match ratio: 0.6081 (398503/655360)
+Median rel error: 6.38858410e-07
+Overall: FAIL
+
+Worst 5 safe-region elements:
+  [175693] output=41.33208847, golden=0.10471606, diff=4.12273712e+01, rel_err=3.93705902e+02
+  [331889] output=41.49652863, golden=0.11556005, diff=4.13809700e+01, rel_err=3.58090302e+02
+  [449276] output=51.74605179, golden=0.15543747, diff=5.15906143e+01, rel_err=3.31905670e+02
+  [638710] output=52.72473526, golden=0.16467786, diff=5.25600586e+01, rel_err=3.19168732e+02
+  [219479] output=36.94311523, golden=0.12000275, diff=3.68231125e+01, rel_err=3.06851990e+02

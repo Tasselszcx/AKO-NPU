@@ -1,0 +1,14 @@
+=== [1/5] Setup CANN environment ===
+=== [2/5] Build ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/matmul_leakyrelu.asc:172:26: error: use of undeclared identifier 'PIPE_MIX'; did you mean 'PIPE_FIX'?
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/matmul_leakyrelu.asc:172:26: error: use of undeclared identifier 'PIPE_MIX'; did you mean 'PIPE_FIX'?
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+make[2]: *** [CMakeFiles/matmul_leakyrelu_custom.dir/build.make:76：CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o] 错误 1
+make[1]: *** [CMakeFiles/Makefile2:83：CMakeFiles/matmul_leakyrelu_custom.dir/all] 错误 2
+make: *** [Makefile:91：all] 错误 2

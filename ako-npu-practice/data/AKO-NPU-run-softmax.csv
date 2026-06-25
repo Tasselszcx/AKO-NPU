@@ -1,0 +1,19 @@
+iter,runtime_us,speedup,status,label
+0,53.41,1.0,baseline,"Baseline: single row, DB=2"
+1,47.77,1.12,improved,"2 rows/tile, DB=2, shared workBuf"
+2,51.17,1.04,regression,
+3,55.26,0.97,regression,
+4,46.37,1.15,improved,"DB=2, 2 rows, shared workBuf (clean)"
+5,47.46,1.13,no-change,
+6,48.28,1.11,regression,
+7,48.62,1.1,no-change,
+8,49.49,1.08,no-change,
+9,54.59,0.98,regression,
+10,51.72,1.03,regression,
+11,82.68,0.65,regression,
+12,53.24,1.0,no-change,
+13,47.94,1.11,no-change,
+14,50.77,1.05,regression,
+15,46.12,1.16,improved,Reconfirm best (lucky run)
+16,62.87,0.85,failed,
+17,50.16,1.06,no-change,

@@ -1,0 +1,9 @@
+iter,description,matmul_us,leakyrelu_us,total_us,correct
+22,baseline_config,16.14,8.16,24.30,true
+23,default_norm,15.74,9.02,24.76,true
+24,unitflag_true,15.68,9.16,24.84,true
+25,enableInit_false,15.66,8.98,24.64,true
+26,enableSetTail_true,15.62,9.02,24.64,true
+27,enableSetBias_true,16.12,8.50,24.62,true
+28,all_disabled,15.50,8.26,23.76,true
+29,restore,16.14,9.00,25.14,true

@@ -1,0 +1,83 @@
+=== [1/5] Setup CANN environment ===
+=== [2/5] Build ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/build
+Consolidate compiler generated dependencies of target matmul_leakyrelu_custom
+[ 50%] Building ASC object CMakeFiles/matmul_leakyrelu_custom.dir/matmul_leakyrelu.asc.o
+[100%] Linking ASC executable matmul_leakyrelu_custom
+[100%] Built target matmul_leakyrelu_custom
+BUILD: PASS
+=== [3/5] Generate test data ===
+Generated matmul_leakyrelu test data:
+  A: input/x1_gm.bin  shape=(1024, 256), dtype=float16
+  B: input/x2_gm.bin  shape=(256, 640), dtype=float16
+  bias: input/bias.bin  shape=(640,), dtype=float32
+  golden: output/golden.bin  shape=(1024, 640), dtype=float32
+  Golden stats: min=-0.0778, max=93.7817, mean=6.4141
+DATA_GEN: PASS
+=== [4/5] Run correctness check ===
+=== Precision Verification ===
+Shape: output=(655360,), golden=(655360,)
+Max abs diff: 5.72204590e-05
+Mean abs diff: 1.57519366e-06
+
+--- Full metrics (all elements) ---
+MERE: 1.21415542e-06 (threshold: 1.220703e-04)
+MARE: 2.20753383e-02 (threshold: 1.220703e-03)
+
+--- Safe metrics (|golden| > 0.1, N=327552) ---
+MERE: 5.43039960e-07 (threshold: 1.220703e-04) PASS
+MARE: 1.24818805e-04 (threshold: 1.220703e-03) PASS
+
+allclose(rtol=0.001, atol=0.001): PASS
+Element match ratio: 1.0000 (655360/655360)
+Median rel error: 2.25288773e-07
+Overall: PASS
+CORRECTNESS: PASS
+=== [5/5] Performance measurement ===
+2026-04-09 14:41:48 [INFO]  Op profiling analysis start.
+2026-04-09 14:41:48 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 1, kernel: matmul_leakyrelu_custom_mix_aic
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-09 14:41:53 [INFO]  Profiling running finished. All task success.
+2026-04-09 14:41:53 [INFO]  Start analyze kernel on device: device1, kernel: matmul_leakyrelu_custom_mix_aic, name is: 0
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-09 14:41:53 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-09 14:41:54 [INFO]  Performance Summary Report:
+
+	1) aicore MTE1 bandwidth utilization lower than 80% when active.
+	2) aicore MTE2 bandwidth utilization lower than 80% when active.
+	3) aicore MTE3 bandwidth utilization lower than 80% when active.
+	4) aicore compute usage lower than 20%.
+	5) aivector MTE2 bandwidth utilization lower than 80% when active.
+	6) aivector MTE3 bandwidth utilization lower than 80% when active.
+	7) aivector compute usage lower than 20%.
+
+2026-04-09 14:41:54 [INFO]  Operator Basic Information:
+
+	Op Name: matmul_leakyrelu_custom_mix_aic
+	Op Type: mix
+	Task Duration(us): 25.841034
+	Block Dim: 8
+	Mix Block Dim: 16
+	Device Id: 1
+	Pid: 3705652
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-09 14:41:54 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-py/solution/build/msprof_output/OPPROF_20260409144148_HZRJJAICHMDGLYYY
+2026-04-09 14:41:54 [INFO]  Profiling data parse finished.
+2026-04-09 14:41:54 [INFO]  Op profiling finish. Welcome to next use.
+
+=== Performance Results ===
+Runtime: 25.84 us (mean), 25.84 ~ 25.84 us (min ~ max)
+Samples: 1
+Speedup: 8.837x (mean), 8.837 ~ 8.837x (min ~ max)
+
+BENCH: COMPLETE

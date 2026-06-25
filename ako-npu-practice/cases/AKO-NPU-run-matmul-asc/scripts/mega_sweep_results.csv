@@ -1,0 +1,248 @@
+iter,name,task_duration_us,status,details
+29,A_fs256x128_FIRSTN_sM1_sN1,111.32,ok,111.32 us
+30,A_fs256x128_FIRSTN_sM1_sN2,112.12,ok,112.12 us
+31,A_fs256x128_FIRSTN_sM2_sN1,110.28,ok,110.28 us
+32,A_fs256x128_FIRSTN_sM2_sN2,111.28,ok,111.28 us
+33,A_fs256x128_FIRSTN_sM3_sN1,122.40,ok,122.40 us
+34,A_fs256x128_FIRSTN_sM3_sN2,118.02,ok,118.02 us
+35,A_fs256x128_FIRSTN_sM4_sN1,115.82,ok,115.82 us
+36,A_fs256x128_FIRSTN_sM4_sN2,114.64,ok,114.64 us
+37,A_fs128x128_FIRSTN_sM1_sN1,155.77,ok,155.77 us
+38,A_fs128x128_FIRSTN_sM1_sN2,161.13,ok,161.13 us
+39,A_fs128x128_FIRSTN_sM2_sN1,144.55,ok,144.55 us
+40,A_fs128x128_FIRSTN_sM2_sN2,142.41,ok,142.41 us
+41,A_fs128x128_FIRSTN_sM3_sN1,147.77,ok,147.77 us
+42,A_fs128x128_FIRSTN_sM3_sN2,147.27,ok,147.27 us
+43,A_fs128x128_FIRSTN_sM4_sN1,144.63,ok,144.63 us
+44,A_fs128x128_FIRSTN_sM4_sN2,142.65,ok,142.65 us
+45,A_fs256x64_FIRSTN_sM1_sN1,160.55,ok,160.55 us
+46,A_fs256x64_FIRSTN_sM1_sN2,161.99,ok,161.99 us
+47,A_fs256x64_FIRSTN_sM2_sN1,153.07,ok,153.07 us
+48,A_fs256x64_FIRSTN_sM2_sN2,159.93,ok,159.93 us
+49,A_fs256x64_FIRSTN_sM3_sN1,164.81,ok,164.81 us
+50,A_fs256x64_FIRSTN_sM3_sN2,173.17,ok,173.17 us
+51,A_fs256x64_FIRSTN_sM4_sN1,164.67,ok,164.67 us
+52,A_fs256x64_FIRSTN_sM4_sN2,176.11,ok,176.11 us
+53,A_fs192x128_FIRSTN_sM1_sN1,133.89,ok,133.89 us
+54,A_fs192x128_FIRSTN_sM1_sN2,130.69,ok,130.69 us
+55,A_fs192x128_FIRSTN_sM2_sN1,125.65,ok,125.65 us
+56,A_fs192x128_FIRSTN_sM2_sN2,127.47,ok,127.47 us
+57,A_fs192x128_FIRSTN_sM3_sN1,125.79,ok,125.79 us
+58,A_fs192x128_FIRSTN_sM3_sN2,129.69,ok,129.69 us
+59,A_fs192x128_FIRSTN_sM4_sN1,125.29,ok,125.29 us
+60,A_fs192x128_FIRSTN_sM4_sN2,130.05,ok,130.05 us
+61,A_fs384x128_FIRSTN_sM1_sN1,,incorrect,
+62,A_fs384x128_FIRSTN_sM1_sN2,,incorrect,
+63,A_fs384x128_FIRSTN_sM2_sN1,,incorrect,
+64,A_fs384x128_FIRSTN_sM2_sN2,,incorrect,
+65,A_fs384x128_FIRSTN_sM3_sN1,,incorrect,
+66,A_fs384x128_FIRSTN_sM3_sN2,,incorrect,
+67,A_fs384x128_FIRSTN_sM4_sN1,,incorrect,
+68,A_fs384x128_FIRSTN_sM4_sN2,,incorrect,
+69,A_fs256x192_FIRSTN_sM1_sN1,,incorrect,
+70,A_fs256x192_FIRSTN_sM1_sN2,,incorrect,
+71,A_fs256x192_FIRSTN_sM2_sN1,,incorrect,
+72,A_fs256x192_FIRSTN_sM2_sN2,,incorrect,
+73,A_fs256x192_FIRSTN_sM3_sN1,,incorrect,
+74,A_fs256x192_FIRSTN_sM3_sN2,,incorrect,
+75,A_fs256x192_FIRSTN_sM4_sN1,,incorrect,
+76,A_fs256x192_FIRSTN_sM4_sN2,,incorrect,
+77,A_fs192x192_FIRSTN_sM1_sN1,,incorrect,
+78,A_fs192x192_FIRSTN_sM1_sN2,,incorrect,
+79,A_fs192x192_FIRSTN_sM2_sN1,,incorrect,
+80,A_fs192x192_FIRSTN_sM2_sN2,,incorrect,
+81,A_fs192x192_FIRSTN_sM3_sN1,,incorrect,
+82,A_fs192x192_FIRSTN_sM3_sN2,,incorrect,
+83,A_fs192x192_FIRSTN_sM4_sN1,,incorrect,
+84,A_fs192x192_FIRSTN_sM4_sN2,,incorrect,
+85,A_fs256x128_FIRSTM_sM1_sN1,,timeout,
+86,A_fs256x128_FIRSTM_sM1_sN2,,timeout,
+87,A_fs256x128_FIRSTM_sM2_sN1,,timeout,
+88,A_fs256x128_FIRSTM_sM2_sN2,,timeout,
+89,A_fs256x128_FIRSTM_sM3_sN1,,timeout,
+90,A_fs256x128_FIRSTM_sM3_sN2,,timeout,
+91,A_fs256x128_FIRSTM_sM4_sN1,,timeout,
+92,A_fs256x128_FIRSTM_sM4_sN2,,timeout,
+93,A_fs256x128xK64_FIRSTN_sM2_sN1,,timeout,
+94,A_fs256x128xK128_FIRSTN_sM2_sN1,,timeout,
+95,A_fs256x128xK256_FIRSTN_sM2_sN1,,timeout,
+96,A_L1CacheUB_false_fs256x128,,timeout,
+97,A_auto_FIRSTN_sM1_sN1,,timeout,
+98,A_auto_FIRSTN_sM2_sN1,,timeout,
+99,A_auto_FIRSTN_sM4_sN1,,timeout,
+100,B_tque_chunk4096,,timeout,
+101,B_tque_chunk6144,,timeout,
+102,B_tque_chunk8192,,timeout,
+103,B_tque_chunk10240,,timeout,
+104,B_tque_chunk12288,,timeout,
+105,B_tque_chunk14336,,timeout,
+106,B_tque_chunk16384,,timeout,
+107,B_tque_chunk20480,,timeout,
+108,B_tque_chunk24576,,timeout,
+109,B_tbuf_chunk32768,123.28,ok,123.28 us
+110,B_tbuf_chunk40960,121.16,ok,121.16 us
+111,B_tbuf_chunk45056,124.28,ok,124.28 us
+112,B_tbuf_chunk49152,122.84,ok,122.84 us
+113,B_tque_1buf_chunk12288,115.22,ok,115.22 us
+114,B_tque_1buf_chunk16384,116.54,ok,116.54 us
+115,B_tque_1buf_chunk24576,117.80,ok,117.80 us
+116,C_hf32_on,111.06,ok,111.06 us
+117,C_hf32_off,110.06,ok,110.06 us
+118,C_nd2nz_on,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+119,C_nd2nz_off,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, false);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/As"
+120,C_result_NZ,,incorrect,
+121,C_single_aiv_leakyrelu,,incorrect,
+122,C_no_bias_matmul,,timeout,
+123,C_hf32_fs256x128_sM2,109.30,ok,109.30 us
+124,C_hf32_fs256x128_sM3,114.68,ok,114.68 us
+125,C_hf32_fs192x128_sM2,128.29,ok,128.29 us
+126,C_hf32_fs192x128_sM3,126.53,ok,126.53 us
+127,C_hf32_fs384x128_sM2,,incorrect,
+128,C_hf32_fs384x128_sM3,,incorrect,
+129,C_nd2nz_fs256x128,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+130,C_nd2nz_fs192x128,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+131,C_hf32_nd2nz,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+132,C_hf32_chunk16384,,incorrect,
+133,C_hf32_chunk24576,,incorrect,
+134,C_nd2nz_chunk16384,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+135,C_nd2nz_chunk24576,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+136,C_hf32_nd2nz_fs256x128_sM2,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+137,C_hf32_nd2nz_fs256x128_sM3,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+138,C_hf32_nd2nz_fs192x128_sM2,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+139,C_hf32_nd2nz_fs192x128_sM3,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+140,C_aivBlockNum1,,incorrect,
+141,C_aivBlockNum4,,build_fail,"make: [ERROR] ASCPLUGIN [pid:2830168, tid:2830168] [asc_utils.cpp:301] Invalid core ratio: cubeNum 1, vecNum 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 1, aivCoreNum: 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: "
+142,C_auto_chunk8192,118.66,ok,118.66 us
+143,C_auto_chunk10240,,timeout,
+144,D_transB,,timeout,
+145,D_input_NZ_A,109.62,ok,109.62 us
+146,D_input_NZ_B,111.26,ok,111.26 us
+147,D_input_NZ_both,110.00,ok,110.00 us
+148,D_atomic_add,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:72:28: error: no matching member function for call to 'GetTensorC'
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-scale-llm/kernel/aut"
+149,D_bufL1_131072,140.01,ok,140.01 us
+150,D_bufL1_262144,130.83,ok,130.83 us
+151,D_bufL1_524288,108.72,ok,108.72 us
+152,D_bufL0_32768,,incorrect,
+153,D_bufL0_65536,,incorrect,
+154,D_bufL1_131072_fs256x128,137.21,ok,137.21 us
+155,D_bufL1_131072_fs192x128,,msprof_fail,
+156,D_bufL1_262144_fs256x128,,timeout,
+157,D_bufL1_262144_fs192x128,130.99,ok,130.99 us
+158,D_bufL1_524288_fs256x128,111.42,ok,111.42 us
+159,D_bufL1_524288_fs192x128,129.55,ok,129.55 us
+160,D_atomic_fs256x128,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:72:28: error: no matching member function for call to 'GetTensorC'
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-scale-llm/kernel/aut"
+161,D_atomic_fs192x128,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:72:28: error: no matching member function for call to 'GetTensorC'
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-scale-llm/kernel/aut"
+162,D_L1_131072_L0_32768,,incorrect,
+163,D_L1_131072_L0_65536,,incorrect,
+164,D_L1_262144_L0_32768,,incorrect,
+165,D_L1_262144_L0_65536,,incorrect,
+166,D_hf32_bufL1_131072,,msprof_fail,
+167,D_hf32_bufL1_262144,,timeout,
+168,D_hf32_bufL1_524288,,timeout,
+169,D_nd2nz_bufL1_131072,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+170,D_nd2nz_bufL1_262144,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+171,D_hf32_bufL1_131072_sM2,,msprof_fail,
+172,D_hf32_bufL1_131072_sM3,112.18,ok,112.18 us
+173,D_hf32_bufL1_262144_sM2,110.62,ok,110.62 us
+174,D_hf32_bufL1_262144_sM3,105.52,ok,105.52 us
+175,E_aicore_matmul_only,81.88,ok,81.88 us
+176,E_half_output,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:129:37: error: no viable conversion from 'LocalTensor<half>' to 'LocalTensor<float>'
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-sc"
+177,E_numBlocks2_cores2,,incorrect,
+178,E_numBlocks4_cores4,,build_fail,"make: [ERROR] ASCPLUGIN [pid:2871456, tid:2871456] [asc_utils.cpp:301] Invalid core ratio: cubeNum 1, vecNum 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 1, aivCoreNum: 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: "
+179,E_aicore_fs256x128,81.98,ok,81.98 us
+180,E_aicore_fs192x128,97.66,ok,97.66 us
+181,E_aicore_fs384x128,,incorrect,
+182,E_aicore_fs128x128,115.64,ok,115.64 us
+183,E_aicore_auto,,msprof_fail,
+184,E_aicore_sM1,82.90,ok,82.90 us
+185,E_aicore_sM2,83.10,ok,83.10 us
+186,E_aicore_sM3,88.70,ok,88.70 us
+187,E_aicore_sM4,89.34,ok,89.34 us
+188,E_aicore_hf32,85.26,ok,85.26 us
+189,E_aicore_bufL1_131072,107.96,ok,107.96 us
+190,E_aicore_bufL1_262144,101.94,ok,101.94 us
+191,E_aicore_nd2nz,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:146:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+192,E_nb2_fs256x128,,incorrect,
+193,E_nb2_fs192x128,,incorrect,
+194,E_nb2_fs128x128,,incorrect,
+195,E_aicore_hf32_fs256x128,82.90,ok,82.90 us
+196,E_aicore_hf32_fs192x128,101.28,ok,101.28 us
+197,E_aicore_hf32_buf131072,111.66,ok,111.66 us
+198,E_aicore_hf32_buf262144,102.64,ok,102.64 us
+199,E_nb4_fs256x128,,build_fail,"make: [ERROR] ASCPLUGIN [pid:2892025, tid:2892025] [asc_utils.cpp:301] Invalid core ratio: cubeNum 1, vecNum 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 1, aivCoreNum: 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: "
+200,E_nb4_fs128x128,,build_fail,"make: [ERROR] ASCPLUGIN [pid:2892264, tid:2892264] [asc_utils.cpp:301] Invalid core ratio: cubeNum 1, vecNum 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: 1, aivCoreNum: 4
+fatal error: error in backend: invalid ratio config of attribute core_ratio, aicCoreNum: "
+201,E_half_fs256x128,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:129:37: error: no viable conversion from 'LocalTensor<half>' to 'LocalTensor<float>'
+Fatal Err: A fatal error occurred in iternel process, and Diagnostic info can not be reported correctly
+/home/hadoop-sc"
+202,E_noL1_fs256x128,88.10,ok,88.10 us
+203,E_noL1_fs192x128,106.90,ok,106.90 us
+204,E_kitchen_sink,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+205,E_kitchen_sink_v2,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"
+206,E_kitchen_sink_chunk16k,,build_fail,"make: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-matmul-asc/solution/matmul_leakyrelu.asc:190:15: error: no matching member function for call to 'SetMatmulConfigParams'
+    tilingApi.SetMatmulConfigParams(1, true, true);  // enable L1 cache UB
+    ~~~~~~~~~~^~~~~~~~~~~~~~~~~~~~~
+/usr/local/Asc"

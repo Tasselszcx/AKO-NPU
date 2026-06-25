@@ -1,0 +1,48 @@
+=== 上板性能统计摘要 ===
+Op: attention_backward_custom | Type: vector | Duration: 162841.359375us | BlockDim: 24 | Freq: 1800/1800
+
+--- PipeUtilization (24 cores, prefix=aiv) ---
+                                  min        avg        max
+  aiv_time(us)                 0.98  108475.99  162834.23
+  vec_ratio%                   0.91      41.47      61.70
+  scalar_ratio%               54.37      68.58      97.72
+  mte2_ratio%                  0.03       2.09       3.18
+  mte3_ratio%                  0.03       0.31       0.47
+  mte2_active_bw                0.0       43.7       66.9    (GB/s)
+  mte3_active_bw                0.0       12.5       19.3    (GB/s)
+
+--- 头开销 ---
+  Task Duration: 162841.359375us | 最长核: 162834.23us | 头开销: 7.12us (0.0%)
+
+--- Memory ---
+  GM→UB: 5566464.0KB total (231936.0KB/core), BW usage: 0.70%
+  UB→GM: 223232.0KB total (9301.3KB/core), BW usage: 0.03%
+  主存读取: 5566482.0KB total
+  主存写入: 223238.0KB total
+  Avg MTE2 transfer: 13.25KB (420120 instructions total)
+  GM→UB avg BW: 1.36 GB/s
+  UB→GM avg BW: 0.05 GB/s
+
+--- MemoryUB ---
+  UB read BW (vector): avg=17.5 GB/s
+  UB write BW (vector): avg=10.0 GB/s
+  UB read BW (scalar): avg=0.2 GB/s
+  UB write BW (scalar): avg=0.2 GB/s
+
+--- L2Cache ---
+  total_hit: avg=93.9% (min=75.0%, max=97.9%)
+  read_hit: avg=92.5% (min=66.7%, max=98.1%)
+  write_hit: avg=84.4% (min=76.6%, max=100.0%)
+  write cache: hit=342061 miss=104451
+
+--- ResourceConflict ---
+  vec_total_cflt: 1.15% | bankgroup_cflt: 1.15% | bank_cflt: 0.00% | resc_cflt: 0.00% | mte_cflt: 0.00%
+  vec_wait: 12.25% | mte2_wait: 0.00% | mte3_wait: 5.41%
+
+--- ArithmeticUtilization ---
+  vec_fp32: 22.9% | vec_fp16: 0.0% | vec_misc: 18.5%
+  vec_fops: 764197829/core
+
+--- 原始数据位置 ---
+  CSV 文件: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-attn-bwd-v2/solution/docs/perf/round_001/
+  如需逐核详情，请 Read 对应 CSV 文件。

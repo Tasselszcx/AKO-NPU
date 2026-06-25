@@ -1,0 +1,77 @@
+=== Building ===
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build
+[ 50%] Building ASC object CMakeFiles/add_custom.dir/add.asc.o
+[100%] Linking ASC executable add_custom
+[100%] Built target add_custom
+Build OK
+=== Generating data ===
+Generated test data: 32768 elements, dtype=<class 'numpy.float32'>
+  input/input_x.bin: (32768,), float32
+  input/input_y.bin: (32768,), float32
+  output/golden.bin: (32768,), float32
+=== Running benchmark with msprof ===
+2026-04-08 12:05:28 [INFO]  Op profiling analysis start.
+2026-04-08 12:05:28 [INFO]  Running device task: DeviceProf
+[INFO] <ProfData> Start profiling on device 0, kernel: add_custom
+[INFO] <WarmUp> Warm Up enabled. times:10
+2026-04-08 12:05:34 [INFO]  Profiling running finished. All task success.
+2026-04-08 12:05:34 [INFO]  Start analyze kernel on device: device0, kernel: add_custom, name is: 0
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [PipeUtilization] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [ArithmeticUtilization] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [L2Cache] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [Memory] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [ResourceConflictRatio] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [MemoryL0] success.
+2026-04-08 12:05:35 [INFO]  Save profiling data with metric [MemoryUB] success.
+2026-04-08 12:05:35 [INFO]  Performance Summary Report:
+
+	1) MTE2 bandwidth utilization lower than 80% when active.
+	2) MTE3 bandwidth utilization lower than 80% when active.
+	3) aivector compute usage lower than 20%.
+
+2026-04-08 12:05:35 [INFO]  Operator Basic Information:
+
+	Op Name: add_custom
+	Op Type: vector
+	Task Duration(us): 3.200128
+	Block Dim: 8
+	Mix Block Dim: 
+	Device Id: 0
+	Pid: 1755237
+	Current Freq: 1800
+	Rated Freq: 1800
+
+2026-04-08 12:05:35 [INFO]  Profiling results saved in /home/hadoop-scale-llm/kernel/autoresearch/AKO-NPU-run-add/solution/build/msprof_output/OPPROF_20260408120528_UZMMNHAFSKRUIBFD
+2026-04-08 12:05:35 [INFO]  Profiling data parse finished.
+2026-04-08 12:05:35 [INFO]  Op profiling finish. Welcome to next use.
+=== Verifying correctness ===
+Verification PASSED! Shape: (32768,)
+Max diff: 0.0
+=== Performance Results ===
+OPPROF dir: ./msprof_output/OPPROF_20260408120528_UZMMNHAFSKRUIBFD
+--- OpBasicInfo ---
+Op Name,Op Type,Task Duration(us),Block Dim,Mix Block Dim,Device Id,Pid,Current Freq,Rated Freq,
+add_custom,vector,3.200128,8,NA,0,1755237,1800,1800,
+--- PipeUtilization ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_cube_time(us),aic_cube_ratio,aic_scalar_time(us),aic_scalar_ratio,aic_mte1_time(us),aic_mte1_ratio,aic_mte2_time(us),aic_mte2_ratio,aic_mte3_time(us),aic_mte3_ratio,aic_mte3_active_bw(GB/s),aic_fixpipe_time(us),aic_fixpipe_ratio,aic_fixpipe_active_bw(GB/s),aic_icache_miss_rate,aiv_time(us),aiv_total_cycles,aiv_vec_time(us),aiv_vec_ratio,aiv_scalar_time(us),aiv_scalar_ratio,aiv_mte2_time(us),aiv_mte2_ratio,aiv_mte2_active_bw(GB/s),aiv_mte3_time(us),aiv_mte3_ratio,aiv_mte3_active_bw(GB/s),aiv_icache_miss_rate,aic_mte1_active_bw(GB/s),aic_mte2_active_bw(GB/s),
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.080555,3745,0.142222,0.068358,1.478333,0.710547,0.489444,0.235247,62.351463,0.240000,0.115354,63.578293,0.000000,NA,NA,
+1,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.223889,4003,0.111111,0.049963,1.545000,0.694729,0.585556,0.263303,52.117306,0.190556,0.085686,80.075272,0.000000,NA,NA,
+2,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.003333,3606,0.102222,0.051026,1.198889,0.598447,0.624444,0.311703,48.871567,0.286667,0.143095,53.228333,0.000000,NA,NA,
+3,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.062222,3712,0.104444,0.050647,1.276111,0.618804,0.610556,0.296067,49.983295,0.284444,0.137931,53.644180,0.000000,NA,NA,
+4,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.149444,3869,0.142778,0.066425,1.392778,0.647971,0.650000,0.302404,46.950119,0.237778,0.110623,64.172478,0.000000,NA,NA,
+5,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.073333,3732,0.114444,0.055198,1.322222,0.637728,0.650000,0.313505,46.950119,0.205000,0.098875,74.433121,0.000000,NA,NA,
+6,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1.898889,3418,0.125000,0.065828,1.280556,0.674371,0.511667,0.269456,59.643478,0.213889,0.112639,71.339790,0.000000,NA,NA,
+7,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.526667,4548,0.138333,0.054749,1.576667,0.624011,0.823889,0.326077,37.040890,0.243889,0.096526,62.564514,0.000000,NA,NA,
+--- Memory ---
+block_id,sub_block_id,aic_time(us),aic_total_cycles,aic_l1_read_bw(GB/s),aic_l1_write_bw(GB/s),aic_main_mem_read_bw(GB/s),aic_main_mem_write_bw(GB/s),aic_mte1_instructions,aic_mte1_ratio,aic_mte2_instructions,aic_mte2_ratio,aic_mte3_instructions,aic_mte3_ratio,aiv_time(us),aiv_total_cycles,aiv_ub_to_gm_bw(GB/s),aiv_gm_to_ub_bw(GB/s),aiv_main_mem_read_bw(GB/s),aiv_main_mem_write_bw(GB/s),aiv_mte2_instructions,aiv_mte2_ratio,aiv_mte3_instructions,aiv_mte3_ratio,read_main_memory_datas(KB),write_main_memory_datas(KB),GM_to_L1_datas(KB),GM_to_L1_bw_usage_rate(%),L1_to_GM_datas(KB)(estimate),L1_to_GM_bw_usage_rate(%)(estimate),L0C_to_L1_datas(KB),L0C_to_L1_bw_usage_rate(%),L0C_to_GM_datas(KB),L0C_to_GM_bw_usage_rate(%),GM_to_UB_datas(KB),GM_to_UB_bw_usage_rate(%),UB_to_GM_datas(KB),UB_to_GM_bw_usage_rate(%),
+0,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.080555,3745,7.333998,14.667995,14.897183,7.448592,3,0.235247,2,0.115354,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.522049,16.000000,4.167044,
+1,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.223889,4003,6.861309,13.722618,13.937035,6.968517,3,0.263303,2,0.085686,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.037240,16.000000,3.898471,
+2,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.003333,3606,7.616700,15.233400,15.471422,7.735711,3,0.311703,2,0.143095,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.812000,16.000000,4.327671,
+3,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.062222,3712,7.399197,14.798394,15.029619,7.514810,3,0.296067,2,0.137931,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.588921,16.000000,4.204090,
+4,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.149444,3869,7.098946,14.197892,14.419734,7.209867,3,0.302404,2,0.110623,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.280970,16.000000,4.033492,
+5,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.073333,3732,7.359545,14.719090,14.949076,7.474538,3,0.313505,2,0.098875,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,7.548251,16.000000,4.181560,
+6,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,1.898889,3418,8.035641,16.071281,16.322395,8.161198,3,0.269456,2,0.112639,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,8.241683,16.000000,4.565705,
+7,vector0,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,2.526667,4548,6.039099,12.078197,12.266919,6.133460,3,0.326077,2,0.096526,32.500000,16.250000,NA,NA,NA,NA,NA,NA,NA,NA,32.000000,6.193947,16.000000,3.431306,
+=== Benchmark complete ===
