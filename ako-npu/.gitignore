@@ -6,6 +6,11 @@ scripts/
 solution/
 _bench_output.txt
 
+# 编译产物
+input/build/
+build/
+CLAUDE.md.bak.*
+
 # skills 仓库（用户 git clone 进来的）
 skills/
 
