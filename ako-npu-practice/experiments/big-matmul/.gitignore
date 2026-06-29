@@ -1,0 +1,7 @@
+# 编译产物与每次运行的中间目录（可由 run_config.sh / par16_run.sh 复现）
+build_*/
+par16/
+# 数据与 profiling 输出
+**/*.bin
+**/OPPROF_*/
+**/msprof_*/

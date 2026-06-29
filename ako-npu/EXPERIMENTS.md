@@ -104,6 +104,16 @@ Step 0 装 skills → Step 1 路由(.asc 直接优化 / .py 先开发)
 
 **框架演进与最佳战绩**（`REPORT.md`）：V1 子 agent（skills 发现失败）→ V2 独立进程+CANNBot → V3 规则持久化(CLAUDE.md) → V4 精度硬约束 → V5 References 字段引导查 skill。峰值加速：dsa **9.33x**、matmul-asc **6.15x**、attn-bwd **2.6-3.6x**。
 
+## 5b. 后续：大 shape 计算密集实验（2026-06-28）
+
+baseline 案例是「算力密集、数据极小」型，看不出算力被吃满。为此新增 **big-matmul** 实验：把 matmul-py 算子参数化，放大到 **4096×4096×4096**（137 GFLOP），专门量化算力利用率 + 拿加速比 + 整机并行。结论：
+
+- **单卡 tiling 调参 1.50× 加速、精度全 PASS**：`baseM×baseN` 256×128（23096µs）→ 128×256（15428µs），Cube 利用率 0.495→0.635。
+- **16 卡并行**：48 次启动全 PASS，墙钟 60.6s，整机并发吞吐 ≈5.8×（host-overhead-bound）。
+- **天花板**：msprof `Block Dim=1`，实际只用 1 个 Cube 核；多 Cube 需算子改写（手写 CalcOffset 无法按 launch block 切分），印证「参数调优拿 1.5×、更大算力释放归 CANNBot 开发阶段」的框架分工。
+
+详见 `ako-npu-practice/experiments/big-matmul/RESULTS.md`。
+
 ## 6. 涉及文件
 
 | 文件 | 说明 |
